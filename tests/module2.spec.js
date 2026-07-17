@@ -78,11 +78,17 @@ test.describe('2.1 - Smart Locator Generation', () => {
     // 'add-to-cart-btn' is a STALE locator: the element was renamed to
     // add-to-cart-p001. Students fix it with the prompt template from 2.1.3.
     // This produces exactly the error the lessons open with:
-    //   Error: locator('[data-testid="add-to-cart-btn"]') - element not found
+    //   Error: locator.click: Timeout 5000ms exceeded.
+    //   Call log:
+    //     - waiting for getByTestId('add-to-cart-btn')
+    //
+    // The explicit 5s action timeout keeps the designed failure fast — without
+    // it the click burns the full 30s test timeout waiting for an element that
+    // will never appear.
     //
     // Do NOT fix on main — this is the lesson's starting state.
     await page.goto('/products.html');
-    await page.getByTestId('add-to-cart-btn').click(); // ← stale
+    await page.getByTestId('add-to-cart-btn').click({ timeout: 5000 }); // ← stale
     await expect(page.getByTestId('toast')).toBeVisible();
   });
 
