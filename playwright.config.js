@@ -10,15 +10,19 @@ module.exports = defineConfig({
     ['json', { outputFile: 'test-results/results.json' }],
   ],
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    baseURL: process.env.BASE_URL || 'http://localhost:4300',
     headless: true,
+    viewport: { width: 1280, height: 720 },
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },
+  expect: {
+    toHaveScreenshot: { animations: 'disabled', maxDiffPixelRatio: 0.01 },
+  },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'npx serve . -p 3000',
-    url: 'http://localhost:3000',
+    command: 'npx serve . -p 4300',
+    url: 'http://localhost:4300',
     reuseExistingServer: !process.env.CI,
     timeout: 20000,
   },
