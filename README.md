@@ -13,13 +13,13 @@ git clone https://github.com/CristianPGit/techshop-demo.git
 cd techshop-demo
 npm install
 
-npm run start:all   # site on :3000 + API on :3001
+npm run start:all   # site on :4300 + API on :3001
 ```
 
 Or run them separately:
 
 ```bash
-npm start           # static site only → http://localhost:3000
+npm start           # static site only → http://localhost:4300
 npm run start:api   # REST API only    → http://localhost:3001
 ```
 
@@ -29,11 +29,11 @@ npm run start:api   # REST API only    → http://localhost:3001
 
 | Page | URL |
 |------|-----|
-| Home | `http://localhost:3000` |
-| Products | `http://localhost:3000/products.html` |
-| Cart | `http://localhost:3000/cart.html` |
-| Checkout | `http://localhost:3000/checkout.html` |
-| Login | `http://localhost:3000/login.html` |
+| Home | `http://localhost:4300` |
+| Products | `http://localhost:4300/products.html` |
+| Cart | `http://localhost:4300/cart.html` |
+| Checkout | `http://localhost:4300/checkout.html` |
+| Login | `http://localhost:4300/login.html` |
 
 **Demo credentials:** `demo@techshop.com` / `password123`
 

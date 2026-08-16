@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "TechShop — demo e-commerce store",
   "scripts": {
-    "start": "npx serve . -p 3000",
+    "start": "npx serve . -p 4300",
     "start:api": "node api/server.js",
     "start:all": "npx concurrently \"npm run start\" \"npm run start:api\"",
     "ci:clean": "node scripts/ci-check-clean.js",
