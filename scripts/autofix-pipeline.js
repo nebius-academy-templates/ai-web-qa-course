@@ -21,6 +21,7 @@
 // ============================================================
 
 const fs = require('fs');
+const { createLinearTicket } = require('./create-linear-ticket');
 
 const MAX_AUTOFIX_ATTEMPTS = 1;
 
@@ -220,7 +221,7 @@ async function autoFixLocator(brokenLocator, testFilePath, domSnapshot, stubMode
   return report;
 }
 
-module.exports = { autoFixLocator, onEscalation, createJiraTicket, escalate, validateLocator };
+module.exports = { autoFixLocator, onEscalation, createJiraTicket, createLinearTicket, escalate, validateLocator };
 
 // ============================================================
 // DEMO RUNNER
@@ -228,10 +229,12 @@ module.exports = { autoFixLocator, onEscalation, createJiraTicket, escalate, val
 if (require.main === module) {
   const mode = process.argv[2] || 'success';
 
-  // Register the Jira callback - THE lesson 2.3.3 addition.
+  // Register the tracker callback - THE lesson 2.3.3 addition.
+  // Swapping Jira -> Linear is this one line. escalate() above was
+  // not touched. On Jira? Register createJiraTicket instead.
   onEscalation(async (report) => {
-    const ticket = await createJiraTicket(report);
-    console.log(`\n🎫 Jira ticket created: ${ticket.url}`);
+    const ticket = await createLinearTicket(report);
+    console.log(`\n🎫 Linear issue created: ${ticket.url}`);
 
     // Exercise 2 target: learners add a second channel here,
     // e.g. the CI-readable structured console summary - WITHOUT
@@ -245,14 +248,14 @@ if (require.main === module) {
     </form>
     <a href="index.html" class="btn btn-primary" data-testid="back-home">Back to Home</a>`;
 
-  // Demo-only env so the guard clause passes; JIRA_MOCK prints
-  // the payload instead of posting. Real usage: set real values
-  // in CI secrets and remove JIRA_MOCK.
-  process.env.JIRA_MOCK = 'true';
-  process.env.JIRA_BASE_URL = process.env.JIRA_BASE_URL || 'https://company.atlassian.net';
-  process.env.JIRA_API_TOKEN = process.env.JIRA_API_TOKEN || 'demo-token';
-  process.env.JIRA_EMAIL = process.env.JIRA_EMAIL || 'qa@company.com';
-  process.env.JIRA_PROJECT_KEY = process.env.JIRA_PROJECT_KEY || 'QA';
+  // NO env defaults here, deliberately. An earlier version defaulted
+  // LINEAR_MOCK to 'true' and filled in placeholder credentials, which
+  // meant "I forgot to configure this" produced a green success line
+  // and a fabricated ticket URL - a false green in the one layer whose
+  // job is making sure failures reach a human. Configure explicitly:
+  //   export LINEAR_MOCK=true    -> print the payload, post nothing
+  //   export LINEAR_MOCK=false   -> post for real (needs real creds)
+  // Unset creds now fail loudly at startup instead of silently at delivery.
 
   autoFixLocator(
     'button[data-testid="confirm-order-btn"]',
