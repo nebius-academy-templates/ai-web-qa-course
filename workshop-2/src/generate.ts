@@ -98,12 +98,28 @@ function renderTicket(ticket: TicketData, users: SyntheticUser[]): string {
 export function extractJson(text: string): unknown {
   const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/);
   const body = (fenced?.[1] ?? text).trim();
-  const start = body.indexOf('{');
   const end = body.lastIndexOf('}');
-  if (start === -1 || end <= start) {
+  if (end === -1) {
     throw new Error(`No JSON object in the model response:\n${text.slice(0, 500)}`);
   }
-  return JSON.parse(body.slice(start, end + 1));
+
+  // Try each '{' left to right and keep the first that parses. The obvious
+  // first-brace-to-last-brace slice breaks the moment the model prefaces bare
+  // JSON with prose that itself contains braces ("use the {id} placeholder").
+  let lastError: unknown;
+  for (let start = body.indexOf('{'); start !== -1 && start < end; start = body.indexOf('{', start + 1)) {
+    try {
+      return JSON.parse(body.slice(start, end + 1));
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw new Error(
+    `No parseable JSON object in the model response ` +
+      `(${lastError instanceof Error ? lastError.message : 'no candidate found'}):\n` +
+      text.slice(0, 500),
+  );
 }
 
 /**
