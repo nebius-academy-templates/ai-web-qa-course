@@ -41,8 +41,17 @@ Then:
 npm test
 ```
 
-You should see **3 failures, one per gate**. That is the starting line, not a
-problem to fix before you begin.
+You should see:
+
+```
+ Test Files  3 failed | 1 passed (4)
+      Tests  3 failed | 10 passed (13)
+```
+
+**3 failures, one per gate** — that is the starting line, not a problem to fix
+before you begin. The 10 that pass are `tests/pipeline.test.ts`, which covers
+the plumbing either side of the gates (parsing the model's JSON, writing files
+to disk). No sprint touches those; a failure there means something real broke.
 
 ### API key
 
@@ -65,7 +74,7 @@ end-to-end at the end.
 |---|---|
 | `npm run smoke` | Verifies install + config. No API call. |
 | `npm start -- <id>` | Runs the pipeline, e.g. `npm start -- TS-142` |
-| `npm test` | All tests. 3 fail by design. |
+| `npm test` | All tests. 3 fail by design, 10 pass. |
 | `npm test -- security` | Just one gate's test. Also `schema`, `hitl`. |
 | `npm run checkpoint <n>` | Restores a checkpoint into `src/gates/` |
 | `npm run typecheck` | `tsc --noEmit` |
@@ -205,7 +214,7 @@ workshop-2/
 │   ├── writeFiles.ts       disk writer, runs only after HITL approves
 │   ├── adapters/           fixture ★ · linear ★★ · jira ★★★
 │   └── gates/              ← the three stubs you implement
-├── tests/                  one failing test per gate
+├── tests/                  one failing test per gate + pipeline.test.ts (passes)
 ├── fixtures/               ticket.json + users.csv (all values invented)
 ├── checkpoints/            working solutions, per sprint
 └── scripts/                smoke.ts, checkpoint.ts
