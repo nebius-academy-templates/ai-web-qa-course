@@ -1,0 +1,4 @@
+name,email,phone,city,zip,card_last_four
+Ana Popescu,ana.popescu@example-mail.ro,+40 721 555 019,Cluj-Napoca,400001,8912
+Marc Declerck,m.declerck@bureau-declerck.example,(555) 019-2837,Brussels,1000,4417
+Sofia Lindqvist,sofia.lindqvist@example-mail.se,+46 70 555 0184,Malmo,21120,2093

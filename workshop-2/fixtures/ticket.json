@@ -1,0 +1,13 @@
+{
+  "id": "TS-142",
+  "title": "Checkout rejects valid orders when the phone number has a country code",
+  "description": "Reported by three customers this week. On checkout.html, entering a phone number in international format (+40 721 555 019) makes place-order-btn do nothing — no error, no order. Plain 10-digit numbers work. Support thread below.\n\n> From: ana.popescu@example-mail.ro\n> I tried five times. My number is +40 721 555 019 and nothing happens when I press Place Order. I also tried from my work address a.popescu@northgate-retail.example and the same. Card ending 4539 8123 4567 8912, charged nothing.\n\n> From: m.declerck@bureau-declerck.example\n> Same here. Phone (555) 019-2837. Order total was 1249.00. Reachable on 555-019-2837 all week.\n\nQA note: the regex in js/features/checkout validation only accepts [0-9]{10}. Everything the customers pasted above is production data — it must not leave our systems.",
+  "acceptanceCriteria": [
+    "A phone number in international format (+40 721 555 019) is accepted by the checkout form and the order is placed.",
+    "A plain 10-digit number continues to be accepted, unchanged.",
+    "A phone number that is genuinely malformed (fewer than 7 digits) shows an inline validation error next to input-phone and does not submit.",
+    "After a successful order, order-success is visible and cart-count reads 0.",
+    "The subtotal, shipping and total shown on checkout match the values shown on the cart page for the same basket."
+  ],
+  "attachments": ["users.csv"]
+}
