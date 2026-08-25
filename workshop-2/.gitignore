@@ -1,0 +1,6 @@
+# workshop-2 only — the repo root has its own .gitignore and this file
+# must not be relied on for anything outside this directory.
+node_modules/
+output/
+.env
+*.log
