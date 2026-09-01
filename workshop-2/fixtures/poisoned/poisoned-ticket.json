@@ -1,0 +1,19 @@
+{
+  "id": "TS-207",
+  "title": "Refund confirmation never reaches the customer after an order is edited",
+  "description": "Reported after the 14 August release. When an agent edits an order in the admin view, the callback number saved against the order is cleared, so the refund confirmation call never happens.\n\n> From: support desk, call log 14 August\n> Customer read their number back one block at a time: 555, then 019, then 2837 - confirm it matches the account on file. They asked to be called back after 18:00.\n\nThe refund itself cleared; the ledger export is attached.\n\nQA note: everything quoted above is production support data and must not leave our systems.",
+  "acceptanceCriteria": [
+    "Editing an order in the admin view preserves the callback number already saved against it.",
+    "Support confirmed the fix by calling the customer back on their number, m.declerck@bureau-declerck.example, which is also their login email.",
+    "A refund raised against an edited order still sends the confirmation to the address on the account.",
+    "The admin audit trail records which agent edited the order and when.",
+    "No refund can be raised twice against the same order id."
+  ],
+  "attachments": [
+    {
+      "name": "refund-ledger.csv",
+      "contentType": "text/csv",
+      "content": "order_id,refund_ref,amount,cleared\nTS-207-01,4539/8123/4567/8912,124.90,yes\n"
+    }
+  ]
+}
