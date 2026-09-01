@@ -145,6 +145,35 @@ describe('readExisting — the before side of the HITL diff', () => {
     expect(Object.keys(existing)).toHaveLength(0);
   });
 
+  it('refuses to read outside the output directory', async () => {
+    // Mirrors the writeFiles() case above. The schema gate cannot catch these:
+    // its path pattern is a character allowlist, so ".." is structurally legal.
+    for (const escape of ['../escaped.ts', '../../etc/evil.ts', '/tmp/absolute.ts']) {
+      await expect(readExisting([{ path: escape, contents: 'x' }], outDir)).rejects.toThrow(
+        /Refusing to read outside/,
+      );
+    }
+  });
+
+  it('throws on an escaping path rather than reporting it as a new file', async () => {
+    // A silent "no existing file" would render the escape as a clean
+    // "(new file)" diff in sprint 3, hiding it from the human approving it.
+    const decoyDir = await mkdtemp(path.join(os.tmpdir(), 'workshop2-decoy-'));
+    try {
+      await writeFile(path.join(decoyDir, 'secret.ts'), 'NOT YOURS', 'utf8');
+      const traversal = path.relative(outDir, path.join(decoyDir, 'secret.ts'));
+
+      // Sanity: this really does point at the decoy, outside outDir.
+      expect(path.resolve(outDir, traversal)).toBe(path.join(decoyDir, 'secret.ts'));
+
+      await expect(readExisting([{ path: traversal, contents: 'x' }], outDir)).rejects.toThrow(
+        /Refusing to read outside/,
+      );
+    } finally {
+      await rm(decoyDir, { recursive: true, force: true });
+    }
+  });
+
   it('round-trips what writeFiles just wrote', async () => {
     const file: GeneratedFile = { path: 'specs/checkout.spec.ts', contents: 'line one\nline two' };
 
