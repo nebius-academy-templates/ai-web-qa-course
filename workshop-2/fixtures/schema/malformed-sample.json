@@ -1,0 +1,10 @@
+{
+  "pageObject": {
+    "path": "pages/CheckoutPage.ts",
+    "contents": "import type { Page } from '@playwright/test';\nexport class CheckoutPage {\n  constructor(private page: Page) {}\n  get phone() { return this.page.getByTestId('input-phone'); }\n  get placeOrder() { return this.page.locator('.css-1a2b3c4'); }\n}"
+  },
+  "testIds": [
+    "input-phone",
+    "checkout-express-lane"
+  ]
+}
