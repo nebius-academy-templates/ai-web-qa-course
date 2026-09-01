@@ -16,7 +16,7 @@ writing the third gate yourself. This folder closes that hole.
 ```bash
 npm run checkpoint solution    # all three gates working
 npm test                       # 0 failures
-npm start -- TS-142            # the whole pipeline, needs ANTHROPIC_API_KEY
+npm start -- TS-142            # the whole pipeline, offline (canned generation)
 ```
 
 To get back to the participant's starting state:

@@ -2,6 +2,9 @@
  * The generation call. Everything reaching this function has already been
  * through the security gate — treat `ticket` as public text.
  */
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
 import type { Config } from './config.js';
 import { OUTPUT_SCHEMA } from './gates/schema.js';
@@ -122,15 +125,35 @@ export function extractJson(text: string): unknown {
   );
 }
 
+const here = path.dirname(fileURLToPath(import.meta.url));
+const CANNED_PATH = path.resolve(here, '../fixtures/canned-generation.json');
+
 /**
- * Calls Claude and returns the parsed — but NOT yet validated — payload.
- * Validation is the schema gate's job; keeping them apart is the point.
+ * The stand-in for a live generation call.
+ *
+ * This is a supported mode, not a degraded one. The workshop is about the
+ * gates around the model, not the model, so nothing downstream needs the call
+ * to have been real — the schema gate still validates it, the HITL gate still
+ * diffs it, and writeFiles still writes it.
+ */
+async function cannedGeneration(): Promise<unknown> {
+  console.log('  No API key — using canned generation output (fixtures/canned-generation.json).');
+  console.log('  Set ANTHROPIC_API_KEY to generate live.');
+  return JSON.parse(await readFile(CANNED_PATH, 'utf8'));
+}
+
+/**
+ * Returns the parsed — but NOT yet validated — payload, either from Claude or
+ * from the canned fixture when no API key is set. Validation is the schema
+ * gate's job; keeping them apart is the point.
  */
 export async function generate(
   ticket: TicketData,
   users: SyntheticUser[],
   config: Config,
 ): Promise<unknown> {
+  if (!config.apiKey) return cannedGeneration();
+
   const client = new Anthropic({ apiKey: config.apiKey });
 
   // Streaming, because a page object plus a spec runs long and a non-streamed
@@ -160,4 +183,4 @@ export async function generate(
   return extractJson(text);
 }
 
-export { APP_CONTEXT, SYSTEM_PROMPT };
+export { APP_CONTEXT, SYSTEM_PROMPT, renderTicket };

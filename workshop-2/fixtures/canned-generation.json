@@ -1,0 +1,27 @@
+{
+  "pageObject": {
+    "path": "pages/CheckoutPage.ts",
+    "contents": "import type { Page } from '@playwright/test';\n\n/**\n * Checkout page object for TechShop.\n *\n * TechShop is hand-written HTML with no build step, so there are no generated\n * class names to select on: every locator here is a data-testid.\n */\nexport class CheckoutPage {\n  constructor(private readonly page: Page) {}\n\n  get form() { return this.page.getByTestId('checkout-form'); }\n  get name() { return this.page.getByTestId('input-name'); }\n  get email() { return this.page.getByTestId('input-email'); }\n  get phone() { return this.page.getByTestId('input-phone'); }\n  get phoneError() { return this.page.getByTestId('input-phone-error'); }\n  get address() { return this.page.getByTestId('input-address'); }\n  get city() { return this.page.getByTestId('input-city'); }\n  get zip() { return this.page.getByTestId('input-zip'); }\n  get country() { return this.page.getByTestId('input-country'); }\n  get placeOrder() { return this.page.getByTestId('place-order-btn'); }\n  get orderSuccess() { return this.page.getByTestId('order-success'); }\n  get cartCount() { return this.page.getByTestId('cart-count'); }\n  get subtotal() { return this.page.getByTestId('subtotal'); }\n  get shipping() { return this.page.getByTestId('shipping'); }\n  get total() { return this.page.getByTestId('total'); }\n\n  async goto(): Promise<void> {\n    await this.page.goto('/checkout.html');\n  }\n\n  async fillDetails(details: {\n    name: string;\n    email: string;\n    phone: string;\n    address: string;\n    city: string;\n    zip: string;\n    country: string;\n  }): Promise<void> {\n    await this.name.fill(details.name);\n    await this.email.fill(details.email);\n    await this.phone.fill(details.phone);\n    await this.address.fill(details.address);\n    await this.city.fill(details.city);\n    await this.zip.fill(details.zip);\n    await this.country.fill(details.country);\n  }\n\n  async submit(): Promise<void> {\n    await this.placeOrder.click();\n  }\n\n  /** Reads the money row values as trimmed strings, for cross-page comparison. */\n  async totals(): Promise<{ subtotal: string; shipping: string; total: string }> {\n    return {\n      subtotal: (await this.subtotal.innerText()).trim(),\n      shipping: (await this.shipping.innerText()).trim(),\n      total: (await this.total.innerText()).trim(),\n    };\n  }\n}"
+  },
+  "spec": {
+    "path": "specs/checkout.spec.ts",
+    "contents": "import { expect, test } from '@playwright/test';\nimport { CheckoutPage } from '../pages/CheckoutPage';\n\nconst DETAILS = {\n  name: 'Wilma Fadel',\n  email: 'Wilma_Fadel48@yahoo.com',\n  phone: '+40 721 555 019',\n  address: '4821 Bergstrom Landing',\n  city: 'Lake Rebeka',\n  zip: '48210',\n  country: 'Romania',\n};\n\ntest.describe('TS-142 — checkout accepts international phone numbers', () => {\n  test('places the order when the phone number has a country code', async ({ page }) => {\n    const checkout = new CheckoutPage(page);\n    await checkout.goto();\n    await checkout.fillDetails(DETAILS);\n    await checkout.submit();\n\n    await expect(checkout.orderSuccess).toBeVisible();\n  });\n\n  test('still accepts a plain 10-digit number', async ({ page }) => {\n    const checkout = new CheckoutPage(page);\n    await checkout.goto();\n    await checkout.fillDetails({ ...DETAILS, phone: '0721555019' });\n    await checkout.submit();\n\n    await expect(checkout.orderSuccess).toBeVisible();\n  });\n\n  test('rejects a number with fewer than 7 digits without submitting', async ({ page }) => {\n    const checkout = new CheckoutPage(page);\n    await checkout.goto();\n    await checkout.fillDetails({ ...DETAILS, phone: '12345' });\n    await checkout.submit();\n\n    await expect(checkout.phoneError).toBeVisible();\n    await expect(checkout.orderSuccess).toBeHidden();\n  });\n\n  test('empties the cart badge after a successful order', async ({ page }) => {\n    const checkout = new CheckoutPage(page);\n    await checkout.goto();\n    await checkout.fillDetails(DETAILS);\n    await checkout.submit();\n\n    await expect(checkout.orderSuccess).toBeVisible();\n    await expect(checkout.cartCount).toHaveText('0');\n  });\n\n  test('shows the same money rows as the cart page for one basket', async ({ page }) => {\n    const checkout = new CheckoutPage(page);\n\n    await page.goto('/cart.html');\n    const fromCart = {\n      subtotal: (await page.getByTestId('subtotal').innerText()).trim(),\n      shipping: (await page.getByTestId('shipping').innerText()).trim(),\n      total: (await page.getByTestId('total').innerText()).trim(),\n    };\n\n    await checkout.goto();\n    expect(await checkout.totals()).toEqual(fromCart);\n  });\n});"
+  },
+  "testIds": [
+    "checkout-form",
+    "input-name",
+    "input-email",
+    "input-phone",
+    "input-phone-error",
+    "input-address",
+    "input-city",
+    "input-zip",
+    "input-country",
+    "place-order-btn",
+    "order-success",
+    "cart-count",
+    "subtotal",
+    "shipping",
+    "total"
+  ]
+}

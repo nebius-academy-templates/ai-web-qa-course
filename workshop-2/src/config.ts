@@ -8,9 +8,12 @@ const SOURCES: readonly TicketSource[] = ['fixture', 'linear', 'jira'];
 
 export interface Config {
   source: TicketSource;
-  apiKey: string;
+  /** Undefined in offline mode, which is the workshop's default. */
+  apiKey?: string;
   model: string;
   outputDir: string;
+  /** True when a real generation call will be made. */
+  live: boolean;
 }
 
 export function resolveSource(raw = process.env.TICKET_SOURCE): TicketSource {
@@ -25,34 +28,27 @@ export function resolveSource(raw = process.env.TICKET_SOURCE): TicketSource {
 }
 
 /**
- * Reads ANTHROPIC_API_KEY and refuses to continue without it.
+ * Reads ANTHROPIC_API_KEY if there is one.
  *
- * Never soften this into a warning: a pipeline that silently skips the
- * generation call still writes files, and nobody notices they are empty.
+ * Absence is not an error. The workshop runs offline by design: with no key,
+ * generate() serves fixtures/canned-generation.json instead of calling the
+ * API, so every gate and every stage still runs end to end.
+ *
+ * The hazard the old hard failure guarded against — a pipeline that quietly
+ * skips generation and writes empty files — does not apply, because the
+ * canned path returns a real, schema-valid payload and says so on stdout.
  */
-export function requireApiKey(env = process.env): string {
-  const key = env.ANTHROPIC_API_KEY?.trim();
-  if (!key) {
-    throw new Error(
-      [
-        'ANTHROPIC_API_KEY is not set.',
-        '',
-        'The pipeline calls the Claude API and will not run without it:',
-        '  export ANTHROPIC_API_KEY=sk-ant-...',
-        '',
-        'Everything except the generation step works without a key —',
-        'run `npm test` and `npm run smoke` to check your setup.',
-      ].join('\n'),
-    );
-  }
-  return key;
+export function readApiKey(env = process.env): string | undefined {
+  return env.ANTHROPIC_API_KEY?.trim() || undefined;
 }
 
 export function loadConfig(env = process.env): Config {
+  const apiKey = readApiKey(env);
   return {
     source: resolveSource(env.TICKET_SOURCE),
-    apiKey: requireApiKey(env),
+    apiKey,
     model: env.ANTHROPIC_MODEL?.trim() || 'claude-opus-5',
     outputDir: env.OUTPUT_DIR?.trim() || 'output',
+    live: apiKey !== undefined,
   };
 }

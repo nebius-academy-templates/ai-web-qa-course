@@ -45,26 +45,41 @@ You should see:
 
 ```
  Test Files  3 failed | 1 passed (4)
-      Tests  3 failed | 10 passed (13)
+      Tests  3 failed | 12 passed (15)
 ```
 
 **3 failures, one per gate** — that is the starting line, not a problem to fix
-before you begin. The 10 that pass are `tests/pipeline.test.ts`, which covers
+before you begin. The 12 that pass are `tests/pipeline.test.ts`, which covers
 the plumbing either side of the gates (parsing the model's JSON, writing files
 to disk). No sprint touches those; a failure there means something real broke.
 
-### API key
+### No API key needed
 
-The generation step needs one:
+**This workshop runs entirely offline by design.** Nothing you do today
+requires an `ANTHROPIC_API_KEY`, and no session costs tokens.
 
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
+Where the pipeline would call Claude, it serves
+`fixtures/canned-generation.json` instead — a real, schema-valid
+`GenerationOutput` for TS-142 using genuine TechShop locators. `npm start`
+prints which mode it is in:
+
+```
+[3/6] Generating (offline — canned response)
+  No API key — using canned generation output (fixtures/canned-generation.json).
+  Set ANTHROPIC_API_KEY to generate live.
 ```
 
-Without it, `npm start` refuses to run and says so — it never silently skips
-the model call and writes empty files. **Sprints 1, 2 and 3 and the whole test
-suite work fine without a key**; you only need one to run the pipeline
-end-to-end at the end.
+That is a supported mode, not a degraded one. Every stage still runs for real:
+the security gate masks the ticket, the schema gate validates the payload, the
+HITL gate diffs it against what is on disk and asks you to approve, and
+`writeFiles` writes it. The only thing that did not happen is the network call
+— and this workshop is about the gates around the model, not the model.
+
+If you do want a live call, set a key and the same command generates for real:
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...    # entirely optional
+```
 
 ---
 
@@ -73,11 +88,14 @@ end-to-end at the end.
 | Command | What it does |
 |---|---|
 | `npm run smoke` | Verifies install + config. No API call. |
-| `npm start -- <id>` | Runs the pipeline, e.g. `npm start -- TS-142` |
-| `npm test` | All tests. 3 fail by design, 10 pass. |
+| `npm start -- <id>` | Runs the pipeline, e.g. `npm start -- TS-142`. Offline unless a key is set. |
+| `npm test` | All tests. 3 fail by design, 12 pass. |
 | `npm test -- security` | Just one gate's test. Also `schema`, `hitl`. |
 | `npm run checkpoint <n>` | Restores a checkpoint into `src/gates/` |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run demo:gateless` | Stage 1 contrast: the prompt with no security gate. No API call. |
+| `npm run demo:gated` | Stage 1 contrast: the same prompt with the gate. No API call. |
+| `npm run demo:compare` | Checks the two captures for leaked PII. Exits non-zero if any. |
 
 ---
 
@@ -208,14 +226,15 @@ overwrites `src/gates/`.
 workshop-2/
 ├── src/
 │   ├── cli.ts              entry point — the six pipeline stages
-│   ├── config.ts           env handling; the loud ANTHROPIC_API_KEY guard
+│   ├── config.ts           env handling; picks live vs offline mode
 │   ├── types.ts            shapes the gates are typed against
 │   ├── generate.ts         the Claude call + the TechShop prompt context
 │   ├── writeFiles.ts       disk writer, runs only after HITL approves
 │   ├── adapters/           fixture ★ · linear ★★ · jira ★★★
 │   └── gates/              ← the three stubs you implement
 ├── tests/                  one failing test per gate + pipeline.test.ts (passes)
-├── fixtures/               ticket.json + users.csv (all values invented)
+├── fixtures/               ticket.json, users.csv, canned-generation.json
+│                        (all values invented; the canned payload stands in for Claude)
 ├── checkpoints/            working solutions, per sprint
 └── scripts/                smoke.ts, checkpoint.ts
 ```

@@ -30,7 +30,8 @@ async function main(): Promise<void> {
 
   // Fails here, before any network call, if the environment is wrong.
   const config = loadConfig();
-  console.log(`source=${config.source}  model=${config.model}  output=${config.outputDir}`);
+  console.log(`source=${config.source}  model=${config.model}  output=${config.outputDir}  ` +
+    `mode=${config.live ? 'live' : 'offline'}`);
 
   step(1, `Fetching ${ticketId} via the ${config.source} adapter`);
   const ticket = await getTicket(ticketId, config.source);
@@ -46,7 +47,7 @@ async function main(): Promise<void> {
   const users = scaleWithFaker(SYNTHETIC_USER_COUNT);
   console.log(`  ${users.length} synthetic users generated`);
 
-  step(3, 'Generating with Claude');
+  step(3, config.live ? 'Generating with Claude' : 'Generating (offline — canned response)');
   const raw = await generate(masked, users, config);
 
   step(4, 'SCHEMA gate — validating the response');

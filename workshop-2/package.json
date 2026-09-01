@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Workshop 2 — Secure Jira/Linear-to-Playwright pipeline. Self-contained; independent of the course repo at the parent directory.",
+  "description": "Workshop 2 \u2014 Secure Jira/Linear-to-Playwright pipeline. Self-contained; independent of the course repo at the parent directory.",
   "scripts": {
     "smoke": "tsx scripts/smoke.ts",
     "start": "tsx src/cli.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "checkpoint": "tsx scripts/checkpoint.ts",
+    "demo:gateless": "tsx fixtures/demo/run-gateless.ts",
+    "demo:gated": "tsx fixtures/demo/run-gated.ts",
+    "demo:compare": "tsx fixtures/demo/compare.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
