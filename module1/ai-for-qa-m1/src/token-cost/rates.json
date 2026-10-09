@@ -1,0 +1,12 @@
+{
+  "_comment": "ILLUSTRATIVE placeholder rates, not current prices. Prices change; edit this file, never the code. Money is in the single currency named below.",
+  "currency": "GBP",
+  "tiers": {
+    "light": { "inputPerMillion": 0.8, "outputPerMillion": 4 },
+    "mid": { "inputPerMillion": 2.4, "outputPerMillion": 12 },
+    "flagship": { "inputPerMillion": 12, "outputPerMillion": 60 }
+  },
+  "engineerHourlyRate": 45,
+  "sprintsPerYear": 26,
+  "wordsPerToken": 0.75
+}

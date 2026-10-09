@@ -1,0 +1,9 @@
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|---|---|---|---|---|
+| 1 | Eleanor | Whitcombe | worker2.customer001@example.com | 07700 900214 | 14 Alder Close, Harrogate, North Yorkshire, HG1 4QT |
+| 2 | Rhys | Pritchard | worker2.customer002@example.com | 07700 900358 | 27 Castle Terrace, Cardiff, CF10 3BE |
+| 3 | Priya | Natarajan | worker2.customer003@example.com | 07700 900472 | Flat 6, 9 Mill Lane, Leicester, LE2 7HS |
+| 4 | Callum | Dunmore | worker2.customer004@example.com | 07700 900586 | 52 Kirkgate, Perth, PH1 5UF |
+| 5 | Imogen | Fairweather | worker2.customer005@example.com | 07700 900631 | 3 Harbour View, Falmouth, Cornwall, TR11 3AX |
+
+All of this is fictional. The phone numbers are in the 07700 900xxx range, which Ofcom reserves for drama and test use, and the emails use the reserved example.com domain. Street names and postcodes look realistic, but they are invented and may not match real properties.

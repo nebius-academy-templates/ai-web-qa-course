@@ -1,0 +1,30 @@
+Here are 5 fictional customer records for TechShop checkout testing. All names, emails, phone numbers and street addresses are made up. The postcodes follow valid UK formats, but the street addresses are invented and may not exist. Phone numbers use the Ofcom-reserved drama ranges (07700 900xxx and 01632 960xxx), and emails use the reserved `example.com` domain, so none can reach a real person.
+
+**1. Oliver Hartley**
+- Email: oliver.hartley@example.com
+- Phone: 07700 900142
+- Shipping address: 14 Marlowe Close, Bristol, BS8 2QT
+
+**2. Priya Venkataraman**
+- Email: priya.venkataraman@example.com
+- Phone: 07700 900287
+- Shipping address: Flat 3, 27 Kingsley Road, Manchester, M14 5RJ
+
+**3. Callum MacGregor**
+- Email: callum.macgregor@example.com
+- Phone: 07700 900355
+- Shipping address: 8 Thistle Lane, Edinburgh, EH6 4NP
+
+**4. Aisha Rahman-Clarke**
+- Email: aisha.rahmanclarke@example.com
+- Phone: 01632 960418
+- Shipping address: 52 Brindley Street, Birmingham, B16 8TX
+
+**5. Rhys Llewellyn**
+- Email: rhys.llewellyn@example.com
+- Phone: 07700 900569
+- Shipping address: 3 Harbour View, Cardiff, CF10 5AL
+
+These cover a mix of regions (England, Scotland and Wales), a flat with a unit number, a hyphenated surname, and both mobile and landline numbers. That should help you test address and name validation.
+
+I can also produce them as CSV or JSON, or add edge cases such as apostrophes in names, very long addresses, or Northern Ireland postcodes.

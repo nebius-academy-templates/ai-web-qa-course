@@ -1,0 +1,39 @@
+<!-- Header and product page as rendered on staging (trimmed to the parts the cart test touches) -->
+<header class="site-header">
+  <a class="logo" href="/">TechShop</a>
+  <nav class="main-nav" aria-label="Main">
+    <a href="/phones">Phones</a>
+    <a href="/laptops">Laptops</a>
+    <a href="/accessories">Accessories</a>
+  </nav>
+  <a class="cart-link" href="/cart" data-testid="cart-link" aria-label="Cart">
+    <svg class="icon-cart" aria-hidden="true" width="24" height="24"></svg>
+    <span hidden id="cart-badge" class="badge">0</span>
+  </a>
+</header>
+
+<main class="product-page">
+  <h1 class="product-title">Nova X2 Smartphone</h1>
+  <p class="product-price">&pound;449.00</p>
+  <button class="btn primary large" data-testid="add-to-cart">Add to Cart</button>
+</main>
+
+<script>
+  (function () {
+    var items = 0;
+    var addButton = document.querySelector('[data-testid="add-to-cart"]');
+    var badge = document.getElementById('cart-badge');
+
+    addButton.addEventListener('click', function () {
+      items += 1;
+      // Header is notified once the cart service has settled.
+      setTimeout(() => window.dispatchEvent(new CustomEvent('cart:updated', { detail: { items: items } })), 150);
+    });
+
+    window.addEventListener('cart:updated', function (event) {
+      var count = event.detail.items;
+      badge.textContent = count > 9 ? '9+' : String(count);
+      badge.hidden = count === 0;
+    });
+  })();
+</script>

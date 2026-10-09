@@ -1,0 +1,106 @@
+# Iteration 3: close the loop
+
+**Lesson:** 1.1.6 walkthrough (steps 7 and 8). Prompt text below is copied verbatim from the lesson.
+
+**STATUS: CAPTURED via subagent runs on 2026-10-09, not typed into claude.ai.** Each run was a separate Claude instance given the lesson's prompt text with a short instruction to answer without tools. Output is unedited. Re-run in a real chat before go-live if exact fidelity matters.
+
+## Prompt (paste exactly, in the conversation the lesson names)
+
+```
+Generate functional test cases for TechShop's Product Search feature. The user can search for mobile phones only. Include positive, negative, and boundary scenarios, plus security scenarios (injection in the search field, oversized input). For each test case give: ID, scenario, test data, expected result, and priority (High / Medium / Low). Return a table.
+```
+
+## What the lesson says to expect
+
+A table with all five columns (ID, scenario, test data, expected result, priority) and the security cases now present: an injection string in the search field, an oversized input, probably a special-character case. Priorities mostly High for the happy path and the injection case. Good enough to use: three iterations, each adding only what the previous review found missing.
+
+## Reviewer's step (the HITL role)
+
+Check all five columns are present and that the security cases are real (an actual injection string, an actual oversized input).
+
+## Run details
+
+**Model:** `claude-sonnet-5-5` (configured model; the serving model was not verified)  
+**Date:** 2026-10-09  
+**Conversation:** one subagent conversation shared by iterations 1, 2 and 3
+
+## Verbatim output
+
+````
+Here are the functional test cases for TechShop's Product Search (mobile phones only), grouped by type. Assumptions: the maximum query length is 100 characters, the minimum is 2 characters, and the page size is 20. These are placeholders, so please confirm the real values from the requirements.
+
+POSITIVE
+
+| ID | Scenario | Test Data | Expected Result | Priority |
+|---|---|---|---|---|
+| TC-P01 | Search by exact model name | "iPhone 15 Pro" | The matching model and its variants are listed first. All results are mobile phones. | High |
+| TC-P02 | Search by brand | "Samsung" | Only Samsung phones are returned. | High |
+| TC-P03 | Search by partial keyword | "Galax" | Phones with "Galaxy" in the name are returned. | Medium |
+| TC-P04 | Case-insensitive search | "IPHONE", "iphone", "iPhone" | All three return identical results. | Medium |
+| TC-P05 | Search by specification | "128GB", "5G" | Phones matching the spec are returned. | Medium |
+| TC-P06 | Multi-word query | "Samsung Galaxy S24 Ultra" | The closest match is ranked first. | Medium |
+| TC-P07 | Submit via Enter key and Search button | "Pixel 8" | Both methods give the same results. | Medium |
+| TC-P08 | Leading and trailing spaces trimmed | "  Pixel 8  " | Pixel 8 results are returned as if no spaces were entered. | Low |
+| TC-P09 | Result card content | "OnePlus" | Each result shows image, name, price, and availability. The result count matches the items shown. | Medium |
+| TC-P10 | Open a result and return | Click any result, then Back | The correct detail page opens, and Back returns to the same results page. | High |
+| TC-P11 | Filter and sort search results | "Samsung", price filter, sort low-to-high | Results satisfy the filter and are in the right order. Clearing filters restores the original list. | Medium |
+
+NEGATIVE
+
+| ID | Scenario | Test Data | Expected Result | Priority |
+|---|---|---|---|---|
+| TC-N01 | Empty search | (empty) | No crash. A prompt appears or a default list is shown, per the requirement. | Medium |
+| TC-N02 | Whitespace-only search | "     " | Handled the same as an empty search. | Low |
+| TC-N03 | No matching product | "xyzabc123" | A friendly "No results found" message. No error page. | High |
+| TC-N04 | Non-phone product searched | "laptop", "tablet" | No non-phone items are returned. A no-results message is shown. | High |
+| TC-N05 | Accessory searched | "iPhone charger" | No accessories are returned. A no-results message is shown. | Medium |
+| TC-N06 | Misspelled term | "Samsng" | "Did you mean...?" suggestions or a no-results message. No error. | Medium |
+| TC-N07 | Special characters only | "@#$%^&*" | Handled gracefully. No error and no raw system message. | Low |
+| TC-N08 | Non-English text and emoji | "手机", an emoji | No crash. A handled no-results or valid response. | Low |
+| TC-N09 | Invalid price filter | Min 800, Max 200 | A validation message appears or the range is corrected. No crash. | Medium |
+| TC-N10 | Network failure during search | Go offline, search "Pixel" | A user-friendly error message with a retry option. No blank page. | Medium |
+| TC-N11 | Out-of-stock phone | Phone known to be out of stock | It shows a clear "Out of stock" label (or is hidden, per the requirement) and cannot be added to the cart from the results. | Medium |
+
+BOUNDARY
+
+| ID | Scenario | Test Data | Expected Result | Priority |
+|---|---|---|---|---|
+| TC-B01 | Below minimum query length | 1 character, e.g. "i" | A message asking for more characters, or the behavior defined in the requirement. | High |
+| TC-B02 | Exactly at minimum query length | 2 characters, e.g. "iP" | Search runs and returns results. | Medium |
+| TC-B03 | Exactly at maximum query length | 100 characters | Accepted and processed without error. | High |
+| TC-B04 | Just above maximum query length | 101 characters | Input is blocked or truncated, or a message is shown. No crash or layout break. | High |
+| TC-B05 | Result count of zero, one, and many | Queries returning 0, 1, and a large number of results | Zero shows the no-results message, one shows a single item correctly, and many are paginated correctly. | Medium |
+| TC-B06 | Exactly one full page of results | Query returning exactly 20 results | All 20 results appear on one page with no empty second page. | High |
+| TC-B07 | One result over a full page | Query returning 21 results | A second page appears with 1 item. No duplicates or missing items. | High |
+| TC-B08 | Price filter at catalogue limits | Min and max set to the lowest and highest catalogue prices | Phones priced exactly at the boundaries are included. | Medium |
+| TC-B09 | Price just inside and outside a range | Max 500, phones priced 499.99, 500.00, 500.01 | 499.99 and 500.00 are included. 500.01 is excluded. | Medium |
+| TC-B10 | Zero and negative price values | Min 0, Min -1 | 0 is handled per the requirement. -1 is rejected. | Low |
+| TC-B11 | Numeric-only query | "0", "15", "99999999999" | No error. Sensible results or a no-results message. | Low |
+
+SECURITY
+
+| ID | Scenario | Test Data | Expected Result | Priority |
+|---|---|---|---|---|
+| TC-S01 | SQL injection, tautology | ' OR '1'='1 | Treated as plain text. No extra data returned and no database error shown. | High |
+| TC-S02 | SQL injection, destructive statement | "; DROP TABLE products;-- | Treated as plain text. No data is changed or lost. | High |
+| TC-S03 | SQL injection, union-based | ' UNION SELECT username, password FROM users-- | No user data is exposed. Handled as a no-results search. | High |
+| TC-S04 | Reflected XSS in search field | <script>alert(1)</script> | Input is escaped. No script runs, including when the query is echoed back on the results page ("Results for ..."). | High |
+| TC-S05 | XSS via HTML attribute | "><img src=x onerror=alert(1)> | Input is escaped. No image loads and no script runs. | High |
+| TC-S06 | XSS via URL parameter | Edit the search URL parameter to contain <script>alert(1)</script> | The parameter is sanitized. No script runs. | High |
+| TC-S07 | NoSQL or command injection | {"$ne": null}, ; ls, \| whoami | Treated as plain text. No command output or unexpected results. | Medium |
+| TC-S08 | Oversized input in the search field | 5,000 characters pasted | Handled safely by truncation or rejection. No timeout, crash, or server error. | High |
+| TC-S09 | Oversized input in the URL parameter | A query parameter of 10,000 characters | The server responds with a handled error (e.g. 414 or 400), not a crash. No stack trace shown. | Medium |
+| TC-S10 | Error message leakage | Any malformed input (e.g. an unbalanced quote) | No stack trace, SQL error, or server details are shown to the user. | High |
+| TC-S11 | Rapid repeated searches | 50 searches in quick succession | Rate limiting or stable behavior. No degraded service or wrong results. | Medium |
+| TC-S12 | Encoded payloads | %3Cscript%3Ealert(1)%3C%2Fscript%3E, null byte %00 | Decoded input is still treated as plain text. No script runs and no error. | Medium |
+
+SUMMARY
+- Total: 43 test cases (11 positive, 11 negative, 11 boundary, 12 security).
+- High priority cases cover the core search, scope rules (phones only), limits on input length and paging, and all injection and oversized-input risks.
+
+If you share the requirements or a screenshot of the search page, I can replace the placeholder limits with real values and export this as a spreadsheet with extra columns for preconditions and actual results.
+````
+
+## Does the real output match the lesson's expectation?
+
+**Yes.** A table with ID, scenario, test data, expected result and priority (about 45 rows) with injection and oversized-input cases present. Caveat: iterations 1 and 2 already reached most of this coverage, so the lesson's story that each iteration adds only what the previous review found missing does not hold for this run; the real gain is the table columns and priorities.

@@ -1,0 +1,25 @@
+{
+  "status": 200,
+  "endpoint": "GET /api/v2/customers/CUST-31877",
+  "data": {
+    "customerId": "CUST-31877",
+    "name": "Daniel Okafor",
+    "email": "daniel.okafor@example.com",
+    "phone": "+44 7700 900342",
+    "address": {
+      "line1": "14 Alder Court",
+      "line2": "Flat 3",
+      "city": "Bristol",
+      "postcode": "BS8 1XY",
+      "country": "GB"
+    },
+    "latestOrder": {
+      "orderNumber": "ORD-905512",
+      "total": 612.45,
+      "currency": "GBP",
+      "placedAt": "2026-10-02T14:31:09Z"
+    },
+    "marketingConsent": true
+  },
+  "requestId": "req-3b90a7"
+}

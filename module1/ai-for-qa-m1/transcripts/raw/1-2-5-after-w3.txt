@@ -1,0 +1,11 @@
+Here are 5 fictional customer records for TechShop checkout tests (worker 3). All names, phone numbers and addresses are invented. Phone numbers use the Ofcom drama range (07700 900xxx), which is reserved for fictional use.
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|---|---|---|---|---|
+| 1 | Imogen | Hartley | worker3.customer001@example.com | 07700 900301 | 14 Alder Close, Harrogate, North Yorkshire, HG1 4QT |
+| 2 | Rhys | Pritchard | worker3.customer002@example.com | 07700 900302 | 27 Bryn Road, Swansea, West Glamorgan, SA2 0AP |
+| 3 | Fiona | McAllister | worker3.customer003@example.com | 07700 900303 | 8 Thistle Lane, Perth, Perth and Kinross, PH1 5RB |
+| 4 | Tobias | Whitcombe | worker3.customer004@example.com | 07700 900304 | 52 Orchard Way, Taunton, Somerset, TA1 3JL |
+| 5 | Amara | Okonkwo | worker3.customer005@example.com | 07700 900305 | 3 Kingsway Mews, Leicester, Leicestershire, LE1 7DA |
+
+Emails run from worker3.customer001 to worker3.customer005 and follow the required format, so they won't clash with the other workers' records. The streets are made up and the postcodes are only plausible for each town, so don't use them for real delivery or address validation.

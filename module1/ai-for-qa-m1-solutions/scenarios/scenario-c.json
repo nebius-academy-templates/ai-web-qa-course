@@ -1,0 +1,14 @@
+{
+  "name": "Scenario C: CI log triage first pass",
+  "itemsPerSprint": 45,
+  "manualMinutesPerItem": 12,
+  "reviewMinutesPerItem": 4.8,
+  "setupHours": 10,
+  "maintenanceHoursPerMonth": 2,
+  "tokensInPerItem": 1800,
+  "tokensOutPerItem": 250,
+  "tier": "mid",
+  "toolingCostPerSprint": 0,
+  "reworkHoursSavedPerSprint": 0,
+  "contextStable": true
+}

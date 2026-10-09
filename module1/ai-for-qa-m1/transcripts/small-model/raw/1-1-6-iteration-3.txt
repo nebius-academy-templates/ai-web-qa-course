@@ -1,0 +1,67 @@
+Functional Test Cases: TechShop Product Search (Mobile Phones Only)
+
+Scope: Product Search covers mobile phones only. Queries for other product types should return no phone results unless a phone matches the query.
+
+| ID | Scenario | Test Data | Expected Result | Priority |
+|---|---|---|---|---|
+| TC-PS-P01 | Search by brand name | "Samsung" | Only Samsung phones are listed. Each card shows the brand. | High |
+| TC-PS-P02 | Search by full model name | "iPhone 15 Pro" | The matching model is listed first. Unrelated phones are not listed above it. | High |
+| TC-PS-P03 | Search by partial model name | "Galaxy S2" | Galaxy S23 and Galaxy S24 are both listed. | Medium |
+| TC-PS-P04 | Search is case-insensitive | "xiaomi redmi note 13", "XIAOMI REDMI NOTE 13", "XiAoMi ReDmI NoTe 13" | All variants return the same results. | Medium |
+| TC-PS-P05 | Search by feature keyword | "5G" | Phones that support 5G are listed. 4G-only phones are not listed. | Medium |
+| TC-PS-P06 | Search by operating system | "Android", "iOS" | Android query returns Android phones only. iOS query returns iPhones only. | Medium |
+| TC-PS-P07 | Result opens product detail page | Click a result from "Samsung" search | The detail page for the same phone opens, with matching name and price. | High |
+| TC-PS-P08 | Result card shows required fields | Any phone result | Each card shows image, brand, model, price, and availability. | Medium |
+| TC-PS-P09 | Sort results | "Samsung" sorted by Price: Low to High, then High to Low | Results are ordered by the selected sort option. | Medium |
+| TC-PS-P10 | Price filter on results | "phone" with price range 300 to 600 | Only phones priced 300 to 600 are listed. Result count matches the number shown. | Medium |
+| TC-PS-P11 | Pagination | "phone", go to page 2 | Page 2 shows different phones from page 1. No duplicates across pages. | Medium |
+| TC-PS-N01 | Laptop query returns no phones | "MacBook Air" | No laptops are listed. A no-results message is shown. | High |
+| TC-PS-N02 | Tablet query returns no phones | "iPad" | No tablets are listed. No phones are listed unless their name or specs contain "iPad". | Medium |
+| TC-PS-N03 | Accessory query returns no phones | "USB-C charger" | No accessories are listed. A no-results message is shown. | Medium |
+| TC-PS-N04 | Non-existent model | "Nokia Z999" | A "no results found" message is shown. No blank grid without explanation. | High |
+| TC-PS-N05 | Brand not stocked | A brand with no catalog products | A "no results found" message is shown. | Low |
+| TC-PS-N06 | Empty search submission | "" (empty) | Search is blocked with a validation message, or the default listing appears, per requirements. No error page. | High |
+| TC-PS-N07 | Whitespace-only search | "     " | Treated the same as an empty search (TC-PS-N06). | Medium |
+| TC-PS-N08 | Special characters | "!@#$%^&*()", "<>", "\"", "'" | No crash or error page. Results are a no-results message or a valid subset. | Medium |
+| TC-PS-N09 | Non-matching Unicode text | "手机", "смартфон" | No crash. Text displays correctly. Results are a no-results message or matched phones. | Low |
+| TC-PS-N10 | Server error during search | Search service returns error (mock or stop service), query "Samsung" | A clear error message with a retry option is shown. The page does not go blank. | High |
+| TC-PS-N11 | Search while offline | Browser set to offline, query "Samsung" | An offline or connection error message is shown. The search box stays usable. | Medium |
+| TC-PS-N12 | Leading and trailing spaces | "   Samsung Galaxy A54   " | Same results as "Samsung Galaxy A54". | Low |
+| TC-PS-B01 | Single character query | "S" | Results follow the defined rule for one-character queries (search runs, or a minimum-length message is shown). No error. | Medium |
+| TC-PS-B02 | Two character query | "S2" | Behavior is consistent with TC-PS-B01. | Low |
+| TC-PS-B03 | Short model number | "A54" | Samsung Galaxy A54 is listed. | Low |
+| TC-PS-B04 | Query at maximum length | A string of exactly the maximum length (255 characters if no limit is defined) | The search runs. No truncation or server error. | High |
+| TC-PS-B05 | Query one character over maximum length | A string of 256 characters | Input is truncated, or a validation message is shown. No server error. | High |
+| TC-PS-B06 | Maximum-length query matching no phones | 255 random letters | A no-results message is shown. | Low |
+| TC-PS-B07 | Price filter lower boundary | Min price 300, phone priced at 300 exists | The phone priced at 300 is included. | Medium |
+| TC-PS-B08 | Price filter upper boundary | Max price 600, phone priced at 600 exists | The phone priced at 600 is included. | Medium |
+| TC-PS-B09 | Price just outside boundaries | Filter 300 to 600; phones at 299.99 and 600.01 exist | Neither phone is included. | Medium |
+| TC-PS-B10 | Single matching result | Exact model name with one match | One result is shown. Pagination is hidden or disabled. | Medium |
+| TC-PS-B11 | Last page of results | Go to the last page of a multi-page result set | Remaining items are shown. Next is disabled. | Low |
+| TC-PS-B12 | Exactly one full page of results | Query that returns exactly one page of phones (page size per requirements) | One full page is shown. No empty second page is created. | Low |
+| TC-PS-B13 | One result over a full page | Query that returns one more phone than a full page | Page 1 shows a full page. The extra phone appears on page 2. | Low |
+| TC-PS-S01 | Script injection in search field | "<script>alert(1)</script>" | No script runs. Any echoed text is escaped or not shown. | High |
+| TC-PS-S02 | HTML injection in search field | "<img src=x onerror=alert(1)>" | No script runs. The markup is not rendered as HTML. | High |
+| TC-PS-S03 | SQL injection, boolean | "' OR '1'='1" | No database error is shown. No extra data is returned beyond a normal search response. | High |
+| TC-PS-S04 | SQL injection, destructive | "'; DROP TABLE products;--" | No database error is shown. Product data is unchanged. | High |
+| TC-PS-S05 | SQL injection, union | "' UNION SELECT username, password FROM users--" | No database error or user data is shown. The request returns a normal search response. | High |
+| TC-PS-S06 | Oversized input, far above limit | A string of 10,000 characters | Input is rejected or truncated, with no server crash. No stack trace is shown. | High |
+| TC-PS-S07 | Oversized input, request body | Crafted request with a payload of several MB | Request is rejected with a client error (for example, 413 or 400). The service stays available. | Medium |
+| TC-PS-S08 | Path traversal attempt | "../../etc/passwd" | No file contents are returned. Query is treated as plain text. | Medium |
+| TC-PS-S09 | Command injection attempt | "; cat /etc/passwd" or "| ls" | No command output is returned. Query is treated as plain text. | Medium |
+| TC-PS-S10 | Parameter tampering in URL | Change the search parameter to an array or an object (for example, q[]=a&q[]=b) | Request is rejected or handled safely. No server error or data leak. | Medium |
+| TC-PS-S11 | Injection in sort or filter parameters | sort="price; DROP TABLE" or price="600 OR 1=1" | Invalid values are rejected or ignored. No database error or data leak. | High |
+| TC-PS-S12 | Search results do not leak hidden products | Query matching a product flagged as unpublished or out of scope | Unpublished products are not listed. | Medium |
+
+Suggested Priority Summary
+High: P01, P02, P07, N01, N04, N06, N10, B04, B05, S01 to S06, S11
+Medium: P03, P04, P05, P06, P08 to P11, N02, N03, N07, N08, N11, B01, B07 to B10, S07 to S10, S12
+Low: N05, N09, N12, B02, B03, B06, B11 to B13
+
+Open Questions for the Requirements Owner
+1. What is the minimum search length, if any?
+2. What is the maximum search length? (Test cases B04, B05, and S06 assume 255.)
+3. What is the page size?
+4. Does an empty search show all phones, or a validation message?
+5. Does search match on specs (5G, OS, storage), or only on name and brand?
+6. Are accessories that name a phone model (for example, a case for iPhone 15) excluded?

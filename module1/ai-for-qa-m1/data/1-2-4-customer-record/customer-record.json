@@ -1,0 +1,18 @@
+{
+  "customerId": "CUST-10482",
+  "firstName": "Emma",
+  "lastName": "Johnson",
+  "email": "emma.johnson@example.com",
+  "phone": "+1-415-555-0198",
+  "address": "245 Oak Street",
+  "city": "Seattle",
+  "state": "WA",
+  "postalCode": "98109",
+  "dateOfBirth": "1992-08-14",
+  "nationalId": "456-72-8912",
+  "accountNumber": "9876543210",
+  "ipAddress": "192.168.14.23",
+  "orderNumber": "ORD-778214",
+  "purchaseAmount": 249.99,
+  "orderDate": "2025-02-18"
+}

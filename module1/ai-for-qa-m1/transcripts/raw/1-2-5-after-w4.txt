@@ -1,0 +1,13 @@
+Here are 5 fictional customer records for TechShop checkout tests. All data is made up. Phone numbers use the Ofcom drama range (07700 900xxx), and the addresses are invented, so they shouldn't map to real people.
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|---|---|---|---|---|
+| 1 | Oliver | Hartley | worker4.customer001@example.com | 07700 900401 | 14 Maple Grove, Chorlton, Manchester M21 8QR |
+| 2 | Priya | Nair | worker4.customer002@example.com | 07700 900402 | 52 Kingsway Road, Headingley, Leeds LS6 3HT |
+| 3 | Callum | Reid | worker4.customer003@example.com | 07700 900403 | 7 Harbour View, Leith, Edinburgh EH6 7BN |
+| 4 | Megan | Powell | worker4.customer004@example.com | 07700 900404 | 23 Castle Street, Roath, Cardiff CF24 3AD |
+| 5 | Tom | Whitaker | worker4.customer005@example.com | 07700 900405 | 91 Queens Park Avenue, Bristol BS3 4LP |
+
+The emails follow the worker4.customer{NNN}@example.com format (001 to 005), so they won't collide with the other workers' records.
+
+The postcodes are in realistic formats, but they may not match the street names exactly. That's fine for checkout form validation tests. If your tests call a postcode lookup service, swap in real addresses first.
