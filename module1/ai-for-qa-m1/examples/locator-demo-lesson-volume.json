@@ -1,0 +1,13 @@
+{
+  "name": "TechShop locator workflow (lesson 1.3.3 numbers, 60 requests per sprint)",
+  "itemsPerSprint": 60,
+  "manualMinutesPerItem": 3,
+  "reviewMinutesPerItem": 0.75,
+  "setupHours": 16,
+  "maintenanceHoursPerMonth": 2,
+  "tokensInPerItem": 300,
+  "tokensOutPerItem": 40,
+  "tier": "light",
+  "toolingCostPerSprint": 0,
+  "contextStable": true
+}

@@ -1,0 +1,56 @@
+# Structured prompt: 20 UK customer records
+
+**Used in:** 1.2.6 walkthrough steps 4 to 7
+
+**STATUS: CAPTURED via subagent runs on 2026-10-09, not typed into claude.ai.** Each run was a separate Claude instance given the lesson's prompt text with a short instruction to answer without tools. Output is unedited. Re-run in a real chat before go-live if exact fidelity matters.
+
+## Structured prompt (a fresh conversation)
+
+**Prompt (paste exactly):**
+
+```
+Generate 20 fictional customer records for an online TechShop. Include first name, last name, email, phone number and shipping address. Use realistic UK addresses and ensure all data is fictional.
+```
+
+**Model:** `claude-sonnet-5-5` (configured model; the serving model was not verified)  
+**Date:** 2026-10-09  
+**Fresh conversation:** yes, new subagent conversation
+
+**Verbatim output:**
+
+````
+Here are 20 fictional customer records for the TechShop. Phone numbers use the 07700 900xxx range, which Ofcom reserves for fictional use. Emails use the reserved `example.com` domain, so none of them can reach a real inbox.
+
+| # | First Name | Last Name | Email | Phone | Shipping Address |
+|---|-----------|-----------|-------|-------|------------------|
+| 1 | Oliver | Hartley | oliver.hartley@example.com | 07700 900101 | 14 Elmwood Road, Clifton, Bristol, BS8 2HT |
+| 2 | Amelia | Thornton | amelia.thornton@example.com | 07700 900102 | 52 Kingsway Avenue, Didsbury, Manchester, M20 6PL |
+| 3 | Harry | Nwosu | harry.nwosu@example.com | 07700 900103 | 7 Canal Street, Hockley, Nottingham, NG1 3QA |
+| 4 | Isla | MacLeod | isla.macleod@example.com | 07700 900104 | 23 Marchmont Crescent, Edinburgh, EH9 1HQ |
+| 5 | Jack | Pritchard | jack.pritchard@example.com | 07700 900105 | 9 Castle Lane, Cardiff, CF10 3AL |
+| 6 | Priya | Choudhury | priya.choudhury@example.com | 07700 900106 | 118 Soho Road, Handsworth, Birmingham, B21 9ST |
+| 7 | George | Whitaker | george.whitaker@example.com | 07700 900107 | 31 Park Terrace, Harrogate, North Yorkshire, HG1 5NB |
+| 8 | Sophie | Lindqvist | sophie.lindqvist@example.com | 07700 900108 | 4 Mill Row, Stratford-upon-Avon, CV37 6EP |
+| 9 | Mohammed | Rahman | mohammed.rahman@example.com | 07700 900109 | 66 Northgate Street, Leeds, LS2 8JD |
+| 10 | Charlotte | Ashworth | charlotte.ashworth@example.com | 07700 900110 | 18 Rosebery Gardens, Muswell Hill, London, N10 2LE |
+| 11 | Callum | Fraser | callum.fraser@example.com | 07700 900111 | 40 Union Street, Aberdeen, AB11 5BN |
+| 12 | Emily | Okafor | emily.okafor@example.com | 07700 900112 | 85 Bridge Road, Leicester, LE2 1QR |
+| 13 | Thomas | Grainger | thomas.grainger@example.com | 07700 900113 | 2 Victoria Parade, Torquay, Devon, TQ1 2BG |
+| 14 | Niamh | Gallagher | niamh.gallagher@example.com | 07700 900114 | 27 Botanic Avenue, Belfast, BT7 1JG |
+| 15 | Daniel | Kowalski | daniel.kowalski@example.com | 07700 900115 | 11 Fenwick Close, Norwich, NR2 4DT |
+| 16 | Hannah | Bellamy | hannah.bellamy@example.com | 07700 900116 | 59 Queens Road, Southampton, SO14 0AP |
+| 17 | Rhys | Llewellyn | rhys.llewellyn@example.com | 07700 900117 | 3 Heol y Felin, Swansea, SA1 4EQ |
+| 18 | Aisha | Patel | aisha.patel@example.com | 07700 900118 | 96 Belgrave Gate, Leicester, LE1 3GR |
+| 19 | Edward | Sinclair | edward.sinclair@example.com | 07700 900119 | 21 Chapel Walk, Sheffield, S1 2PD |
+| 20 | Megan | Hollis | megan.hollis@example.com | 07700 900120 | 8 Orchard Way, Cambridge, CB4 2BX |
+
+The names, street addresses and postcodes are invented. The towns are real, and some street names or postcodes may happen to match real ones by coincidence. Avoid using them for real deliveries or mailings.
+
+I can also provide this as CSV or JSON, or add fields such as customer ID, registration date, order history or marketing consent.
+````
+
+## What to check when capturing
+
+- Count the rows: the lesson notes Claude occasionally returns 19 or 21.
+- Verification pass (the learner does this, not Claude): all 20 records with all five fields; emails syntactically valid; UK-plausible phone numbers; any two identical emails. Run `node scripts/check-duplicate-emails.ts <this file>` to check duplicates.
+- Record the result honestly: unique emails in this run prove nothing about the prompt, because it never asked for uniqueness.

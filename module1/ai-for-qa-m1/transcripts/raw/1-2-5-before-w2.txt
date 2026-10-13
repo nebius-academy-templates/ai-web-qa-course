@@ -1,0 +1,14 @@
+Here are 5 fictional customer records for TechShop checkout testing. The names, emails and phone numbers are made up. The phone numbers use the UK's reserved drama ranges (e.g. 07700 900xxx), so they can't belong to real people. The emails use the reserved `example.com` domain. The street addresses follow real UK formats, but the house numbers and street and postcode combinations are invented and may not exist.
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|-----------|-----------|-------|-------|------------------|
+| 1 | Eleanor | Whitfield | eleanor.whitfield@example.com | 07700 900124 | 14 Marlow Close, Reading, Berkshire, RG1 4QT |
+| 2 | Rhys | Pritchard | rhys.pritchard@example.com | 07700 900358 | 27 Castle Terrace, Cardiff, CF10 3NP |
+| 3 | Aisha | Rahman | aisha.rahman@example.com | 07700 900472 | Flat 3, 52 Deansgate Mews, Manchester, M3 2BW |
+| 4 | Callum | MacLeod | callum.macleod@example.com | 07700 900615 | 8 Thistle Gardens, Edinburgh, EH3 6RA |
+| 5 | Priya | Nair | priya.nair@example.com | 07700 900839 | 101 Alder Road, Bristol, BS6 7JD |
+
+A few notes for your tests:
+- The records cover England, Wales and Scotland, plus a flat address, so you can check address-line handling.
+- If your checkout validates postcodes against a real address database (e.g. via a postcode lookup API), these combinations may be rejected. In that case, swap in addresses that you know pass validation.
+- If you need other cases, such as Northern Ireland (BT postcodes), names with apostrophes or hyphens, or very long address lines, I can add them.

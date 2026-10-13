@@ -1,0 +1,11 @@
+Here are 5 fictional TechShop checkout-test customers (all data is invented; phone numbers use the Ofcom drama range 07700 900xxx, and the addresses are fictional).
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|-----------|-----------|-------|-------|------------------|
+| 1 | Oliver | Hartley | worker1.customer001@example.com | 07700 900101 | 14 Mill Lane, Headingley, Leeds, West Yorkshire, LS6 2AB |
+| 2 | Priya | Nair | worker1.customer002@example.com | 07700 900102 | 52 Whitehall Road, Clifton, Bristol, BS8 4DL |
+| 3 | Callum | Reid | worker1.customer003@example.com | 07700 900103 | 7 Princes Terrace, Dowanhill, Glasgow, G12 9JU |
+| 4 | Megan | Prosser | worker1.customer004@example.com | 07700 900104 | 23 Castle Street, Cardiff, CF10 1BS |
+| 5 | Tomasz | Wilkins | worker1.customer005@example.com | 07700 900105 | 91 Abbey Gardens, Jesmond, Newcastle upon Tyne, NE2 3QT |
+
+All five emails follow the worker1.customer{NNN}@example.com format, counting from 001 to 005, so none will clash with the other workers' records.

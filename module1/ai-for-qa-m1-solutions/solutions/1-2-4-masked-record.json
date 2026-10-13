@@ -1,0 +1,18 @@
+{
+  "customerId": "CUST-58213",
+  "firstName": "Olivia",
+  "lastName": "Bennett",
+  "email": "testuser_301@example.com",
+  "phone": "+1-206-555-0147",
+  "address": "812 Maple Avenue",
+  "city": "Tacoma",
+  "state": "WA",
+  "postalCode": "98402",
+  "dateOfBirth": "1987-03-22",
+  "nationalId": "987-65-4321",
+  "accountNumber": "5550123987",
+  "ipAddress": "203.0.113.45",
+  "orderNumber": "ORD-310945",
+  "purchaseAmount": 187.5,
+  "orderDate": "2025-02-18"
+}

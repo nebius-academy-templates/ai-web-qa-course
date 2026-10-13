@@ -1,0 +1,47 @@
+[2026-10-06T08:41:02.118Z] ##[group]Run npx playwright test tests/cart --project=chromium --retries=1 --workers=4
+[2026-10-06T08:41:02.121Z] Node v20.17.0, Playwright 1.47.2
+[2026-10-06T08:41:03.904Z] Running 6 tests using 4 workers
+[2026-10-06T08:41:04.512Z]   ok  1 [chromium] > cart/badge.spec.ts:8:5 > badge is hidden while the cart is empty (412ms)
+[2026-10-06T08:41:04.730Z]   ok  2 [chromium] > cart/summary.spec.ts:11:5 > cart page lists the added product (938ms)
+[2026-10-06T08:41:05.051Z]   ok  3 [chromium] > cart/summary.spec.ts:24:5 > cart total matches line items (1.1s)
+[2026-10-06T08:41:05.390Z]   ok  4 [chromium] > cart/badge.spec.ts:20:5 > badge caps at 9+ after ten adds (1.9s)
+[2026-10-06T08:41:06.274Z]   ok  5 [chromium] > cart/navigation.spec.ts:9:5 > cart link opens the cart page (601ms)
+[2026-10-06T08:41:06.911Z]   1) [chromium] > cart/badge.spec.ts:14:5 > badge increments after add to cart
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('cart-link').locator('#cart-badge')
+    Expected string: "1"
+    Received string: "0"
+    Timeout: 100ms
+
+    Call log:
+      - expect.toHaveText with timeout 100ms
+      - waiting for getByTestId('cart-link').locator('#cart-badge')
+      -   locator resolved to <span hidden id="cart-badge" class="badge">0</span>
+      -   unexpected value "0"
+      -   locator resolved to <span hidden id="cart-badge" class="badge">0</span>
+      -   unexpected value "0"
+      -   locator resolved to <span hidden id="cart-badge" class="badge">0</span>
+      -   unexpected value "0"
+
+      15 |   await page.goto('/products/nova-x2');
+      16 |   await page.getByTestId('add-to-cart').click();
+    > 17 |   await expect(page.getByTestId('cart-link').locator('#cart-badge')).toHaveText('1', { timeout: 100 });
+         |                                                                      ^
+      18 | });
+
+        at /home/runner/work/techshop-web/techshop-web/tests/cart/badge.spec.ts:17:70
+
+    attachment #1: trace (application/zip) -------------------------
+    test-results/cart-badge-badge-increments-after-add-to-cart-chromium/trace.zip
+    ------------------------------------------------------------------
+
+[2026-10-06T08:41:07.480Z]   Retry #1 -------------------------------------------------------
+[2026-10-06T08:41:08.703Z]   ok  6 [chromium] > cart/badge.spec.ts:14:5 > badge increments after add to cart (1.2s) (retry #1)
+[2026-10-06T08:41:08.744Z]   1 flaky
+[2026-10-06T08:41:08.744Z]     [chromium] > cart/badge.spec.ts:14:5 > badge increments after add to cart
+[2026-10-06T08:41:08.744Z]   5 passed (6.6s)
+[2026-10-06T08:41:08.801Z] ##[endgroup]
+[2026-10-06T08:41:08.803Z] Process completed with exit code 0.
+[2026-10-06T08:41:08.806Z] Flaky tests do not fail the job. Previous 9 runs: 3 flaky, 6 clean.

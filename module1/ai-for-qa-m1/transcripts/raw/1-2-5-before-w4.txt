@@ -1,0 +1,13 @@
+Here are 5 fictional customer records for TechShop checkout testing. The names, emails and phone numbers are made up. The phone numbers use Ofcom's reserved drama ranges (07700 900xxx, 020 7946 0xxx, 0161 496 0xxx, 0113 496 0xxx and 0131 496 0xxx), so they can't belong to real people. The emails use the reserved `example.com` domain, so they can't be delivered to a real inbox. The street addresses are realistic in format, but the building numbers are invented, and the postcodes are not tied to real properties, so treat them as test data only.
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|-----------|-----------|-------|-------|------------------|
+| 1 | Oliver | Hargreaves | oliver.hargreaves@example.com | 07700 900123 | 14 Maple Grove, Chorlton, Manchester, M21 8QT |
+| 2 | Priya | Nair | priya.nair@example.com | 020 7946 0231 | Flat 3, 27 Elmwood Road, Camden, London, NW1 8AB |
+| 3 | Callum | MacLeod | callum.macleod@example.com | 0131 496 0457 | 8 Thistle Court, Leith, Edinburgh, EH6 5NP |
+| 4 | Sophie | Williams | sophie.williams@example.com | 07700 900688 | 52 Beaumont Street, Jesmond, Newcastle upon Tyne, NE2 3LR |
+| 5 | Imogen | Thatcher | imogen.thatcher@example.com | 0113 496 0814 | 39 Orchard Lane, Headingley, Leeds, LS6 2DH |
+
+**Notes for testing**
+- If your checkout validates postcodes against a real address lookup (for example Royal Mail PAF or a third-party service), some of these may be rejected. In that case, swap in postcodes from a test fixture for that service.
+- If you also need edge cases, I can add records with apostrophes or hyphens in names (e.g. O'Brien, Smith-Jones), long address lines, Channel Islands or Northern Ireland (BT) postcodes, or missing optional fields.
