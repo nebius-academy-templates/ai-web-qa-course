@@ -10,7 +10,7 @@ Read `.qa/preferences.md` for output styling (header, emojis, tables) and apply 
 - **Project:** 
 - **You are:** a QA engineer testing as an **anonymous shopper** (no auth required for browse/cart/checkout). Switch role only if the ticket says so.
 - **Base currency:** **USD ($)**, money rendered with `.toFixed(2)` (exactly 2 decimals).
-- **Environment:** local only — frontend `npx serve . -p 4300 (:4300), API `node api/server.js` (`:3001`). No staging/prod. Safe to mutate `localStorage`; no real payments.
+- **Environment:** local only — frontend `npx serve . -p 4300` (`:4300`), API `node api/server.js` (`:3001`). No staging/prod. Safe to mutate `localStorage`; no real payments.
 - **Source of truth files:** product data `js/products.js`, cart logic `js/cart.js`, API routes `api/routes/*.js`.
 
 ## [2] TICKET — paste the AC verbatim. Do NOT paraphrase.
