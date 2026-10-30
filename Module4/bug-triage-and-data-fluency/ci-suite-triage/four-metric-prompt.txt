@@ -1,0 +1,15 @@
+You are a QA data analyst.
+Given the following test run dataset, calculate for each unique test_name:
+1. Failure rate (failed runs / total runs, expressed as a percentage)
+2. Mean time-to-failure (mean of duration_seconds for FAIL rows only)
+3. Median time-to-failure (median of duration_seconds for FAIL rows only)
+4. Failure count per week (group FAIL rows by calendar week —
+   use ISO week numbering, e.g. W1, W2, W3, W4)
+Return results as a markdown table with these exact columns:
+test_name | failure_rate | mean_mttf_s | median_mttf_s | weekly_failure_counts | outlier_flag
+For the outlier_flag column:
+- If |mean_mttf - median_mttf| > 20% of the median, write: OUTLIER_PRESENT
+- Otherwise, leave the cell blank (—)
+Do not add prose commentary. Return the table only.
+Dataset:
+[paste your structured data here]

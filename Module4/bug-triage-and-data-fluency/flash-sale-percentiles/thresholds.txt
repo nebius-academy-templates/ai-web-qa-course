@@ -1,0 +1,6 @@
+Pre-agreed thresholds (agreed before the run)
+
+endpoint                  | p95 threshold | p99 threshold | rationale
+checkout_confirm_payment  | <= 300ms      | <= 600ms      | Revenue-critical; user expects checkout to be fast
+search_results_load       | <= 500ms      | <= 1000ms     | High-traffic but user tolerance for search is slightly higher
+user_login_submit         | <= 200ms      | <= 400ms      | Authentication must be near-instant; slow login erodes trust

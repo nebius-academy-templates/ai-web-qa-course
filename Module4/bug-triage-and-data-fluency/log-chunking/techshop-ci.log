@@ -1,0 +1,153 @@
+2026-06-10T02:14:28.000Z [info] ##[group]Run workflow metadata
+2026-06-10T02:14:28.001Z [info] Workflow: ui-e2e-tests
+2026-06-10T02:14:28.002Z [info] Run name: Playwright regression suite
+2026-06-10T02:14:28.003Z [info] Trigger: push
+2026-06-10T02:14:28.004Z [info] Branch: main
+2026-06-10T02:14:28.005Z [info] Commit: 9f31c2e
+2026-06-10T02:14:28.006Z [info] Actor: qa-bot
+2026-06-10T02:14:28.007Z [info] Repository: TechShop/web-ui
+2026-06-10T02:14:28.008Z [info] ##[endgroup]
+2026-06-10T02:14:28.300Z [info] Current runner version: '2.329.0'
+2026-06-10T02:14:28.301Z [info] Runner name: 'GitHub Actions 12'
+2026-06-10T02:14:28.302Z [info] Runner group name: 'Default'
+2026-06-10T02:14:28.303Z [info] Machine name: 'fv-az941-812'
+2026-06-10T02:14:28.500Z [info] ##[group]Operating System
+2026-06-10T02:14:28.501Z [info] Ubuntu
+2026-06-10T02:14:28.502Z [info] 22.04.5
+2026-06-10T02:14:28.503Z [info] LTS
+2026-06-10T02:14:28.504Z [info] ##[endgroup]
+2026-06-10T02:14:28.700Z [info] ##[group]Runner Image
+2026-06-10T02:14:28.701Z [info] Image: ubuntu-22.04
+2026-06-10T02:14:28.702Z [info] Version: 20260601.1.0
+2026-06-10T02:14:28.703Z [info] Included Software: https://github.com/actions/runner-images
+2026-06-10T02:14:28.704Z [info] ##[endgroup]
+2026-06-10T02:14:29.000Z [info] ##[group]Checkout repository
+2026-06-10T02:14:29.100Z [info] Run actions/checkout@v4
+2026-06-10T02:14:29.400Z [info] Syncing repository: TechShop/web-ui
+2026-06-10T02:14:30.000Z [info] Fetching the repository
+2026-06-10T02:14:30.700Z [info] Determining the checkout info
+2026-06-10T02:14:31.100Z [info] Checking out the ref
+2026-06-10T02:14:31.500Z [info] /usr/bin/git version
+2026-06-10T02:14:31.700Z [info] git version 2.49.0
+2026-06-10T02:14:31.900Z [info] ##[endgroup]
+2026-06-10T02:14:32.100Z [info] ##[group]Setup Node
+2026-06-10T02:14:32.200Z [info] Run actions/setup-node@v4
+2026-06-10T02:14:32.500Z [info] Found in cache @ /opt/hostedtoolcache/node/20.11.1/x64
+2026-06-10T02:14:32.700Z [info] Environment details
+2026-06-10T02:14:32.701Z [info] node: v20.11.1
+2026-06-10T02:14:32.702Z [info] npm: 10.2.4
+2026-06-10T02:14:32.703Z [info] PLAYWRIGHT_JUNIT_OUTPUT_NAME: results.xml
+2026-06-10T02:14:32.704Z [info] BASE_URL: https://staging.techshop.example
+2026-06-10T02:14:32.705Z [info] BROWSER: chromium
+2026-06-10T02:14:32.706Z [info] WORKERS: 42026-06-10T02:14:32.707Z [info] RETRIES: 1
+2026-06-10T02:14:32.708Z [info] TEST_TIMEOUT_MS: 30000
+2026-06-10T02:14:32.709Z [info] STRIPE_API_KEY: sk_test_51Mabc123XYZ000secretkey
+2026-06-10T02:14:32.710Z [info] DB_CONNECTION_STRING: postgres://admin:p@ssw0rd!@internal-db.techshop.local:5432/shop_staging
+2026-06-10T02:14:32.711Z [info] INTERNAL_API_GATEWAY: https://api-gw.internal.techshop.corp/v2
+2026-06-10T02:14:32.712Z [info] ##[endgroup]
+2026-06-10T02:14:33.000Z [info] ##[group]Install dependencies
+2026-06-10T02:14:33.100Z [info] Run npm ci
+2026-06-10T02:14:33.800Z [info] npm WARN deprecated inflight@1.0.6: This module is not supported, and leaks memory.
+2026-06-10T02:14:34.000Z [info] npm WARN deprecated glob@7.2.3: Glob versions prior to v9are no longer supported.
+2026-06-10T02:14:34.200Z [info] npm WARN deprecated osenv@0.1.5: This package is deprecated.
+2026-06-10T02:14:34.400Z [info] npm WARN deprecated nopt@3.0.6: Please update to a current version.
+2026-06-10T02:14:35.800Z [info] added 912 packages, and audited 913 packages in 7s
+2026-06-10T02:14:36.200Z [info] 187 packages are looking for funding
+2026-06-10T02:14:36.400Z [info] found 0 vulnerabilities
+2026-06-10T02:14:36.500Z [info] ##[endgroup]
+2026-06-10T02:14:36.800Z [info] ##[group]Install Playwright browsers
+2026-06-10T02:14:36.900Z [info] Run npx playwright install --with-deps chromium
+2026-06-10T02:14:37.300Z [info] apt-get update
+2026-06-10T02:14:37.500Z [info] Get:1 http://archive.ubuntu.com jammy InRelease [270 kB]
+2026-06-10T02:14:37.700Z [info] Get:2 http://archive.ubuntu.com jammy-updates InRelease[119 kB]
+2026-06-10T02:14:37.900Z [info] Get:3 http://archive.ubuntu.com jammy-security InRelease[110 kB]
+2026-06-10T02:14:38.300Z [info] Fetched 499 kB in 1s (601 kB/s)
+2026-06-10T02:14:38.500Z [info] Reading package lists...
+2026-06-10T02:14:39.100Z [info] Chromium 124.0.6367.29 downloaded
+2026-06-10T02:14:39.300Z [info] ##[endgroup]
+2026-06-10T02:14:39.600Z [info] ##[group]Restore cache
+2026-06-10T02:14:39.800Z [info] Cache Size: ~156 MB (163577600 B)
+2026-06-10T02:14:40.100Z [info] Cache restored from key: playwright-cache-Linux-main
+2026-06-10T02:14:40.200Z [info] ##[endgroup]
+2026-06-10T02:14:40.500Z [info] ##[group]Run Playwright tests
+2026-06-10T02:14:40.600Z [info] Run npx playwright test --project=chromium --reporter=line
+2026-06-10T02:14:40.700Z [info] Test run settings:
+2026-06-10T02:14:40.701Z [info]        baseURL=https://staging.techshop.example
+2026-06-10T02:14:40.702Z [info]        browser=chromium
+2026-06-10T02:14:40.703Z [info]        headless=true
+2026-06-10T02:14:40.704Z [info]        workers=4
+2026-06-10T02:14:40.705Z [info]        retries=1
+2026-06-10T02:14:40.706Z [info]        timeout=30000
+2026-06-10T02:14:41.100Z [info] Running 12 tests using 4 workers
+2026-06-10T02:14:41.500Z [info] [1/12] tests/auth/login.spec.ts:12:5 > Login > user can sign in
+2026-06-10T02:14:41.900Z [info] [2/12] tests/catalog/search.spec.ts:18:5 > Search > product results appear as user types
+2026-06-10T02:14:42.100Z [info] [3/12] tests/cart/cart.spec.ts:27:5 > Cart > add a product from product grid
+2026-06-10T02:14:42.300Z [info] [4/12] tests/checkout/checkout.spec.ts:52:5 > Checkout >user can submit order with valid address
+2026-06-10T02:14:42.900Z [info] ✓ tests/auth/login.spec.ts:12:5 > Login > user can sign in (1.4s)
+2026-06-10T02:14:43.200Z [info] ✓ tests/catalog/search.spec.ts:18:5 > Search > product results appear as user types (1.3s)
+2026-06-10T02:14:43.500Z [info] [5/12] tests/profile/profile.spec.ts:19:5 > Profile > user can update address
+2026-06-10T02:14:43.900Z [warn] browser console warning: [Checkout] shipping options request exceeded 1500ms
+2026-06-10T02:14:44.100Z [info] [6/12] tests/orders/order-history.spec.ts:21:5 > Orders >user can filter order history
+2026-06-10T02:14:44.300Z [info] ✓ tests/cart/cart.spec.ts:27:5 > Cart > add a product from product grid (2.1s)
+2026-06-10T02:14:44.600Z [info] ✓ tests/profile/profile.spec.ts:19:5 > Profile > user canupdate address (1.1s)
+2026-06-10T02:14:44.900Z [info] ✓ tests/orders/order-history.spec.ts:21:5 > Orders > usercan filter order history (0.8s)
+2026-06-10T02:14:45.100Z [info] [7/12] tests/catalog/product-details.spec.ts:31:5 > Product details > price and image are visible
+2026-06-10T02:14:45.300Z [info] [8/12] tests/wishlist/wishlist.spec.ts:16:5 > Wishlist >user can save item
+2026-06-10T02:14:45.500Z [warn] network: GET https://staging.techshop.example/api/shipping/options pending > 1800ms
+2026-06-10T02:14:45.800Z [info] ✓ tests/catalog/product-details.spec.ts:31:5 > Product details > price and image are visible (0.7s)
+2026-06-10T02:14:46.000Z [info] ✓ tests/wishlist/wishlist.spec.ts:16:5 > Wishlist > usercan save item (0.7s)
+2026-06-10T02:14:46.200Z [info] [9/12] tests/promotions/promo.spec.ts:15:5 > Promotions >promo badge is shown for discounted product
+2026-06-10T02:14:46.500Z [info] [10/12] tests/support/contact.spec.ts:23:5 > Support > contact form validation works
+2026-06-10T02:14:46.800Z [info] [11/12] tests/checkout/summary.spec.ts:17:5 > Checkout summary > totals update after quantity change
+2026-06-10T02:14:47.000Z [info] ✓ tests/promotions/promo.spec.ts:15:5 > Promotions > promo badge is shown for discounted product (0.8s)
+2026-06-10T02:14:47.100Z [warn] api response: POST /checkout -> 408 Request Timeout duration=30001ms traceId=af82d9
+2026-06-10T02:14:47.200Z [warn] browser console warning: checkout submit blocked waiting
+2026-06-10T02:14:47.300Z [info] [12/12] tests/navigation/header.spec.ts:11:5 > Header > category links navigate correctly
+2026-06-10T02:14:47.500Z [info] ✓ tests/support/contact.spec.ts:23:5 > Support > contact
+2026-06-10T02:14:47.700Z [info] ✓ tests/checkout/summary.spec.ts:17:5 > Checkout summary> totals update after quantity change (0.9s)
+2026-06-10T02:14:47.900Z [info] ✓ tests/navigation/header.spec.ts:11:5 > Header > category links navigate correctly (0.6s)
+2026-06-10T02:14:48.000Z [warn] response finished with status 503 Service Unavailable requestId=req-7812 route=/api/orders
+2026-06-10T02:14:48.200Z [info] retry #1 for tests/checkout/checkout.spec.ts:52:5 > Checkout > user can submit order with valid address
+2026-06-10T02:14:48.500Z [info] tests/checkout/checkout.spec.ts:52:5 > Checkout > user can submit order with valid address
+2026-06-10T02:14:48.700Z [info] navigating to https://staging.techshop.example/checkout
+2026-06-10T02:14:49.000Z [info] waiting for getByTestId('checkout-submit')
+2026-06-10T02:14:49.400Z [info] locator resolved to Place order
+2026-06-10T02:14:49.800Z [info] clicking getByTestId('checkout-submit')
+2026-06-10T02:14:50.100Z [info] waiting for response /api/orders
+2026-06-10T02:14:50.400Z [warn] still waiting for response /api/orders after 5000ms
+2026-06-10T02:14:55.400Z [warn] still waiting for response /api/orders after 10000ms
+2026-06-10T02:15:00.400Z [warn] still waiting for response /api/orders after 15000ms
+2026-06-10T02:15:05.400Z [warn] still waiting for response /api/orders after 20000ms
+2026-06-10T02:15:10.400Z [warn] still waiting for response /api/orders after 25000ms
+2026-06-10T02:15:15.401Z [error] ✗ tests/checkout/checkout.spec.ts:52:5 > Checkout > usercan submit order with valid address (30.9s)
+2026-06-10T02:15:15.402Z [error] Error: expect(page.getByText('Order confirmed')).toBeVisible()
+2026-06-10T02:15:15.403Z [error]
+2026-06-10T02:15:15.404Z [error] Expected: visible
+2026-06-10T02:15:15.405Z [error] Received: <element(s) not found>
+2026-06-10T02:15:15.406Z [error] Timeout: 30000ms exceeded.
+2026-06-10T02:15:15.408Z [error] Call log:
+2026-06-10T02:15:15.409Z [error]       - expect.toBeVisible with timeout 30000ms
+2026-06-10T02:15:15.410Z [error]       - waiting for getByText('Order confirmed')
+2026-06-10T02:15:15.412Z [error] at tests/checkout/checkout.spec.ts:67:52
+2026-06-10T02:15:15.425Z [info]
+2026-06-10T02:15:15.426Z [info] 1 failed
+2026-06-10T02:15:15.427Z [info] 11 passed (34.3s)
+2026-06-10T02:15:15.428Z [info] ##[endgroup]
+2026-06-10T02:15:15.700Z [info] ##[group]Upload test artifacts
+2026-06-10T02:15:15.900Z [info] Run actions/upload-artifact@v4
+2026-06-10T02:15:16.100Z [info] With the provided path, there will be 4 files uploaded
+2026-06-10T02:15:16.300Z [info] Artifact name is valid!
+2026-06-10T02:15:16.500Z [info] Root directory input is valid!
+2026-06-10T02:15:17.100Z [info] Beginning upload of artifact content to blob storage
+2026-06-10T02:15:18.400Z [info] Uploaded bytes 1882134
+2026-06-10T02:15:18.800Z [info] Finished uploading artifact content to blob storage!
+2026-06-10T02:15:19.100Z [info] SHA256 digest of uploaded artifact zip is c2fe0d31aa91
+2026-06-10T02:15:19.300Z [info] Finalizing artifact upload
+2026-06-10T02:15:19.500Z [info] Artifact playwright-report.zip successfully finalized.
+2026-06-10T02:15:19.700Z [info] Artifact techshop-results.zip successfully finalized.
+2026-06-10T02:15:19.900Z [info] ##[endgroup]
+2026-06-10T02:15:20.100Z [info] ##[group]Post job cleanup
+2026-06-10T02:15:20.300Z [info] Post job cleanup.
+2026-06-10T02:15:20.500Z [info] Cleaning up orphan processes
+2026-06-10T02:15:20.700Z [info] Terminate orphan process: pid (2291) (Xvfb)
+2026-06-10T02:15:20.900Z [error] Process completed with exit code 1.

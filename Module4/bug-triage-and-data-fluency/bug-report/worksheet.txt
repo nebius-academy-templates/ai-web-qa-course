@@ -1,0 +1,45 @@
+======================================
+PRODUCT SEARCH — EXERCISE WORK SHEET
+======================================
+Sources: product-search.log · prompt-template.txt · sample-report-seeded.txt (same folder)
+
+STEP 1: PREPARED EXCERPT
+-------------------------
+[Write your cleaned, masked excerpt here]
+
+STEP 2: PROMPT
+--------------
+[Write your complete prompt here, including the excerpt]
+
+STEP 3: MY CLAUDE REPORT (pasted, unedited, lines numbered [1], [2], ...)
+-----------------------------------------------------------------------
+[Paste Claude's full response here and number its lines]
+
+STEP 4: VALIDATION OF MY REPORT
+-------------------------------
+ENVIRONMENT section:
+- [your annotation per line]
+PRECONDITIONS section:
+- [your annotation per line]
+REPRODUCTION STEPS section:
+- [your annotation per step]
+EXPECTED VS. ACTUAL RESULT section:
+- [your annotation]
+[NEEDS VERIFICATION] used by Claude: YES / NO — where: [...]
+
+STEP 5: VALIDATION OF THE SAMPLE (sample-report-seeded.txt)
+-----------------------------------------------------------
+ENVIRONMENT section:
+- [your annotation per line]
+PRECONDITIONS section:
+- [your annotation per line]
+REPRODUCTION STEPS section:
+- [your annotation per step]
+EXPECTED VS. ACTUAL RESULT section:
+- [your annotation]
+
+STEP 6: VERDICTS
+----------------
+My report:     [N] targeted edits -> correct directly / regenerate
+Sample report: [N] targeted edits -> correct directly / regenerate
+Comparison:    [one sentence]

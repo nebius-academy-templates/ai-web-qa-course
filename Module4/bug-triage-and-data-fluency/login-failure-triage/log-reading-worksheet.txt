@@ -1,0 +1,20 @@
+LOG READING WORKSHEET — TechShop login failure (lesson 4.1.2)
+Sources: playwright-ci.log · api.log · auth-service.log · grafana-stream.log
+
+1. Failing line (quoted from the log)
+   
+2. Test name + failed assertion
+   Test:
+   Assertion:
+
+3. Environmental clue (quote the line and name the source)
+   
+4. Three noise lines — each with a one-line reason
+   -
+   -
+   -
+
+5. One non-CI log line that adds causal context (quote it, name the source)
+   
+6. Sentence
+   This test failed because ___, with evidence from ___, in the context of ___.

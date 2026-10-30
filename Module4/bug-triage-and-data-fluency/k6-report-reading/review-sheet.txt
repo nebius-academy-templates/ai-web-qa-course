@@ -1,0 +1,22 @@
+======================================
+K6 REPORT — CLAUDE SUMMARY REVIEW SHEET
+======================================
+Source: k6-flash-sale-report.txt (same folder)
+
+CLAUDE'S SUMMARY (pasted, unedited)
+-----------------------------------
+[Paste Claude's full response here]
+
+REVIEW — four things a stakeholder summary must get right
+----------------------------------------------------------
+1. Which number did it lead with — the average or the P95?        [average / P95 / both]  — line in the summary: ...
+2. Did it say the system is SLOW or FAILING (or both)?             [slow / failing / both] — evidence it cited: ...
+3. Where did it put the bottleneck — network or server?            [network / server / didn't say] — evidence it cited: ...
+4. Did it compare against the SLA (P95 < 2 s)?                     [yes / no] — how: ...
+
+Anything in the summary that is NOT in the report: ...
+
+MY SENTENCE
+-----------
+In this TechShop report, the average response time makes the system look ______,
+but the P95 tells a different story because ______.

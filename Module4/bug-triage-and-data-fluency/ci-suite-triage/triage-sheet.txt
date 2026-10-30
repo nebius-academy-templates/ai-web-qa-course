@@ -1,0 +1,41 @@
+======================================
+CI SUITE TRIAGE — WORK SHEET
+======================================
+Sources: techshop-ci-runs.csv · four-metric-prompt.txt (same folder)
+
+EXERCISE 1 — MANUAL (10-row slice of checkout_confirm_payment, in the lesson)
+---------------------------------------------------------------------------
+Task 1 — failure rate
+  Number of FAIL rows: ___   Total rows: ___   Failure rate = ___ ÷ ___ × 100 = ____%
+Task 2 — mean MTTF
+  FAIL durations: ___, ___, ___, ___   Sum: ___   Count: ___   Mean MTTF = ___ ÷ ___ = _____ s
+Task 3 — median MTTF
+  Sorted: ___, ___, ___, ___   Median MTTF = (___ + ___) ÷ 2 = _____ s
+Task 4 — 2× rule
+  Maximum MTTF: ___   Median × 2: ___   Is max > 2 × median?  YES / NO   OUTLIER_PRESENT?  YES / NO
+
+EXERCISE 2 — CLAUDE ON THE FULL DATASET
+---------------------------------------
+Step 1 — Claude's table (pasted, unedited):
+[paste the table here]
+
+Step 2 — Verify before you trust it:
+  a) Your slice vs Claude's checkout_confirm_payment row — do the numbers match? YES / NO
+     If not, why not (one sentence): ___
+  b) Spot-check: user_login_submit, counted by hand from the CSV
+     FAIL rows: ___ of ___ → failure rate ___%   FAIL durations: ___ → mean ___ median ___
+     Claude's row says: ___   Match? YES / NO
+  c) Any row you do not trust, and why: ___ (or "none")
+
+Task A — two tests that warrant immediate investigation
+  Test 1: ___   Reason: ___
+  Test 2: ___   Reason: ___
+
+Task B — one-sentence annotation per flagged test  ("[what the number suggests] + Verify: [what to check]")
+  Annotation 1: ___
+  Annotation 2: ___
+
+Task C (bonus) — product_filter_apply deep dive
+  FAIL durations from the CSV: ___, ___, ___, ___, ___, ___, ___, ___
+  Pattern observed: ___
+  Why the mean is misleading: ___

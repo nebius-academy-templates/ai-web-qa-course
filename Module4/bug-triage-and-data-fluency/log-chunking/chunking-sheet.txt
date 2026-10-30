@@ -1,0 +1,68 @@
+======================================
+TECHSHOP CI LOG — CHUNKING SHEET
+======================================
+Source: techshop-ci.log (same folder)
+
+CHUNK 1
+-------
+Label:
+Content covers: [describe what's in this section]
+Sensitive data found:
+  - Line: [paste the sensitive line]
+  - Type: [what kind of data is it]
+  - Redacted to: [your placeholder]
+Decision: KEEP / CUT
+Reason:
+
+CHUNK 2
+-------
+Label:
+Content covers:
+Sensitive data found: NONE / [details]
+Decision: KEEP / CUT
+Reason:
+
+CHUNK 3
+-------
+[repeat format]
+
+CHUNK 4
+-------
+[repeat format]
+
+CHUNK 5
+-------
+[repeat format]
+
+======================================
+PROMPT DRAFT
+======================================
+
+SYSTEM PROMPT:
+[Your system prompt here]
+
+---
+[CHUNK LABEL]
+[Chunk content, redacted]
+---
+[CHUNK LABEL]
+[Chunk content, redacted]
+---
+
+INSTRUCTION:
+[Your specific instruction to the model]
+
+======================================
+CLAUDE RESPONSE (pasted, unedited)
+======================================
+
+[Paste Claude's full response here]
+
+======================================
+VERDICT
+======================================
+
+CERTAIN:   [what the model called certain — and whether each item is in the chunks you sent]
+INFERRED:  [what the model called inference — and whether any inference leaked into "certain"]
+ROOT CAUSE — AGREE / DISAGREE: [Claude's root cause in one sentence; your call; one line of evidence from the kept chunks]
+PLACEHOLDER HANDLING: [worked around them / stalled / asked for real values / treated as the failure]
