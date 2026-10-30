@@ -102,11 +102,16 @@ All four surfaces are first-class P1 for this course. A regression in any breaks
   bugs) and intentionally-failing CI scripts. They are the lesson. **Report, repro, assert — never patch.**
 - **Keep `data-testid` / `id` / `data-product-id` hooks intact** on interactive elements; tests and the bug
   panel depend on them.
-- ⚠️ **Selector reality:** `qa/tests/e2e/_selectors.ts` deliberately uses the *existing* stable hooks
-  (navbar/hero `data-testid`, form `id`s, `.product-card[data-product-id]`, semantic role/text). The product
-  cards are **not** yet instrumented with `product-name-*` / `product-price-*` / `add-to-cart-*` testids, so
-  **only ~3 of the 10 bug-panel bugs currently light up** in `bug-injection.spec.ts`. The other 7 are dormant
-  until the cards are instrumented. Don't assume all 10 are wired.
+- ⚠️ **Selector reality:** the product cards **are** instrumented — `js/products.js` emits
+  `product-card-*`, `product-name-*`, `product-price-*`, `add-to-cart-*` and the pages carry `hero`,
+  `product-grid`, `category-filter`, `cart-count`. **9 of the 10 bug-panel bugs fire**; the exception is
+  `bug-hide-checkout-btn` on `cart.html`, where the link has `id="checkout-btn"` but no `data-testid`
+  (it still fires on `checkout.html` via the `place-order-btn` fallback). `qa/tests/e2e/_selectors.ts`
+  still leans on `.product-card` CSS selectors and predates the instrumentation — migrating it to testids
+  is open work.
+- ⚠️ **Injected bugs do not survive a grid re-render.** `filterProducts()` rebuilds the grid with
+  `innerHTML`, discarding every DOM mutation the panel made. Never touch the filter after injecting a
+  content/locator bug — the assertion will go green on a broken build.
 - **Don't reduce the generous timeouts** (30s test / 7s expect) — `serve` + API can be slow on cold start.
 - **Pre-existing quirks ≠ new regressions.** e.g. empty cart still shows `$9.99` shipping. Flag such things
   separately; don't fold them into a new ticket's plan.
