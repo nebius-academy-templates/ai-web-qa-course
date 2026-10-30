@@ -27,7 +27,7 @@ for an "AI for QA" course (Modules 2–5)**.
 
 Single app, **no monorepo**, **no framework**. Two processes:
 
-### Frontend — static, vanilla HTML/CSS/JS (port 3000)
+### Frontend — static, vanilla HTML/CSS/JS (port 4300)
 - Pages: `index.html`, `products.html`, `cart.html`, `checkout.html`, `login.html`
 - Served by `serve` (`npm start`).
 - Logic: `js/products.js` (catalog/render/filter), `js/cart.js` (cart math), `js/bugs.js` (bug panel).
@@ -63,7 +63,7 @@ Single app, **no monorepo**, **no framework**. Two processes:
 
 - **Local only** — there is **no staging/prod**. Safe to mutate `localStorage` and the in-memory API.
   No real payments, no real PII.
-- Frontend `http://localhost:3000` · API `http://localhost:3001`.
+- Frontend `http://localhost:4300` · API `http://localhost:3001`.
 - Live GitHub Pages build is **read-only** (static frontend only — no API). Point browser tests at it via
   `WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium`.
 - Playwright auto-starts both local servers (`webServer` block) and reuses them if already running.
@@ -121,7 +121,7 @@ All four surfaces are first-class P1 for this course. A regression in any breaks
 npm install && npx playwright install   # first time only
 
 # Run the app (both servers)
-npm run start:all          # static :3000 + API :3001  (or: npm start / npm run start:api)
+npm run start:all          # static :4300 + API :3001  (or: npm start / npm run start:api)
 
 # Run the suites (Playwright auto-starts/reuses the servers)
 npm run qa                 # all projects
