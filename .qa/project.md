@@ -27,7 +27,7 @@ for an "AI for QA" course (Modules 2–5)**.
 
 Single app, **no monorepo**, **no framework**. Two processes:
 
-### Frontend — static, vanilla HTML/CSS/JS (port 3000)
+### Frontend — static, vanilla HTML/CSS/JS (port 4300)
 - Pages: `index.html`, `products.html`, `cart.html`, `checkout.html`, `login.html`
 - Served by `serve` (`npm start`).
 - Logic: `js/products.js` (catalog/render/filter), `js/cart.js` (cart math), `js/bugs.js` (bug panel).
@@ -63,7 +63,7 @@ Single app, **no monorepo**, **no framework**. Two processes:
 
 - **Local only** — there is **no staging/prod**. Safe to mutate `localStorage` and the in-memory API.
   No real payments, no real PII.
-- Frontend `http://localhost:3000` · API `http://localhost:3001`.
+- Frontend `http://localhost:4300` · API `http://localhost:3001`.
 - Live GitHub Pages build is **read-only** (static frontend only — no API). Point browser tests at it via
   `WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium`.
 - Playwright auto-starts both local servers (`webServer` block) and reuses them if already running.
@@ -102,11 +102,16 @@ All four surfaces are first-class P1 for this course. A regression in any breaks
   bugs) and intentionally-failing CI scripts. They are the lesson. **Report, repro, assert — never patch.**
 - **Keep `data-testid` / `id` / `data-product-id` hooks intact** on interactive elements; tests and the bug
   panel depend on them.
-- ⚠️ **Selector reality:** `qa/tests/e2e/_selectors.ts` deliberately uses the *existing* stable hooks
-  (navbar/hero `data-testid`, form `id`s, `.product-card[data-product-id]`, semantic role/text). The product
-  cards are **not** yet instrumented with `product-name-*` / `product-price-*` / `add-to-cart-*` testids, so
-  **only ~3 of the 10 bug-panel bugs currently light up** in `bug-injection.spec.ts`. The other 7 are dormant
-  until the cards are instrumented. Don't assume all 10 are wired.
+- ⚠️ **Selector reality:** the product cards **are** instrumented — `js/products.js` emits
+  `product-card-*`, `product-name-*`, `product-price-*`, `add-to-cart-*` and the pages carry `hero`,
+  `product-grid`, `category-filter`, `cart-count`. **9 of the 10 bug-panel bugs fire**; the exception is
+  `bug-hide-checkout-btn` on `cart.html`, where the link has `id="checkout-btn"` but no `data-testid`
+  (it still fires on `checkout.html` via the `place-order-btn` fallback). `qa/tests/e2e/_selectors.ts`
+  still leans on `.product-card` CSS selectors and predates the instrumentation — migrating it to testids
+  is open work.
+- ⚠️ **Injected bugs do not survive a grid re-render.** `filterProducts()` rebuilds the grid with
+  `innerHTML`, discarding every DOM mutation the panel made. Never touch the filter after injecting a
+  content/locator bug — the assertion will go green on a broken build.
 - **Don't reduce the generous timeouts** (30s test / 7s expect) — `serve` + API can be slow on cold start.
 - **Pre-existing quirks ≠ new regressions.** e.g. empty cart still shows `$9.99` shipping. Flag such things
   separately; don't fold them into a new ticket's plan.
@@ -121,7 +126,7 @@ All four surfaces are first-class P1 for this course. A regression in any breaks
 npm install && npx playwright install   # first time only
 
 # Run the app (both servers)
-npm run start:all          # static :3000 + API :3001  (or: npm start / npm run start:api)
+npm run start:all          # static :4300 + API :3001  (or: npm start / npm run start:api)
 
 # Run the suites (Playwright auto-starts/reuses the servers)
 npm run qa                 # all projects

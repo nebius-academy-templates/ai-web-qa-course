@@ -25,6 +25,25 @@ npm run start:api   # REST API only    → http://localhost:3001
 
 ---
 
+## Repo map
+
+| Path | What it is | Course use |
+|------|------------|------------|
+| `index/products/cart/checkout/login.html`, `js/`, `css/`, `api/` | The TechShop app itself | Shared practice context for every module |
+| `js/bugs.js` | Bug Injection Panel (10 toggleable defects) | Locator + visual lessons |
+| `scripts/ci-check-{clean,noisy}.js` | Intentionally failing CI logs | CI-log reading |
+| `scripts/autofix-*.js`, `scripts/create-linear-ticket.js` | Retry-limited auto-fix + escalation callback | Auto-fix block |
+| `tests/` + `playwright.config.js` | Locator lessons (two tests red **by design**) | Auto-fix block |
+| `qa/` + `playwright.config.ts` | The real QA suite: e2e, API, bug-injection | Reference suite, kept green |
+| `design-review/`, `design-assets/` | Captured baseline/actual/diff triples | Visual-validation lessons |
+| `module1/` | Module 1 practice repo + private solutions | Governance / security / cost |
+| `workshop-2/`, `workshop-better-agents.md` | Standalone workshops | Not part of the 5-module syllabus |
+
+Two Playwright configs on purpose: `playwright.config.ts` runs `qa/` (`npm run qa`),
+`playwright.config.js` runs `tests/` (`npm test`). Both serve the site on **:4300**.
+
+---
+
 ## Pages
 
 | Page | URL |

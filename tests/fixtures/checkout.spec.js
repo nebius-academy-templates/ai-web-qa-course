@@ -1,9 +1,9 @@
 // tests/fixtures/checkout.spec.js
 // Fixture for lessons 2.3.5 / 2.3.8 — contains ONE broken locator.
 // The data-testid below is stale: the real button in checkout.html carries
-// data-testid="confirm-order-btn". The auto-fix workflow repairs this file.
+// data-testid="place-order-btn". The auto-fix workflow repairs this file.
 //
-// Correct locator after fix:  button[data-testid="confirm-order-btn"]
+// Correct locator after fix:  button[data-testid="place-order-btn"]
 //
 // Reset between runs:  git checkout tests/fixtures/checkout.spec.js
 const { test, expect } = require('@playwright/test');
