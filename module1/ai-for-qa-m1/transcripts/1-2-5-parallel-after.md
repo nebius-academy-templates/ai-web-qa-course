@@ -2,7 +2,7 @@
 
 **Used in:** 1.2.5 (the corrected prompt)
 
-**STATUS: CAPTURED via subagent runs on 2026-10-09, not typed into claude.ai.** Each run was a separate Claude instance given the lesson's prompt text with a short instruction to answer without tools. Output is unedited. Re-run in a real chat before go-live if exact fidelity matters.
+**STATUS: CAPTURED in a real claude.ai chat on 2026-10-31.** The prompt was typed into the claude.ai web chat (signed-in Pro account, driven through a browser), and the output below is copied from that conversation's own data, unedited. This replaces the 2026-10-09 subagent capture.
 
 ## Worker 1: corrected prompt, separate new chat (replace {N} with 1 and {NNN} stays as written)
 
@@ -14,24 +14,36 @@ Generate 5 fictional customer records for TechShop checkout tests. Include first
 Every email must be unique across all records and across all four workers: use the format worker1.customer{NNN}@example.com, where 1 is your worker number and {NNN} counts up from 001 within your records. Do not reuse any email.
 ```
 
-**Model:** `claude-sonnet-5-5` (configured model; the serving model was not verified)  
-**Date:** 2026-10-09  
-**Fresh conversation:** yes, one new subagent conversation per worker
+**Model:** `claude-opus-5-5` (Opus 5.5, the default in the claude.ai model picker), effort Medium  
+**Date:** 2026-10-31 (reply at 14:20 UTC)  
+**Interface:** claude.ai web chat, Pro plan, no project. Account defaults left on: Claude Docs and artifacts, file creation, web search and chat memory.  
+**Conversation:** `26f9db61-3e97-4903-a434-2747c47bfcb9` (new chat, one per worker)
 
 **Verbatim output:**
 
 ````
-Here are 5 fictional TechShop checkout-test customers (all data is invented; phone numbers use the Ofcom drama range 07700 900xxx, and the addresses are fictional).
+Here are 5 fictional customer records for worker 1. Phone numbers use Ofcom's reserved drama range (07700 900000–900999), so none of them can reach a real person. Street names are invented, and postcodes are plausible for each town.
 
 | # | First name | Last name | Email | Phone | Shipping address |
-|---|-----------|-----------|-------|-------|------------------|
-| 1 | Oliver | Hartley | worker1.customer001@example.com | 07700 900101 | 14 Mill Lane, Headingley, Leeds, West Yorkshire, LS6 2AB |
-| 2 | Priya | Nair | worker1.customer002@example.com | 07700 900102 | 52 Whitehall Road, Clifton, Bristol, BS8 4DL |
-| 3 | Callum | Reid | worker1.customer003@example.com | 07700 900103 | 7 Princes Terrace, Dowanhill, Glasgow, G12 9JU |
-| 4 | Megan | Prosser | worker1.customer004@example.com | 07700 900104 | 23 Castle Street, Cardiff, CF10 1BS |
-| 5 | Tomasz | Wilkins | worker1.customer005@example.com | 07700 900105 | 91 Abbey Gardens, Jesmond, Newcastle upon Tyne, NE2 3QT |
+|---|---|---|---|---|---|
+| 1 | Eleanor | Whitcombe | worker1.customer001@example.com | 07700 900123 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 7QX |
+| 2 | Rajan | Mehta-Collins | worker1.customer002@example.com | 07700 900456 | Flat 3, 27 Ferncroft Road, Bristol, BS7 9LJ |
+| 3 | Siobhan | Archer | worker1.customer003@example.com | 07700 900789 | 82 Thornbury Lane, Chelmsford, Essex, CM2 6TW |
+| 4 | Dominic | Fairley | worker1.customer004@example.com | 07700 900314 | 5 Kestrel Mews, Shrewsbury, Shropshire, SY3 8PD |
+| 5 | Amara | Okonkwo-Hale | worker1.customer005@example.com | 07700 900628 | 41 Glenmore Crescent, Edinburgh, EH10 5RN |
 
-All five emails follow the worker1.customer{NNN}@example.com format, counting from 001 to 005, so none will clash with the other workers' records.
+Here is the same data as CSV, ready to paste:
+
+```csv
+first_name,last_name,email,phone,address_line1,address_line2,city,county,postcode
+Eleanor,Whitcombe,worker1.customer001@example.com,07700 900123,14 Larkspur Close,,Harrogate,North Yorkshire,HG2 7QX
+Rajan,Mehta-Collins,worker1.customer002@example.com,07700 900456,Flat 3,27 Ferncroft Road,Bristol,,BS7 9LJ
+Siobhan,Archer,worker1.customer003@example.com,07700 900789,82 Thornbury Lane,,Chelmsford,Essex,CM2 6TW
+Dominic,Fairley,worker1.customer004@example.com,07700 900314,5 Kestrel Mews,,Shrewsbury,Shropshire,SY3 8PD
+Amara,Okonkwo-Hale,worker1.customer005@example.com,07700 900628,41 Glenmore Crescent,,Edinburgh,,EH10 5RN
+```
+
+The set includes a few edge cases that are useful in checkout tests: hyphenated surnames (records 2 and 5), a flat number on a second address line (record 2), and Scottish and Bristol addresses with no county.
 ````
 
 ## Worker 2: corrected prompt, separate new chat (replace {N} with 2 and {NNN} stays as written)
@@ -44,22 +56,36 @@ Generate 5 fictional customer records for TechShop checkout tests. Include first
 Every email must be unique across all records and across all four workers: use the format worker2.customer{NNN}@example.com, where 2 is your worker number and {NNN} counts up from 001 within your records. Do not reuse any email.
 ```
 
-**Model:** `claude-sonnet-5-5` (configured model; the serving model was not verified)  
-**Date:** 2026-10-09  
-**Fresh conversation:** yes, one new subagent conversation per worker
+**Model:** `claude-opus-5-5` (Opus 5.5, the default in the claude.ai model picker), effort Medium  
+**Date:** 2026-10-31 (reply at 14:21 UTC)  
+**Interface:** claude.ai web chat, Pro plan, no project. Account defaults left on: Claude Docs and artifacts, file creation, web search and chat memory.  
+**Conversation:** `ee998018-feea-4f18-b5d4-117ee087f058` (new chat, one per worker)
 
 **Verbatim output:**
 
 ````
+Here are 5 fictional customer records for worker 2. Phone numbers use Ofcom's reserved drama range (07700 900000–900999), so none can reach a real person. Streets and house numbers are invented, and the postcodes follow a realistic format for each town.
+
 | # | First name | Last name | Email | Phone | Shipping address |
 |---|---|---|---|---|---|
-| 1 | Eleanor | Whitcombe | worker2.customer001@example.com | 07700 900214 | 14 Alder Close, Harrogate, North Yorkshire, HG1 4QT |
-| 2 | Rhys | Pritchard | worker2.customer002@example.com | 07700 900358 | 27 Castle Terrace, Cardiff, CF10 3BE |
-| 3 | Priya | Natarajan | worker2.customer003@example.com | 07700 900472 | Flat 6, 9 Mill Lane, Leicester, LE2 7HS |
-| 4 | Callum | Dunmore | worker2.customer004@example.com | 07700 900586 | 52 Kirkgate, Perth, PH1 5UF |
-| 5 | Imogen | Fairweather | worker2.customer005@example.com | 07700 900631 | 3 Harbour View, Falmouth, Cornwall, TR11 3AX |
+| 1 | Eleanor | Whitcombe | worker2.customer001@example.com | 07700 900214 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 7QD |
+| 2 | Rajesh | Pattinson | worker2.customer002@example.com | 07700 900587 | Flat 3, 22 Merrion Terrace, Bristol, BS6 9LX |
+| 3 | Siobhan | Calloway | worker2.customer003@example.com | 07700 900731 | 8 Thistledown Road, Norwich, Norfolk, NR4 6JF |
+| 4 | Marcus | Fenwick-Hale | worker2.customer004@example.com | 07700 900046 | 57 Kelvinbrook Avenue, Glasgow, G12 8TW |
+| 5 | Priya | Ashdown | worker2.customer005@example.com | 07700 900862 | 2 Orchard Mews, Lewes, East Sussex, BN7 1XR |
 
-All of this is fictional. The phone numbers are in the 07700 900xxx range, which Ofcom reserves for drama and test use, and the emails use the reserved example.com domain. Street names and postcodes look realistic, but they are invented and may not match real properties.
+The same data as CSV:
+
+```csv
+first_name,last_name,email,phone,address_line1,city,county,postcode
+Eleanor,Whitcombe,worker2.customer001@example.com,07700 900214,14 Larkspur Close,Harrogate,North Yorkshire,HG2 7QD
+Rajesh,Pattinson,worker2.customer002@example.com,07700 900587,"Flat 3, 22 Merrion Terrace",Bristol,,BS6 9LX
+Siobhan,Calloway,worker2.customer003@example.com,07700 900731,8 Thistledown Road,Norwich,Norfolk,NR4 6JF
+Marcus,Fenwick-Hale,worker2.customer004@example.com,07700 900046,57 Kelvinbrook Avenue,Glasgow,,G12 8TW
+Priya,Ashdown,worker2.customer005@example.com,07700 900862,2 Orchard Mews,Lewes,East Sussex,BN7 1XR
+```
+
+All emails use the reserved example.com domain, follow the worker2.customer{NNN} format, and run from 001 to 005 with no repeats.
 ````
 
 ## Worker 3: corrected prompt, separate new chat (replace {N} with 3 and {NNN} stays as written)
@@ -72,24 +98,25 @@ Generate 5 fictional customer records for TechShop checkout tests. Include first
 Every email must be unique across all records and across all four workers: use the format worker3.customer{NNN}@example.com, where 3 is your worker number and {NNN} counts up from 001 within your records. Do not reuse any email.
 ```
 
-**Model:** `claude-sonnet-5-5` (configured model; the serving model was not verified)  
-**Date:** 2026-10-09  
-**Fresh conversation:** yes, one new subagent conversation per worker
+**Model:** `claude-opus-5-5` (Opus 5.5, the default in the claude.ai model picker), effort Medium  
+**Date:** 2026-10-31 (reply at 14:21 UTC)  
+**Interface:** claude.ai web chat, Pro plan, no project. Account defaults left on: Claude Docs and artifacts, file creation, web search and chat memory.  
+**Conversation:** `eacca367-6370-4c34-b6e6-17f602159d11` (new chat, one per worker)
 
 **Verbatim output:**
 
 ````
-Here are 5 fictional customer records for TechShop checkout tests (worker 3). All names, phone numbers and addresses are invented. Phone numbers use the Ofcom drama range (07700 900xxx), which is reserved for fictional use.
+Here are 5 fictional customer records for worker 3:
 
 | # | First name | Last name | Email | Phone | Shipping address |
 |---|---|---|---|---|---|
-| 1 | Imogen | Hartley | worker3.customer001@example.com | 07700 900301 | 14 Alder Close, Harrogate, North Yorkshire, HG1 4QT |
-| 2 | Rhys | Pritchard | worker3.customer002@example.com | 07700 900302 | 27 Bryn Road, Swansea, West Glamorgan, SA2 0AP |
-| 3 | Fiona | McAllister | worker3.customer003@example.com | 07700 900303 | 8 Thistle Lane, Perth, Perth and Kinross, PH1 5RB |
-| 4 | Tobias | Whitcombe | worker3.customer004@example.com | 07700 900304 | 52 Orchard Way, Taunton, Somerset, TA1 3JL |
-| 5 | Amara | Okonkwo | worker3.customer005@example.com | 07700 900305 | 3 Kingsway Mews, Leicester, Leicestershire, LE1 7DA |
+| 1 | Eleanor | Whitcombe | worker3.customer001@example.com | 07700 900314 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 7QX |
+| 2 | Rajan | Mistry | worker3.customer002@example.com | 07700 900582 | Flat 3, 27 Bramwell Road, Leicester, LE3 9TJ |
+| 3 | Fiona | McAllister | worker3.customer003@example.com | 07700 900127 | 8 Glenmorrow Crescent, Paisley, Renfrewshire, PA2 8LW |
+| 4 | Thomas | Pryce-Evans | worker3.customer004@example.com | 07700 900869 | 52 Heol Ffynnon, Carmarthen, Carmarthenshire, SA31 4DN |
+| 5 | Amara | Okonkwo | worker3.customer005@example.com | 07700 900445 | 109 Saltmarsh Lane, Norwich, Norfolk, NR6 2BF |
 
-Emails run from worker3.customer001 to worker3.customer005 and follow the required format, so they won't clash with the other workers' records. The streets are made up and the postcodes are only plausible for each town, so don't use them for real delivery or address validation.
+The phone numbers fall in Ofcom's 07700 900000–900999 range, which is set aside for drama and fiction and is never assigned to real people. The emails use the reserved example.com domain, so no mail can reach a real inbox. Street names are invented. Town names and postcode formats are real UK ones, so they should pass address validation that only checks format. They won't pass a postcode lookup service, though.
 ````
 
 ## Worker 4: corrected prompt, separate new chat (replace {N} with 4 and {NNN} stays as written)
@@ -102,26 +129,37 @@ Generate 5 fictional customer records for TechShop checkout tests. Include first
 Every email must be unique across all records and across all four workers: use the format worker4.customer{NNN}@example.com, where 4 is your worker number and {NNN} counts up from 001 within your records. Do not reuse any email.
 ```
 
-**Model:** `claude-sonnet-5-5` (configured model; the serving model was not verified)  
-**Date:** 2026-10-09  
-**Fresh conversation:** yes, one new subagent conversation per worker
+**Model:** `claude-opus-5-5` (Opus 5.5, the default in the claude.ai model picker), effort Medium  
+**Date:** 2026-10-31 (reply at 14:22 UTC)  
+**Interface:** claude.ai web chat, Pro plan, no project. Account defaults left on: Claude Docs and artifacts, file creation, web search and chat memory.  
+**Conversation:** `15186d31-6452-4869-aceb-a4fad6a0e9fd` (new chat, one per worker)
 
 **Verbatim output:**
 
 ````
-Here are 5 fictional customer records for TechShop checkout tests. All data is made up. Phone numbers use the Ofcom drama range (07700 900xxx), and the addresses are invented, so they shouldn't map to real people.
+Here are 5 fictional customer records for TechShop checkout tests. Phone numbers use Ofcom's 07700 900xxx range, which is reserved for drama and fiction, so none of them can reach a real person. Street names and house numbers are invented, and the town and postcode formats are realistic.
 
 | # | First name | Last name | Email | Phone | Shipping address |
 |---|---|---|---|---|---|
-| 1 | Oliver | Hartley | worker4.customer001@example.com | 07700 900401 | 14 Maple Grove, Chorlton, Manchester M21 8QR |
-| 2 | Priya | Nair | worker4.customer002@example.com | 07700 900402 | 52 Kingsway Road, Headingley, Leeds LS6 3HT |
-| 3 | Callum | Reid | worker4.customer003@example.com | 07700 900403 | 7 Harbour View, Leith, Edinburgh EH6 7BN |
-| 4 | Megan | Powell | worker4.customer004@example.com | 07700 900404 | 23 Castle Street, Roath, Cardiff CF24 3AD |
-| 5 | Tom | Whitaker | worker4.customer005@example.com | 07700 900405 | 91 Queens Park Avenue, Bristol BS3 4LP |
+| 1 | Harriet | Pemberton | worker4.customer001@example.com | 07700 900412 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 7QX |
+| 2 | Rhys | Calloway | worker4.customer002@example.com | 07700 900587 | Flat 3, 22 Thornbury Road, Cardiff, CF14 9LW |
+| 3 | Priya | Ashdown | worker4.customer003@example.com | 07700 900139 | 7 Mill Brook Lane, Bath, Somerset, BA2 6TJ |
+| 4 | Callum | Strachan | worker4.customer004@example.com | 07700 900764 | 41 Kelvinhaugh Gardens, Glasgow, G3 8NZ |
+| 5 | Eleanor | Whitcombe | worker4.customer005@example.com | 07700 900926 | 9 Orchard Rise, Canterbury, Kent, CT2 0PF |
 
-The emails follow the worker4.customer{NNN}@example.com format (001 to 005), so they won't collide with the other workers' records.
+The same records as JSON, for fixtures:
 
-The postcodes are in realistic formats, but they may not match the street names exactly. That's fine for checkout form validation tests. If your tests call a postcode lookup service, swap in real addresses first.
+```json
+[
+  {"firstName":"Harriet","lastName":"Pemberton","email":"worker4.customer001@example.com","phone":"07700 900412","address":{"line1":"14 Larkspur Close","line2":"","city":"Harrogate","county":"North Yorkshire","postcode":"HG2 7QX","country":"GB"}},
+  {"firstName":"Rhys","lastName":"Calloway","email":"worker4.customer002@example.com","phone":"07700 900587","address":{"line1":"Flat 3","line2":"22 Thornbury Road","city":"Cardiff","county":"","postcode":"CF14 9LW","country":"GB"}},
+  {"firstName":"Priya","lastName":"Ashdown","email":"worker4.customer003@example.com","phone":"07700 900139","address":{"line1":"7 Mill Brook Lane","line2":"","city":"Bath","county":"Somerset","postcode":"BA2 6TJ","country":"GB"}},
+  {"firstName":"Callum","lastName":"Strachan","email":"worker4.customer004@example.com","phone":"07700 900764","address":{"line1":"41 Kelvinhaugh Gardens","line2":"","city":"Glasgow","county":"","postcode":"G3 8NZ","country":"GB"}},
+  {"firstName":"Eleanor","lastName":"Whitcombe","email":"worker4.customer005@example.com","phone":"07700 900926","address":{"line1":"9 Orchard Rise","line2":"","city":"Canterbury","county":"Kent","postcode":"CT2 0PF","country":"GB"}}
+]
+```
+
+All emails use the `worker4.customerNNN@example.com` prefix and run from 001 to 005, so they won't collide with the other three workers. The `example.com` domain is reserved and never delivers mail. If your checkout validates postcodes against a real lookup service such as PAF, these postcodes are in a valid format but may not resolve to these exact streets.
 ````
 
 ## What to check when capturing
@@ -132,4 +170,15 @@ The postcodes are in realistic formats, but they may not match the street names 
 
 ## Result of the duplicate check
 
-20 email occurrences, 20 distinct, **0 repeated**. All emails follow `workerN.customerNNN@example.com` with N matching the worker and NNN running 001 to 005. Phone numbers and surnames still overlap in places (for example Rhys Pritchard, `07700 900358`, appears in both worker 2's output and the earlier before-run), so the fix only covers the field the prompt names.
+20 email occurrences, 20 distinct, **0 repeated**. Every email follows `workerN.customerNNN@example.com`, with N matching the worker and NNN running 001 to 005, so the prompt fix worked for the field it names.
+
+It did nothing for the other fields, and in this run the overlap is worse than in the before run:
+
+- Eleanor Whitcombe appears in all four workers, and 14 Larkspur Close, Harrogate appears in all four (HG2 7QX for workers 1 and 3, HG2 7QD for worker 2, and Harriet Pemberton at HG2 7QX for worker 4).
+- Phone `07700 900314`: workers 1 and 3. Phone `07700 900587`: workers 2 and 4.
+- Priya Ashdown: workers 2 and 4.
+- Across both runs, `07700 900123` (before workers 1 and 2, after worker 1) and `07700 900764` (before worker 4, after worker 4) also repeat.
+
+This supports the lesson's point that the fix only covers the field the prompt names. If the checkout tests key on phone number or address, each of those fields needs its own uniqueness rule.
+
+**Checker caveat:** run directly on this file, `check-duplicate-emails.ts` reports 16 repeated emails. They are not real duplicates: workers 1, 2 and 4 each shows the same records twice in one reply (a table plus a CSV or JSON copy), and the checker counts each copy. The counts above use only the tables. Strip the second copy, or check one copy per worker, before running it.

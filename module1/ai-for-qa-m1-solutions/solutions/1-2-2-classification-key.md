@@ -1,6 +1,6 @@
 # 1.2.2 Classify five QA data samples: reference key
 
-Files are in `data/data-classification/` of the learner repo. Everything in them is synthetic.
+Files are in `data/1-2-2-samples/` of the learner repo. Everything in them is synthetic.
 The question the learner answers: if these were real, could they be pasted into a public LLM?
 
 Verdicts: samples **1, 2 and 5 unsafe**; samples **3 and 4 safe** (with a caveat each). This matches the grader prompt.
@@ -58,6 +58,14 @@ The four pre-send checks from 1.2.1: real names or personal information; IDs or 
 - Samples 3 and 4 are flagged too (names, emails and phones in 3; the `userId` column in 4). That is the lesson's point: a regex finds shapes, it cannot tell a faker-generated name from a real one or an anonymous ID from a production ID. Provenance is a human judgement, and the scanner must not be used to decide "safe".
 - Practical use: run it as a prompt-hygiene check on files you did **not** generate yourself, and treat a clean run as "no known pattern found", never as "safe".
 
-## What a model typically gets wrong on this set [RUN CHECK]
+## What a model gets wrong on this set (observed in claude.ai, 2026-11-01)
 
-From the grader prompt: Claude over-flags sample 3 (names and emails read as "unsafe") and under-lists the masking targets on sample 2 (the key only, hostnames missed). I could not run Claude here, so capture a real run before go-live and confirm the pattern.
+**The two predicted errors did not happen. The grader should not expect them.** The five files were pasted into a claude.ai chat with the question "could each one be pasted into a public LLM?" (conversation a78418bc). Two earlier runs outside claude.ai gave the same results.
+- **Sample 3 was not over-flagged.** It was called "Safe" because "it's Faker-generated with a documented seed", the emails use `.example`, and the phone numbers are in the Ofcom drama range.
+- **Sample 2's hostnames were not missed.** The mask list was "the password, the full API key, the hostnames and the database name", with the advice to use `${{ secrets.DATABASE_URL }}`-style references instead.
+
+Where it differed from this key:
+- **Sample 4:** "Safe (with one check)". If the `usr_` IDs are real production IDs, "they count as pseudonymised personal data under UK GDPR" and should be re-keyed. That matches the caveat in this key, so accept it.
+- **Sample 1:** it called the session ID "effectively a credential". That is a stronger reason than this key gives, and it is correct.
+
+So the realistic learner mistake on this set is not copying an error from Claude. It is overruling a correct answer, for example marking sample 3 unsafe because it contains names, or giving the verdicts without the reasons. Details: `run-checks/2026-11-01/`.

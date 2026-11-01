@@ -25,7 +25,7 @@ Downstream task the record is prepared for: Claude helps write assertions for an
 | purchaseAmount | sensitive | **mask** | The test asserts on it, so it must stay a **number** (not a string, not a placeholder). |
 | orderDate | clean | keep | A date alone does not identify anyone. |
 
-## (c) Rulings on the disputed fields **[SME CHECK]**
+## (c) Rulings on the disputed fields (final, SME, 2026-11-01)
 
 I follow the lesson text, not the older table, because the lessons are what learners read before they are graded.
 
@@ -60,6 +60,21 @@ The grader threshold element (1) says "firstName, lastName, email, phone, nation
 3. **Is the structure and format needed for the task preserved?** Pass. `email` is a valid email, `orderNumber` is `ORD-` plus six digits, `purchaseAmount` is still a JSON number (`187.5`, not `"[REDACTED]"`), and all 16 keys are present in the original order.
 4. **Could the individual be re-identified from what remains?** Pass with a caveat. What remains is `state: WA` and `orderDate: 2025-02-18`, which do not identify anyone, and every other value is fictional. The caveat is that this holds for one record. In a dataset, any original value left in a second place (a log line, a note) would re-link the person, which is why masking has to be consistent.
 
-## Typical misses in Claude's own masking [RUN CHECK]
+## Misses in Claude's own masking (observed in claude.ai, 2026-11-01)
 
-From the grader prompt, to be confirmed against a captured run: `ipAddress` or `orderNumber` left unchanged; `purchaseAmount` turned into a string or a placeholder; city and postal code kept while the address is masked (partial re-identification); date of birth replaced inconsistently; a field dropped without saying so. A learner who reports that Claude's version passed all four checks must still name the deciding fields for each check.
+The record was pasted into a claude.ai chat with the request to classify each field, choose a treatment and return a masked version that keeps each field's format (conversation 5e857e3e). Claude answered in the chat and also delivered a Jest test file.
+
+**Observed:**
+- **orderNumber left unchanged.** It kept `ORD-778214`, with the reason "The test needs it". The test needs the format, not the real value. This was also the miss in one of two earlier runs outside claude.ai.
+- **"Anonymize" used for single-field replacement.** It applied the label to customerId, city, postalCode, dateOfBirth and ipAddress. By section (d), that label doesn't fit a single record. Accept the values, and question the label.
+- **nationalId and accountNumber marked "Delete (format-kept placeholder)".** The fields were kept with `000-00-0000` and `0000000000`. This is explained, not silent, and fits the request to keep every field's format.
+- **Labels differ from this key.** customerId was called a direct identifier, accountNumber sensitive (financial) and purchaseAmount clean. As in the rulings above, the treatment matters more than the label.
+
+**Not seen in claude.ai (don't expect them):**
+- The city was masked (`Testville`), so partial re-identification did not happen here. Both earlier runs outside claude.ai did keep the city, so a learner may still meet it.
+- `ipAddress` was masked (`192.0.2.10`).
+- `purchaseAmount` stayed the number `249.99`.
+- All 16 keys were kept in order.
+- The date of birth was replaced once (`1990-01-01`).
+
+A learner who reports that Claude's version passed all four checks has missed the order number, and must still name the deciding fields for each check. Details: `run-checks/2026-11-01/`.

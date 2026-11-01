@@ -1,5 +1,5 @@
 // PII scanner / masker.
-//   node src/sanitize/cli.ts <input> [--out file] [--report file] [--json file] [--check] [--salt text]
+//   npx tsx src/sanitize/cli.ts <input> [--out file] [--report file] [--json file] [--check] [--salt text]
 //
 // Exit codes: 0 clean or fully masked, 1 error, 2 findings present (--check), 3 unmasked findings remain.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -16,7 +16,7 @@ function main(argv: string[]): number {
   const valueFlags = ['--out', '--report', '--json', '--salt'];
   const input = argv.find((a, i) => !a.startsWith('--') && !valueFlags.includes(argv[i - 1] ?? ''));
   if (!input) {
-    console.error('usage: node src/sanitize/cli.ts <input> [--out file] [--report file] [--json file] [--check] [--salt text]');
+    console.error('usage: npx tsx src/sanitize/cli.ts <input> [--out file] [--report file] [--json file] [--check] [--salt text]');
     return 1;
   }
   const check = argv.includes('--check');

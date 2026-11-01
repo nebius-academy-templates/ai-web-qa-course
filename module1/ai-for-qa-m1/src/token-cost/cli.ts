@@ -1,7 +1,7 @@
 // Token & ROI calculator.
-//   node src/token-cost/cli.ts estimate <file|-> [--actual]
-//   node src/token-cost/cli.ts cost --in 300 --out 40 --tier mid --calls 60 [--rates path]
-//   node src/token-cost/cli.ts roi <scenario.json> [--rates path]
+//   npx tsx src/token-cost/cli.ts estimate <file|-> [--actual]
+//   npx tsx src/token-cost/cli.ts cost --in 300 --out 40 --tier mid --calls 60 [--rates path]
+//   npx tsx src/token-cost/cli.ts roi <scenario.json> [--rates path]
 import { readFileSync } from 'node:fs';
 import { estimateText } from './estimate.ts';
 import { actualInputTokens, loadEnvIfPresent } from './actual.ts';

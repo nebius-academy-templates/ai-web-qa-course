@@ -1,12 +1,12 @@
 // Lists every email address that appears more than once across the given files
 // (Markdown tables, CSV, JSON, plain text). Used for the 1.2.5 parallel-increment before/after captures.
-//   node scripts/check-duplicate-emails.ts transcripts/1-2-5-parallel-before.md [more files...]
+//   npx tsx scripts/check-duplicate-emails.ts transcripts/1-2-5-parallel-before.md [more files...]
 // Exit code: 0 no duplicates, 2 duplicates found, 1 usage error.
 import { readFileSync } from 'node:fs';
 
 const files = process.argv.slice(2);
 if (files.length === 0) {
-  console.error('usage: node scripts/check-duplicate-emails.ts <file> [more files...]');
+  console.error('usage: npx tsx scripts/check-duplicate-emails.ts <file> [more files...]');
   process.exit(1);
 }
 const EMAIL = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}\b/g;

@@ -5,14 +5,27 @@
   "description": "AI for QA Engineers, Module 1: practice data, transcripts and the PII Masking & Token Calculator learning project (TechShop, all data fictional).",
   "type": "module",
   "scripts": {
-    "sanitize": "node src/sanitize/cli.ts",
-    "tokens": "node src/token-cost/cli.ts",
-    "test": "node --test \"tests/**/*.test.ts\"",
-    "test:starter": "node --test \"starter/**/*.test.ts\"",
-    "generate:dirty": "node scripts/generate-dirty-users.ts",
-    "generate:suite": "node scripts/generate-suite.ts"
+    "sanitize": "tsx src/sanitize/cli.ts",
+    "tokens": "tsx src/token-cost/cli.ts",
+    "test": "vitest run tests",
+    "test:starter": "vitest run starter",
+    "test:watch": "vitest tests",
+    "typecheck": "tsc --noEmit",
+    "generate:dirty": "tsx scripts/generate-dirty-users.ts",
+    "generate:suite": "tsx scripts/generate-suite.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
+    "@faker-js/faker": "^9.9.0",
+    "ajv": "^8.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.11"
   },
   "engines": {
-    "node": ">=22.18"
+    "node": ">=22"
   }
 }

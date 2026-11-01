@@ -43,7 +43,7 @@ Return a table first (ID, scenario, input, expected status and result), then the
 
 ## Prompt 2: "Explain the difference between implicit waits and explicit waits in Selenium with examples."
 
-**Ruling: [SME CHECK] this prompt is judged by a different frame from the other three and should be flagged as such.**
+**Ruling (confirmed by the SME, 2026-11-01): this prompt is judged by a different frame from the other three and should be flagged as such.**
 
 - Prompts 1, 3 and 4 ask the model to produce a QA artefact (tests, a framework). Prompt 2 asks the model to explain a concept. For an explanation request the usual artefact gaps (application context, business rules) do not apply.
 - It references Selenium, which this course does not use (the course stack is Playwright). The course should not train a Selenium habit.
@@ -116,7 +116,7 @@ Do not write any other tests.
 
 **Reference rewrite**
 
-The validation rules below are illustrative TechShop rules for the reference answer. [SME CHECK] confirm or replace them.
+The validation rules below are the canonical TechShop checkout rules for this practice (confirmed by the SME, 2026-11-01).
 
 ```
 You are a QA engineer for TechShop, an online electronics store.
@@ -134,6 +134,19 @@ Generate test cases for the guest checkout flow only, as a table with columns: I
 Include positive, negative and boundary cases for the card and postcode fields. Do not invent payment methods or fields that are not listed above.
 ```
 
-**What the original prompt typically makes Claude invent [RUN CHECK]:** the grader prompt expects "a payment method, a coupon field, a shipping option, a login step, a test-case format Claude chose on its own". I could not run Claude in this build, so these are the expected inventions from the grader prompt, not observed ones. Capture a real run before go-live.
+**What the original prompt makes Claude invent (observed in claude.ai, 2026-11-01).** Opus 5.5 in the claude.ai web chat did not write test cases straight away. It first asked: "I don't have any details about your checkout page (no file, link or spec in this chat). What should the test cases be based on?" There were three options: Generic checkout (Recommended), I'll share details, Local dev app. After "Generic checkout" was picked, it built an Excel workbook with 86 cases rather than answering in the chat. Every invention the grader prompt lists is in it:
+- payment methods: wallet payments, 3-D Secure, saved cards and gift cards as part payment
+- a coupon field: 11 promo-code and gift-card cases
+- shipping options: shipping methods, a free-shipping threshold, click and collect
+- a login step: logged-in checkout, logging in during checkout, saved addresses
+- a format Claude chose: a spreadsheet with ID, Area, Title, Preconditions, Steps, Test data, Expected result, Priority, Type, plus tracking columns and a summary sheet
 
-**What a good rewrite reliably fixes [RUN CHECK]:** payment-method cases disappear (only card cases remain) and the format follows the requested table. The rewrite does not, by itself, give Claude the real error messages, which is why "what is still missing" in the comparison is usually a missing error message text.
+Grader notes:
+- Learners in claude.ai may get the clarifying question, or a file instead of a reply in the chat. Both are normal, and the comparison still works. The point is the same: Claude had to guess, and its guesses don't match TechShop's rules (card only).
+- Three earlier runs outside claude.ai answered in the chat with 72 to 88 cases and the same inventions, so the result is consistent.
+
+**What the rewrite fixes (observed in claude.ai).** The rewrite came back as a table in the chat: 50 cases in the four requested columns. There were no payment-method, coupon, shipping or login cases, and the decline case used "Your card was declined" word for word. It ended with questions the rules leave open: postcodes without a space or in lower case, card numbers with separators, over-length input, and whether card fields clear after a decline.
+
+Two earlier runs outside claude.ai also raised the missing error-message wording. The claude.ai run did not. So accept any of these as "what is still missing". Error wording is a common answer, not the only one.
+
+Runs: claude.ai conversations 862bae1c (original) and 35bbbd3a (rewrite); details in `run-checks/2026-11-01/`.

@@ -1,146 +1,150 @@
-Here are functional test cases for TechShop's Product Search, grouped into positive, negative, and boundary scenarios. I've kept the earlier assumption that search covers mobile phones only. Limits such as the maximum query length (I've used 100 characters) and the minimum characters before search runs are placeholders. Please confirm the real values from the requirements.
+I'll reorganise the existing doc so the functional cases are grouped into clear Positive, Negative and Boundary sections, and add more boundary coverage.
 
-POSITIVE SCENARIOS
+[tool call: ToolSearch]
 
-TC-P01 Search by exact model name
-Precondition: The catalogue contains "iPhone 15 Pro".
-Steps: Enter "iPhone 15 Pro" and submit.
-Expected: The matching model and its variants are listed first. All results are mobile phones.
+[tool call: mcp__Claude_Docs__guide]
 
-TC-P02 Search by brand
-Steps: Enter "Samsung" and submit.
-Expected: Only Samsung phones are returned.
+[tool call: mcp__Claude_Docs__read]
 
-TC-P03 Search by partial keyword
-Steps: Enter "Galax".
-Expected: Phones with "Galaxy" in the name are returned (if partial match is supported).
+[tool call: mcp__Claude_Docs__update]
 
-TC-P04 Case-insensitive search
-Steps: Search "IPHONE", "iphone", "iPhone".
-Expected: The three searches return identical results.
+[tool call: mcp__Claude_Docs__update]
 
-TC-P05 Search by specification
-Steps: Enter "128GB" or "5G".
-Expected: Phones with that spec are returned.
+Structure updated; now filling the Negative scenarios.
 
-TC-P06 Multi-word query
-Steps: Enter "Samsung Galaxy S24 Ultra".
-Expected: The closest match is ranked first.
+[tool call: mcp__Claude_Docs__update]
 
-TC-P07 Submit with Enter key and with the Search button
-Expected: Both methods give the same results.
+Now the Boundary scenarios.
 
-TC-P08 Leading and trailing spaces
-Steps: Enter "  Pixel 8  ".
-Expected: Spaces are trimmed and Pixel 8 results are returned.
+[tool call: mcp__Claude_Docs__update]
 
-TC-P09 Results display
-Expected: Each result shows image, name, price, and availability. The result count matches the number of items shown.
+Last step: renumbering the non-functional cases to follow on.
 
-TC-P10 Open a result
-Steps: Click a result.
-Expected: The correct product detail page opens, and Back returns to the same results page.
+[tool call: mcp__Claude_Docs__update]
 
-TC-P11 Search with filters and sorting
-Steps: Search "Samsung", then filter by price range and sort by price low-to-high.
-Expected: Results satisfy the filters and are in the right order. Clearing filters restores the original list.
+The doc now groups the functional cases into Positive (TC-01–24), Negative (TC-33–44), and Boundary (TC-45–58). The phones-only rule checks (TC-25–32) mix positive and negative cases. I also added new negative cases for invalid filters and URLs, and new boundary cases for input length, price edges, pagination and stock levels.
 
-NEGATIVE SCENARIOS
+The boundary cases assume a 255-character input limit, 20 results per page, and autocomplete starting at 2 characters. Tell me TechShop's real values and I'll update them. The non-functional cases are still at the end; I can remove them if you want a functional-only doc.
 
-TC-N01 Empty search
-Steps: Submit with an empty box.
-Expected: No crash. A prompt appears or a default list is shown, per the requirement.
+===== Document content after this turn =====
 
-TC-N02 Whitespace only
-Steps: Enter spaces and submit.
-Expected: Handled the same as an empty search.
+# TechShop Product Search – Test Cases
 
-TC-N03 No matching product
-Steps: Enter "xyzabc123".
-Expected: A friendly "No results found" message. No error page.
+Oct 31, 2026 · @Tutor
 
-TC-N04 Non-phone product
-Steps: Search "laptop", "tablet", or "iPhone charger".
-Expected: No non-phone items are returned. A no-results message is shown, ideally stating that only mobile phones are searchable.
+## Scope and assumptions
 
-TC-N05 Misspelled term
-Steps: Enter "Samsng".
-Expected: "Did you mean...?" suggestions or a no-results message. No error.
+66 test cases cover TechShop's Product Search, which returns mobile phones only and never any other product category.
 
-TC-N06 Special characters only
-Steps: Enter "@#$%^&*".
-Expected: Handled gracefully with no error and no raw system message.
+**In scope:** keyword search, the mobile-phone category restriction, results display, filters, sorting, pagination, autocomplete, and non-functional checks (performance, security, accessibility, compatibility).
 
-TC-N07 SQL injection
-Steps: Enter ' OR '1'='1 and "; DROP TABLE products;--".
-Expected: Treated as plain text. No data exposure and no database error shown.
+**Out of scope:** cart, checkout, product detail page content beyond navigation from results.
 
-TC-N08 Script injection
-Steps: Enter <script>alert(1)</script>.
-Expected: Input is escaped. No script runs, including when the query is echoed back on the results page.
+**Assumed test data** (adjust to your catalogue):
 
-TC-N09 Non-English text and emoji
-Steps: Enter "手机" or an emoji.
-Expected: No crash. A handled no-results or valid response.
+- Phones: Apple iPhone 15, iPhone 15 Pro Max, Samsung Galaxy S24, Galaxy A15, Google Pixel 8, OnePlus 12, Xiaomi Redmi Note 13, Nokia 105 (feature phone)
+- Non-phone products in the same store: Apple iPad Air, Samsung Galaxy Tab S9, Apple Watch, Galaxy Buds, MacBook Air, phone cases, chargers, screen protectors
+- One phone marked out of stock; one phone with a discounted price
+- Price range filter, brand filter, storage filter, and sort options: Relevance, Price low–high, Price high–low, Newest
 
-TC-N10 Invalid price filter on results
-Steps: Set minimum price greater than maximum price.
-Expected: A validation message appears or the range is corrected. No crash.
+**Priority:** P1 = blocks release, P2 = important, P3 = minor.
 
-TC-N11 Network or server failure during search
-Steps: Go offline or force a server error, then search.
-Expected: A user-friendly error message with a retry option. No blank page.
+## Positive – core search
 
-TC-N12 Out-of-stock phone
-Steps: Search for a phone known to be out of stock.
-Expected: It is shown with a clear "Out of stock" label (or hidden, per the requirement). It cannot be added to the cart from the results.
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-01 | Search by exact product name | iPhone 15 | Enter term in search bar, press Enter | iPhone 15 appears as the top result | P1 |
+| TC-02 | Search by brand | Samsung | Enter term, click search icon | Only Samsung phones listed (Galaxy S24, Galaxy A15) | P1 |
+| TC-03 | Search by model only | Pixel 8 | Enter term, press Enter | Google Pixel 8 returned | P1 |
+| TC-04 | Partial keyword match | Galax | Enter term, press Enter | All Samsung Galaxy phones returned | P2 |
+| TC-05 | Case insensitivity | iPHONE, iphone, IPHONE | Search each variant | Identical result sets for all three | P2 |
+| TC-06 | Leading/trailing spaces trimmed | "  OnePlus 12  " | Enter term, press Enter | Same results as "OnePlus 12" | P2 |
+| TC-07 | Multi-word search | Samsung Galaxy S24 | Enter term, press Enter | Galaxy S24 ranked first | P1 |
+| TC-08 | Search by attribute | 5G, 256GB, dual SIM | Search each term | Only phones with that attribute returned | P2 |
+| TC-09 | Generic category term | phone, smartphone, mobile | Search each term | All phones returned; no other categories | P1 |
+| TC-10 | Result card content | iPhone 15 | Search, inspect a result card | Card shows image, name, price, rating, stock status | P1 |
+| TC-11 | Navigate to product page | Pixel 8 | Search, click the result | Pixel 8 product detail page opens | P1 |
+| TC-12 | Result count shown | Samsung | Search, read the header | Count (e.g. "2 results for Samsung") matches cards shown | P3 |
+| TC-13 | Out-of-stock phone in results | Out-of-stock model | Search for it | Shown with "Out of stock" label; Add to cart disabled | P2 |
+| TC-14 | Discounted price displayed | Discounted model | Search for it | Original price struck through, sale price shown | P2 |
 
-BOUNDARY SCENARIOS
+## Positive – filters, sorting, pagination and autocomplete
 
-TC-B01 Minimum query length
-Steps: Enter 1 character, then 2 characters (and 3 if a minimum of 3 is required).
-Expected: Behavior matches the rule: a message below the minimum, and results at or above it.
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-15 | Brand filter | Search "phone", filter Brand = Apple | Apply filter | Only Apple phones; count updates | P1 |
+| TC-16 | Price range filter | £200–£600 | Search "phone", set range | All results priced within £200–£600 inclusive | P1 |
+| TC-17 | Combined filters | Brand = Samsung, Storage = 256GB | Apply both | Only phones meeting both conditions | P2 |
+| TC-18 | Clear filters | Any active filters | Click "Clear all" | Full unfiltered result set restored | P2 |
+| TC-19 | Sort by price low–high | Search "phone" | Choose Price: Low to High | Results in ascending price order | P1 |
+| TC-20 | Sort by price high–low | Search "phone" | Choose Price: High to Low | Results in descending price order | P2 |
+| TC-21 | Pagination | Term returning more than one page of results | Go to page 2, then back | Next set shown; no duplicates or gaps; page 1 restored | P2 |
+| TC-22 | Autocomplete suggestions | Type "Gal" | Wait for dropdown | Suggestions show only phones (Galaxy S24, Galaxy A15); no Galaxy Tab | P1 |
+| TC-23 | Select a suggestion | Type "Pix", click "Pixel 8" | Click suggestion | Pixel 8 results or product page opens | P2 |
+| TC-24 | Search term persists | Search "OnePlus", open a result, press Back | Press browser Back | Search term, filters and scroll position retained | P3 |
 
-TC-B02 Maximum query length, at the limit
-Steps: Enter exactly 100 characters.
-Expected: Accepted and processed without error.
+## Positive and negative – mobile-phones-only rule
 
-TC-B03 Just above the maximum
-Steps: Enter 101 characters.
-Expected: Input is blocked or truncated, or a message is shown. No crash or layout break.
+These cases verify the core rule: no non-phone product ever appears in search results, even when it shares a brand or name.
 
-TC-B04 Very long input
-Steps: Paste 5,000 characters.
-Expected: Handled safely with no timeout or crash.
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-25 | Brand shared with tablets | Apple | Search, review all result pages | Only iPhones; no iPad, Mac or Apple Watch | P1 |
+| TC-26 | Product family shared with tablets | Galaxy | Search, review all pages | Galaxy phones only; Galaxy Tab S9 and Galaxy Buds excluded | P1 |
+| TC-27 | Search for a laptop | MacBook Air | Enter term, press Enter | No results message; no laptop shown | P1 |
+| TC-28 | Search for a tablet | iPad | Enter term, press Enter | No results message, or phone-only suggestions | P1 |
+| TC-29 | Search for accessories | iPhone case, charger | Search each term | No cases or chargers listed; phones may appear if relevant | P1 |
+| TC-30 | Search for a wearable | smartwatch | Enter term, press Enter | No results; no watches listed | P2 |
+| TC-31 | Feature phones included | Nokia 105 | Enter term, press Enter | Nokia 105 returned (confirm feature phones are in scope) | P2 |
+| TC-32 | Direct URL manipulation | Add `&category=tablets` to the search URL | Load the edited URL | Parameter ignored or rejected; still phones only | P1 |
 
-TC-B05 Result count of zero, one, and many
-Steps: Run searches returning 0, 1, and a large number of results.
-Expected: Zero shows the no-results message, one shows a single item correctly, and many are paginated or scrolled correctly.
+## Negative scenarios
 
-TC-B06 Page size boundary
-Precondition: Page size is 20.
-Steps: Run searches returning exactly 20, 21, and 40 results.
-Expected: 20 results fit on one page, 21 results produce a second page with 1 item, and 40 results fill two pages. No duplicates or missing items.
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-33 | Empty search | (blank) | Click search with no input | Search not submitted, or prompt "Enter a search term" | P1 |
+| TC-34 | Spaces only | "     " | Enter spaces, press Enter | Treated as empty; same as TC-33 | P2 |
+| TC-35 | Phone not stocked | Motorola Razr | Enter term, press Enter | "No results found" with suggestions or popular phones | P1 |
+| TC-36 | Gibberish input | xyzqwe123 | Enter term, press Enter | No results message; no error page | P2 |
+| TC-37 | Misspelling | iphnoe, samsng | Search each term | "Did you mean iPhone / Samsung?" or corrected results | P2 |
+| TC-38 | Special characters only | !@#$%^&\*() | Enter term, press Enter | No error; no results or sanitised search | P2 |
+| TC-39 | Non-Latin / emoji input | 三星, 📱 | Search each term | No crash; graceful no-results or matched results | P3 |
+| TC-40 | Network loss | Any term | Disconnect network, submit search | Friendly error message with retry option | P2 |
+| TC-41 | Price filter min greater than max | Min £800, Max £200 | Enter values, apply | Validation message; filter not applied | P2 |
+| TC-42 | Non-numeric price input | abc, -50 | Type into price fields | Input rejected or validation message | P2 |
+| TC-43 | Filters with no matches | Brand = Apple, Storage = 2TB | Apply both | "No phones match your filters" with a Clear filters option | P2 |
+| TC-44 | Invalid page in URL | `page=-1`, `page=abc`, `page=999` | Load each URL | Redirect to page 1 or friendly empty state; no server error | P3 |
 
-TC-B07 Price filter limits
-Steps: Set min and max to the lowest and highest prices in the catalogue. Then set min equal to max. Then set 0 and a negative value.
-Expected: Boundary prices are included in results, min equal to max returns phones at exactly that price, and 0 or negative values are rejected or handled.
+## Boundary scenarios
 
-TC-B08 Price just inside and outside a range
-Steps: Filter with max 500 when phones priced at 499.99, 500.00, and 500.01 exist.
-Expected: 499.99 and 500.00 are included. 500.01 is excluded.
+Assumed limits: search input max 255 characters, 20 results per page, autocomplete starts at 2 characters. Replace with TechShop's real values.
 
-TC-B09 Numeric-only query
-Steps: Enter "0", "15", and "99999999999".
-Expected: Handled without error, with sensible results or a no-results message.
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-45 | Minimum input length | a (1 character) | Enter term, press Enter | Results returned, or minimum-length message; no error | P3 |
+| TC-46 | Just below max length | 254 characters | Paste string, press Enter | Accepted; search runs | P2 |
+| TC-47 | At max length | 255 characters | Paste string, press Enter | Accepted; search runs | P2 |
+| TC-48 | Just above max length | 256 characters | Paste string | Input capped at 255 or validation message | P2 |
+| TC-49 | Far above max length | 10,000 characters | Paste string, press Enter | Input capped; no server error or timeout | P2 |
+| TC-50 | Price filter lower edge | Phone at exactly £200; range £200–£600 | Apply range | Phone included | P1 |
+| TC-51 | Price filter upper edge | Phones at £600.00 and £600.01; range £200–£600 | Apply range | £600.00 included; £600.01 excluded | P1 |
+| TC-52 | Full price range | Min £0, Max = highest catalogue price | Apply range | All phones returned | P3 |
+| TC-53 | Results equal page size | Term returning exactly 20 phones | Search | One page; no Next control | P2 |
+| TC-54 | Results one over page size | Term returning 21 phones | Search, go to page 2 | Two pages; page 2 shows 1 phone | P2 |
+| TC-55 | First and last page controls | Term returning 3+ pages | Check page 1, then last page | Previous disabled on page 1; Next disabled on last page | P3 |
+| TC-56 | Autocomplete threshold | Type "G", then "Ga" | Watch the dropdown | No suggestions at 1 character; suggestions appear at 2 | P3 |
+| TC-57 | Stock edge | Phones with stock 0 and stock 1 | Search for each | Stock 0 = "Out of stock"; stock 1 = in stock (e.g. "Only 1 left") | P2 |
+| TC-58 | Exactly one result | Term matching one phone (OnePlus 12) | Search | One card; count reads "1 result" (singular) | P3 |
 
-TC-B10 Repeated searches
-Steps: Run the same search several times in a row, and double-click the Search button.
-Expected: Consistent results and no duplicate requests causing wrong data.
+## Non-functional
 
-SUGGESTED EXECUTION PRIORITY
-- High: P01, P02, P10, N03, N04, N07, N08, B01, B02, B03, B06
-- Medium: P03 to P09, P11, N01, N02, N05, N10 to N12, B05, B07, B08
-- Low: N06, N09, B04, B09, B10
-
-If you share the requirements or a screenshot of the search page, I can replace the placeholder limits with the real ones and format this as a spreadsheet with preconditions, test data, and actual-result columns.
+| ID | Type | Scenario | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-59 | Performance | Response time | Search "Samsung" 10 times, measure | Results load in under 2 seconds (confirm target) | P1 |
+| TC-60 | Performance | Concurrent load | Simulate 500 concurrent users searching | No errors; response time stays within target | P2 |
+| TC-61 | Security | SQL injection | Search `' OR '1'='1` | Input treated as text; no data leak or DB error | P1 |
+| TC-62 | Security | Cross-site scripting | Search `<script>alert(1)</script>` | Script not executed; term shown escaped | P1 |
+| TC-63 | Accessibility | Keyboard and screen reader | Tab to search, type, press Enter; use NVDA/VoiceOver | Search bar labelled; results and count announced | P2 |
+| TC-64 | Usability | Mobile responsive layout | Search on a 375px-wide screen | Search bar, filters and results usable without horizontal scroll | P2 |
+| TC-65 | Compatibility | Cross-browser | Run TC-01, TC-25, TC-19 on Chrome, Safari, Firefox, Edge | Consistent behaviour on all browsers | P2 |
+| TC-66 | Compatibility | Native app vs web | Run TC-01 and TC-25 in the TechShop app | Same results as web | P3 |

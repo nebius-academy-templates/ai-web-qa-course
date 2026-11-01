@@ -1,5 +1,5 @@
 // Computes size figures for the MANIFEST.md files from the committed data, so the numbers
-// in the manifests can always be reproduced. Run: node scripts/make-manifests.ts
+// in the manifests can always be reproduced. Run: npx tsx scripts/make-manifests.ts
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -17,13 +17,13 @@ function stats(path: string) {
   return { w, c, rule: ruleTokens(w), chars: charTokens(c) };
 }
 
-// ---- 1.1.4 flaky-test-prompt -------------------------------------------------
+// ---- 1.1.4 1-1-4-flaky-ci -------------------------------------------------
 const files114 = ['jira-ticket.md', 'dom-snippet.html', 'ci-log.txt', 'unrelated-suite.spec.ts'];
-const rows114 = files114.map((f) => ({ f, ...stats(`flaky-test-prompt/${f}`) }));
+const rows114 = files114.map((f) => ({ f, ...stats(`1-1-4-flaky-ci/${f}`) }));
 const included = rows114.filter((r) => r.f !== 'unrelated-suite.spec.ts');
 const sum = (rs: typeof rows114, k: 'w' | 'c' | 'rule' | 'chars') => rs.reduce((a, r) => a + r[k], 0);
 
-const m114 = `# Manifest: flaky-test-prompt (practice 1.1.4)
+const m114 = `# Manifest: 1-1-4-flaky-ci (practice 1.1.4)
 
 Sizes of the four practice files. Token figures use two methods so learners can see the spread:
 
@@ -41,21 +41,21 @@ ${rows114.map((r) => `| ${r.f} | ${r.w} | ${r.c} | ${r.rule} | ${r.chars} |`).jo
 - Three included files, files only: **${round10(sum(included, 'rule') * 0.9)} to ${round10(sum(included, 'chars') * 1.1)} tokens**.
 - Plus the learner's own system prompt and user message (typically 60 to 150 tokens): **about ${round10(sum(included, 'rule') * 0.9 + 60)} to ${round10(sum(included, 'chars') * 1.1 + 150)} tokens in total**.
 - Verdict for the three-file prompt: **comfortable** (a small fraction of any current context window).
-- Including the suite adds roughly ${sum([rows114[3]], 'rule')} to ${sum([rows114[3]], 'chars')} tokens of noise, more than the other three files combined, and nothing in it touches the cart.
+- Including the suite adds roughly ${sum([rows114[3]], 'rule')} to ${sum([rows114[3]], 'chars')} tokens of noise, about ${Math.round(rows114[3].rule / sum(included, 'rule'))} times the other three files combined, and nothing in it touches the cart. The size is deliberate: the token count alone should make leaving it out obvious.
 
 Note: no tokenizer was available when these were produced. Both columns are estimates, not exact counts.
 `;
-writeFileSync(join(root, 'flaky-test-prompt', 'MANIFEST.md'), m114);
+writeFileSync(join(root, '1-1-4-flaky-ci', 'MANIFEST.md'), m114);
 
-// ---- 1.3.2 token-cost-estimate -----------------------------------------------
-const prompts = ['a', 'b', 'c'].map((k) => ({ k: k.toUpperCase(), ...stats(`token-cost-estimate/prompt-${k}.txt`) }));
+// ---- 1.3.2 1-3-2-prompts -----------------------------------------------
+const prompts = ['a', 'b', 'c'].map((k) => ({ k: k.toUpperCase(), ...stats(`1-3-2-prompts/prompt-${k}.txt`) }));
 const out: Record<string, [number, number]> = { A: [40, 150], B: [10, 25], C: [500, 1000] };
 const outNote: Record<string, string> = {
   A: 'Unscoped: a locator plus usually two alternatives and a short paragraph.',
   B: '"Return only the locator, no explanation": one line of code.',
   C: 'Asked for every strategy, pros and cons, ranking and a justified recommendation: an essay.',
 };
-const m132 = `# Manifest: token-cost-estimate (practice 1.3.2)
+const m132 = `# Manifest: 1-3-2-prompts (practice 1.3.2)
 
 Input figures are computed from the three prompt files. Output figures are accepted ranges
 for the response size each prompt asks for.
@@ -91,7 +91,7 @@ are wide enough to bracket realistic tokenizer results.
 - Cost, lowest to highest: A, B, C (SME CHECK: A and B are close; A has trivial input but unscoped output, B has more input but near-zero output).
 - Quality, lowest to highest: A, C, B (SME CHECK).
 `;
-writeFileSync(join(root, 'token-cost-estimate', 'MANIFEST.md'), m132);
+writeFileSync(join(root, '1-3-2-prompts', 'MANIFEST.md'), m132);
 
 console.log(m114.split('\n').slice(8, 16).join('\n'));
 console.log(prompts);

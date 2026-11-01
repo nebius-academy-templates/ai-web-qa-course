@@ -1,0 +1,6 @@
+Chains A and B: one conversation each, these five messages sent one at a time (text exactly as in solutions/1-1-7-iteration-progression.md).
+P0: A Playwright UI test fails in our pipeline. An element on a third-party page is no longer redirecting the user. Help me work out why this failure occurred, starting with what to check first.
+P1: Same failing test as above: an element on a third-party page no longer redirects the user. I've now found that the third-party page isn't rendering because the API behind it is not returning a valid response. List the most likely causes of an invalid API response in this situation, and what evidence would confirm each.
+P2: Same failing test; the API behind the third-party page isn't returning a valid response. I've now confirmed the response status is 401. What does a 401 from a third-party API usually mean in a CI run, and what should I check first?
+P3: Same failing test. The API returns 401 and I now know the third-party site is a financial API. Given that, what authentication-related causes are most likely, and what should I check first in our test environment?
+P4: Same failing test. The API returns 401 from a financial provider, and I've now confirmed that the API key our test environment uses has expired. What should I do to fix this properly, and how do I stop it happening again?

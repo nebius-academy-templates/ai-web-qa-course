@@ -1,4 +1,4 @@
-# Manifest: token-cost-estimate (practice 1.3.2)
+# Manifest: 1-3-2-prompts (practice 1.3.2)
 
 Input figures are computed from the three prompt files. Output figures are accepted ranges
 for the response size each prompt asks for.

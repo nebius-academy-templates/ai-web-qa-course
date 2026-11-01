@@ -1,11 +1,11 @@
 // Checks a masked customer record against the reference masked record: same keys and order,
 // every identifier changed, every value in the same shape, task fields still typed correctly.
-// Usage: node tools/compare-masked.ts <masked.json> [original.json]
+// Usage: npx tsx tools/compare-masked.ts <masked.json> [original.json]
 import { readFileSync } from 'node:fs';
 
 const [maskedPath, originalPath = '../ai-for-qa-m1/data/1-2-4-customer-record/customer-record.json'] = process.argv.slice(2);
 if (!maskedPath) {
-  console.error('usage: node tools/compare-masked.ts <masked.json> [original.json]');
+  console.error('usage: npx tsx tools/compare-masked.ts <masked.json> [original.json]');
   process.exit(1);
 }
 const load = (p: string) => JSON.parse(readFileSync(p, 'utf8')) as Record<string, string | number>;

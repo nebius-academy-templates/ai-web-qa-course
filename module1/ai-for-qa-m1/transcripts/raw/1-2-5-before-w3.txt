@@ -1,30 +1,15 @@
-Here are 5 fictional customer records for TechShop checkout testing. All names, emails, phone numbers and street addresses are made up. The postcodes follow valid UK formats, but the street addresses are invented and may not exist. Phone numbers use the Ofcom-reserved drama ranges (07700 900xxx and 01632 960xxx), and emails use the reserved `example.com` domain, so none can reach a real person.
+Here are 5 fictional customer records. Emails use the reserved `example.com` domain and phone numbers come from Ofcom's ranges set aside for fiction and testing, so none of them can reach a real person. Street names are invented, and postcodes follow the correct UK format for each area.
 
-**1. Oliver Hartley**
-- Email: oliver.hartley@example.com
-- Phone: 07700 900142
-- Shipping address: 14 Marlowe Close, Bristol, BS8 2QT
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|---|---|---|---|---|
+| 1 | Eleanor | Whitcombe | eleanor.whitcombe@example.com | 07700 900142 | Flat 3, 27 Larkspur Mews, London, SE15 4QZ |
+| 2 | Rajesh | Pemberton | r.pemberton@example.com | 0161 496 0387 | 14 Thornfield Crescent, Didsbury, Manchester, M20 6XJ |
+| 3 | Siobhan | Gallagher | siobhan.g@example.com | 07700 900815 | 8 Cranleigh Gardens, Clifton, Bristol, BS8 3PW |
+| 4 | Tomasz | Ellery | tomasz.ellery@example.com | 0131 496 0254 | 2F1, 46 Brackenhill Place, Edinburgh, EH9 2LT |
+| 5 | Amara | Fenwick-Hale | amara.fh@example.com | 0113 496 0671 | Rosewood Cottage, 5 Millbrook Lane, Headingley, Leeds, LS6 3DN |
 
-**2. Priya Venkataraman**
-- Email: priya.venkataraman@example.com
-- Phone: 07700 900287
-- Shipping address: Flat 3, 27 Kingsley Road, Manchester, M14 5RJ
+A few things built in for checkout coverage: a flat number (record 1), an Edinburgh tenement-style address (record 4), a named house plus street (record 5), a hyphenated surname (record 5), and a mix of mobile and landline formats.
 
-**3. Callum MacGregor**
-- Email: callum.macgregor@example.com
-- Phone: 07700 900355
-- Shipping address: 8 Thistle Lane, Edinburgh, EH6 4NP
+One caution: if TechShop validates addresses against a live postcode lookup such as Royal Mail PAF, these may fail, since the streets don't exist. For those tests you'd need your provider's test addresses instead.
 
-**4. Aisha Rahman-Clarke**
-- Email: aisha.rahmanclarke@example.com
-- Phone: 01632 960418
-- Shipping address: 52 Brindley Street, Birmingham, B16 8TX
-
-**5. Rhys Llewellyn**
-- Email: rhys.llewellyn@example.com
-- Phone: 07700 900569
-- Shipping address: 3 Harbour View, Cardiff, CF10 5AL
-
-These cover a mix of regions (England, Scotland and Wales), a flat with a unit number, a hyphenated surname, and both mobile and landline numbers. That should help you test address and name validation.
-
-I can also produce them as CSV or JSON, or add edge cases such as apostrophes in names, very long addresses, or Northern Ireland postcodes.
+Want these as CSV or JSON, or with extra edge cases like long names, apostrophes (O'Neill) or BFPO addresses?

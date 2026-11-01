@@ -1,7 +1,7 @@
 # 1.1.4 Three-layer prompt for the flaky badge test: reference solution
 
 Scenario (from the lesson): the TechShop test "badge increments after add to cart" fails in CI roughly every third run and passes on retry.
-Files: `jira-ticket.md`, `dom-snippet.html`, `ci-log.txt`, `unrelated-suite.spec.ts` in `data/flaky-test-prompt/`.
+Files: `jira-ticket.md`, `dom-snippet.html`, `ci-log.txt`, `unrelated-suite.spec.ts` in `data/1-1-4-flaky-ci/`.
 
 **The planted cause (do not reveal to learners):** the page script defers the badge update with `setTimeout(..., 150)`, while the test asserts with `{ timeout: 100 }`. The assertion times out at 100 ms, before the update at 150 ms. It passes only when the runner is slow enough between the click and the assertion for the 150 ms to have nearly elapsed. That is why the failing run is on a fast worker and the retry (with more overhead) passes.
 Evidence in the files: `Timeout: 100ms`, three `locator resolved to <span hidden id="cart-badge" class="badge">0</span>` lines in the call log, and the `setTimeout(...150)` line in the page script. The fix is to remove the hard-coded `timeout: 100` and use the default (or wait on the `cart:updated` event); retries only hide the flake.
@@ -13,7 +13,7 @@ Evidence in the files: `Timeout: 100ms`, three `locator resolved to <span hidden
 | `ci-log.txt` | **In** | The failure evidence: the exact assertion, the 100 ms timeout, what the badge contained when it was checked, and the retry that passed. |
 | `dom-snippet.html` | **In** | What the test touches (the hidden badge span and the add-to-cart button) and the page script that updates the badge, which is where the timing lives. |
 | `jira-ticket.md` | **In** | The expected behaviour (badge hidden at zero, shows the count after an add) so the model can tell a product defect from a test defect. |
-| `unrelated-suite.spec.ts` | **Out** | 50 passing tests that never touch the cart or the badge. About 1,400 to 2,400 tokens (see `MANIFEST.md`), more than the other three files combined, and nothing in it explains a badge timing failure. It would be noise the model has to filter. |
+| `unrelated-suite.spec.ts` | **Out** | 500 passing tests (50 storefront checks at five viewports in light and dark mode) that never touch the cart or the badge. About 23,000 to 40,000 tokens (see `MANIFEST.md`), roughly 25 times the other three files combined, and nothing in it explains a badge timing failure. It would be noise the model has to filter. |
 
 Acceptable variant: including the suite with an argued reason (for example "to see test conventions") is a Partial, not a fail. Including it with no reason is unmet.
 
@@ -47,18 +47,41 @@ Lesson rule: words / 0.75, per included file plus the learner's own text.
 
 Accepted band: **about 900 to 1,850 tokens** in total. The upper end covers learners who treat code and logs as denser (characters / 4 gives about 1,530 for the three files). `MANIFEST.md` has the per-file figures.
 
-**Verdict: comfortable.** It is a small fraction of any current context window, so truncation and silent degradation are not a concern here. Adding the suite would roughly double the size for no gain.
+**Verdict: comfortable.** It is a small fraction of any current context window, so truncation and silent degradation are not a concern here. Adding the suite would multiply the size about 25 times (to roughly 24,000 tokens or more) for no gain.
 
-## 5. Expected verdict lines (what an honest run looks like) [RUN CHECK]
+## 5. Verdict lines from an honest run (observed in claude.ai, 2026-11-01)
 
-I could not run Claude in this build. These are what the grader prompt expects a learner to find, not observed output.
+The run was in claude.ai, with the system prompt above set as a Project's instructions (claude.ai has no separate system-prompt box) and the three files pasted into the message.
 
-- **Format:** usually followed (three headings). If Claude adds a preamble or a fourth section, the learner reports it as "no, it added ...".
-- **Evidence:** the supporting lines are the `3 x locator resolved to ... 0` call-log lines, the `Timeout: 100ms` line, or the `setTimeout(..., 150)` line in the DOM script.
-- **Your call:** agree if Claude identifies the 100 ms timeout against the 150 ms deferral. A response that blames "a race condition" with no quoted line is the weak pattern the grader is told to catch.
+- **Format:** followed exactly: Root Cause / Evidence / Recommended Fix, with no preamble. The last fix item was marked "Unrelated to the flake" and pointed out the static `aria-label` (AC6). A learner who reports "yes, plus a note on accessibility" is accurate.
+- **Evidence:** quoted lines from all three files: the `setTimeout(..., 150)` handler, `toHaveText('1', { timeout: 100 })`, `Timeout: 100ms`, the `locator resolved to <span hidden ...>0</span>` lines, the retry that passed, and the ticket's note that the server is not involved.
+- **Your call:** the cause was the 100 ms timeout against the 150 ms delay: "a race in the test", with the product not slow. It said removing the override "is not a global timeout increase". It did not recommend retries. A learner who agrees is right.
+- **Limits stated:** it listed what it could not tell from the files: why the rate is about one in three (the trace would show it), the project's default expect timeout (it had not seen `playwright.config`), and how the "caps at 9+" test is written.
 
-## 6. The completed sentence (second run, no system prompt) [RUN CHECK]
+Two earlier runs outside claude.ai gave the same verdicts.
+
+## 6. The completed sentence (second run, no system prompt) (observed in claude.ai, 2026-11-01)
 
 "Without the system prompt the response was less ______ because ______."
 
-Expected shapes of an honest answer, from the grader prompt: the three-heading format disappears; the response gets longer or more generic; or it proposes fixes beyond the evidence (adding retries, rewriting the feature). A sentence that restates the lesson with no observation ("less consistent because the model defaults to pretrained behaviour") is unmet. Capture a real pair of runs before go-live so the grader can recognise the typical difference.
+The second run was a normal claude.ai chat with the same message and files.
+
+**What changed:**
+- **Format.** It used two headings, "Diagnosis: the assertion's 100ms timeout is shorter than the app's own 150ms delay" and "Fix", not the three required ones.
+- **Evidence.** It quoted far fewer lines and had no separate Evidence section.
+- **Limits.** It did not list what the files could not settle. On the "caps at 9+" test it gave a reason ("Ten sequential clicks leave plenty of time"), with only a light hedge.
+- **Length.** It was shorter: about 480 words against about 870.
+
+**What did not change:**
+- The diagnosis was the same and correct.
+- No retries were suggested.
+- It still added the AC6 `aria-label` point as "One unrelated thing I noticed".
+
+Accept, for example:
+- "less structured, because the three headings were replaced by Diagnosis and Fix"
+- "less evidenced, because it quoted far fewer lines and had no Evidence section"
+- "less careful about limits, because it explained the 9+ test without having its code"
+
+Mark unmet: a sentence with no observation, such as "less consistent because the model defaults to pretrained behaviour". "Less accurate", "longer" or "it suggested retries" need a quote, because none of these happened in the captured runs.
+
+Runs: claude.ai conversations 70cba8f7 (Project with instructions) and a19da0d0 (no instructions); details in `run-checks/2026-11-01/`.
