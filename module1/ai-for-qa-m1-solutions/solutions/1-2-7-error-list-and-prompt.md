@@ -49,7 +49,9 @@ Why each line is there: columns and order stop Claude choosing its own schema; "
 ## Verification checklist: how to judge a learner's run
 
 - The grader accepts a table with violations as long as the learner **reports** them. Reporting Claude's mistakes is the skill, and "all checks passed" on a table that visibly has 9 records is the failure the grader prompt names.
-- The checks in order of how often a real run is likely to trip them [RUN CHECK, not observed here]: record count (19 or 21 rows instead of 10 happens occasionally per the walkthrough), duplicate emails, edge values at the range limits. Capture a real run to confirm before go-live.
+- Which checks a real run trips (observed, 3 runs of the reference prompt, 2026-11-01, checked with a script against every schema rule): **none. The predicted count, duplicate and range errors could not be reproduced, so the grader should not expect them.** All three runs returned exactly 10 rows, the six columns in order, 10 distinct `@example.com` emails, ages from 18 to 80, only the four allowed countries and spends from 50 to 1000, with nothing but the table. This matches the 1.2.6 finding, where 20 of 20 rows came back clean.
+- What the runs *did* do: two of the three deliberately put values on the limits (age 18 and 80, spend 50 and 1000). A learner who flags these as violations has misread "inclusive", and that is the realistic false positive on this step. The third run used 19 to 73 and 58.9 to 1000.
+- So on this exercise, "all checks passed" is usually the **correct** report. What the grader looks for is evidence that the learner actually ran each check, for example "10 rows counted, emails compared pairwise, 18 and 80 confirmed in range". A bare "all good" is not enough. Raw runs: `run-checks/2026-11-01/127-*.md`.
 - Uniqueness is the check that takes the most attention: with 10 emails every pair has to be compared, and a duplicate does not announce itself the way a wrong country does.
 
 ## Open item from the grader prompt: the parallel-uniqueness step

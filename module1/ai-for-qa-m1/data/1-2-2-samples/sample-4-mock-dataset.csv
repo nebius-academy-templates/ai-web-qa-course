@@ -1,0 +1,17 @@
+userId,subscriptionType,billingCycle,active
+usr_a41f9c02,free,none,true
+usr_b7d30e55,premium,monthly,true
+usr_c9a1124d,premium,annual,true
+usr_d03e8b76,basic,monthly,false
+usr_e5c7f210,free,none,true
+usr_f82a6d39,premium,monthly,true
+usr_0b6e43a8,basic,annual,true
+usr_1c9d57f4,free,none,false
+usr_2de08a61,premium,annual,true
+usr_3f71b9c0,basic,monthly,true
+usr_48a5e2d7,free,none,true
+usr_59c0f813,premium,monthly,false
+usr_6ad37b4e,basic,monthly,true
+usr_7be96c05,premium,annual,true
+usr_8cf1d2a9,free,none,true
+usr_9d04e37b,basic,annual,false

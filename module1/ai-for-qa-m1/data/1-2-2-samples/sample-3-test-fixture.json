@@ -1,0 +1,43 @@
+{
+  "fixture": "cart-customers",
+  "generatedBy": "faker (seed 4242)",
+  "customers": [
+    {
+      "id": "fx-001",
+      "firstName": "Marcus",
+      "lastName": "Webb",
+      "email": "customer1@techshop-test.example",
+      "phone": "+44 7700 900101",
+      "loyaltyTier": "gold"
+    },
+    {
+      "id": "fx-002",
+      "firstName": "Aisha",
+      "lastName": "Rahman",
+      "email": "customer2@techshop-test.example",
+      "phone": "+44 7700 900102",
+      "loyaltyTier": "silver"
+    },
+    {
+      "id": "fx-003",
+      "firstName": "Ollie",
+      "lastName": "Hartley",
+      "email": "customer3@techshop-test.example",
+      "phone": "+44 7700 900103",
+      "loyaltyTier": "bronze"
+    },
+    {
+      "id": "fx-004",
+      "firstName": "Sofia",
+      "lastName": "Marchetti",
+      "email": "customer4@techshop-test.example",
+      "phone": "+44 7700 900104",
+      "loyaltyTier": "none"
+    }
+  ],
+  "cart": {
+    "sku": "NOVA-X2-128",
+    "quantity": 2,
+    "unitPrice": 449.0
+  }
+}

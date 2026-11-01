@@ -10,9 +10,15 @@ Rule applied throughout, per your instruction: where the lessons and the brief d
 5. **1.2.7 / 1.2.5.** The parallel-uniqueness step is not in the practice; recommended as an extension (before/after transcripts are ready).
 6. **Front-loaded prompt role sentence.** The lesson's front-loaded prompt starts with "You are a QA engineer for TechShop." and iterations 1 to 3 do not. Kept as written in the lesson (earlier I had removed it; reverted). Decide whether to add the role to the iterations too.
 
-## Lesson numbers that look wrong
-- `Error: locator.click: Timeout 30000ms exceeded.` is called about 28 tokens; word/char estimates give 7 to 12. Check with a real tokenizer.
-- 1.3.1: the one-line prompt is 8 words, not 9; the structured prompt is 32 words, not 38 (token figures roughly hold).
+## Lesson numbers that look wrong (final figures for the lesson text)
+| Text | Lesson says | Words | Characters | Lesson rule (words / 0.75) | Chars / 4 | Use in the lesson |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| `Error: locator.click: Timeout 30000ms exceeded.` (1.3.1, 1.1.3) | about 28 tokens | 5 | 47 | 7 | 12 | **about 12 tokens** (provisional until a tokenizer count is captured; 28 is not supported by either method) |
+| One-line prompt (1.3.1) | 9 words, about 12 tokens | 8 | 45 | 11 | 11 | **8 words, about 11 tokens** |
+| Structured prompt (1.3.1) | 38 words, about 50 to 55 tokens | 32 | 209 | 43 | 52 | **32 words, about 43 tokens** (the rule the lesson teaches; chars / 4 gives 52) |
+
+The tests and starter now use the corrected one-line example (8 words, about 11 tokens).
+Exact count for the error line: put `ANTHROPIC_API_KEY` and `TOKEN_COUNT_MODEL` in `.env`, then run `npm run tokens -- estimate - --actual` and paste the line. The API count includes a few tokens of message overhead.
 
 ## Written by me because the lessons did not print them
 Prompts A, B, C (1.3.2); the 1.3.4 scenario C manual triage time (12 min per failure); the sample files and 1.2.7 flawed CSV.
@@ -21,7 +27,7 @@ Prompts A, B, C (1.3.2); the 1.3.4 scenario C manual triage time (12 min per fai
 All real Claude transcripts (`transcripts/*.md`), tokenizer screenshots (`transcripts/screenshots/README.md` lists them) and actual token counts. Items marked **[RUN CHECK]** and **[SME CHECK]** in `solutions/` need a human before go-live.
 
 ## Deviations from the brief
-Zero dependencies (no faker, csv-parse, dotenv or vitest): the npm registry was blocked in the build environment. Node 22 native TypeScript and `node:test` are used instead. Node/TS was not objected to; confirm.
+Toolset matches Workshop 2 and the syllabus: `@anthropic-ai/sdk`, `@faker-js/faker`, `ajv`, `tsx`, `typescript`, `vitest` (same versions, same lockfile tree). An earlier build shipped with zero dependencies only because the npm registry was blocked in the build environment; that was a build constraint, not a teaching decision, and has been reversed. Tests use Vitest (`test`/`expect`) and scripts run through tsx. The SDK, Faker and Ajv are installed but not yet used by Module 1 code (token counting still calls the API with `fetch`; the dirty-data generator uses its own seeded PRNG so committed data stays identical).
 
 ## Transcript findings (captured 2026-10-09 via subagent runs, not typed into claude.ai)
 - **1.1.6 iteration 1** returned 43 numbered cases, not the "handful of one-line checks" the lesson expects. **Iteration 2** (33 cases) already included SQL and script injection. The three-step "each iteration adds what was missing" story is weak for this model; the real gain is the table, columns and priorities. Rewrite the expectation text for steps 3, 6 and 8, or choose a deliberately weaker starting prompt.

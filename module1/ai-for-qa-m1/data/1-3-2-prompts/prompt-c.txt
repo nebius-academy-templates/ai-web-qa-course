@@ -1,0 +1,23 @@
+You are a senior QA automation architect. I need you to analyse the entire page below and generate the best Playwright locator for the Sign in button. Please be exhaustive. Consider every possible locator strategy: role-based, test-id, text, label, CSS and XPath. For each strategy, explain step by step how it would work on this page, list its advantages and disadvantages, discuss how likely it is to break when the UI changes, compare it with all the other strategies, and rank them. Then recommend one final locator and justify your choice in detail, including notes on accessibility, maintenance cost and cross-browser behaviour.
+
+<html lang="en">
+<head><meta charset="utf-8"><title>TechShop - Sign in</title><link rel="stylesheet" href="/css/site.css"></head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="/">TechShop</a>
+    <nav class="main-nav"><a href="/phones">Phones</a> <a href="/laptops">Laptops</a> <a href="/accessories">Accessories</a> <a href="/stores">Stores</a></nav>
+    <a class="cart-link" href="/cart">Cart</a>
+  </header>
+  <section class="hero"><h1>Welcome back</h1><p>Sign in to see your orders and saved items.</p></section>
+  <aside class="promo"><p>Autumn sale: free delivery on orders over 50 pounds.</p></aside>
+  <form id="login" class="login-form">
+    <label for="email">Email address</label>
+    <input id="email" name="email" type="email">
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password">
+    <button type="submit" class="btn primary">Sign in</button>
+    <a class="forgot" href="/forgot-password">Forgot password</a>
+  </form>
+  <footer class="site-footer"><a href="/help">Help</a> <a href="/privacy">Privacy</a> <a href="/terms">Terms</a> <a href="/contact">Contact</a></footer>
+</body>
+</html>

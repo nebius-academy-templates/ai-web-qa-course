@@ -134,6 +134,15 @@ Generate test cases for the guest checkout flow only, as a table with columns: I
 Include positive, negative and boundary cases for the card and postcode fields. Do not invent payment methods or fields that are not listed above.
 ```
 
-**What the original prompt typically makes Claude invent [RUN CHECK]:** the grader prompt expects "a payment method, a coupon field, a shipping option, a login step, a test-case format Claude chose on its own". I could not run Claude in this build, so these are the expected inventions from the grader prompt, not observed ones. Capture a real run before go-live.
+**What the original prompt makes Claude invent (observed, 3 runs, 2026-11-01):** all five inventions the grader prompt lists appeared in every run.
+- Payment methods: PayPal, Apple Pay and Google Pay (3 of 3), plus 3-D Secure flows and gift cards as part payment.
+- A coupon field: a full "Promo codes" section (expired codes, stacking, minimum spend) (3 of 3).
+- Shipping options: standard vs express, a free-shipping threshold, in-store pickup (3 of 3).
+- A login step: saved addresses, logging in during checkout, cart merge (3 of 3).
+- A format Claude chose: 72 to 88 cases in 11 or 12 sections, each a table of ID, test case, steps, expected result. It also added tax, security, accessibility and performance sections nobody asked for.
 
-**What a good rewrite reliably fixes [RUN CHECK]:** payment-method cases disappear (only card cases remain) and the format follows the requested table. The rewrite does not, by itself, give Claude the real error messages, which is why "what is still missing" in the comparison is usually a missing error message text.
+One thing the grader should know: Claude did not hide the guessing. Every run opened with a line like "I don't know the details of your checkout yet, so these test cases are for a typical e-commerce checkout", and ended by asking for the payment provider and the format. A learner who says "Claude invented payment methods without warning" has misread the output. The point is that it had to guess, and its guesses don't match TechShop's rules (card only).
+
+**What the rewrite fixes (observed, 2 runs):** both runs returned exactly 45 cases in the requested four columns (ID, Scenario, Steps, Expected result). Neither had a single payment-method, coupon, shipping or login case. Both used "Your card was declined" verbatim for the decline case. What was still missing, as predicted: both ended with open questions, and the shared one was error message wording. One run says outright that "the exact text is only specified for a declined card", so the other negative cases check only that *an* error appears. Other gaps the runs raised: whether spaces in card numbers and lowercase postcodes are accepted, and what happens with over-length input. One run noted that the 16-digit rule rejects Amex. Accept any of these as "what is still missing".
+
+Raw runs: `run-checks/2026-11-01/112-*.md`.

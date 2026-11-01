@@ -1,6 +1,6 @@
 # 1.3.2 Token estimates and rankings: reference answers
 
-The three prompts are in `data/token-cost-estimate/` (`prompt-a.txt`, `prompt-b.txt`, `prompt-c.txt`). **The lesson never printed their text, so I wrote them to match the lesson's own worked examples** (B is about 35 words of instruction plus about 25 words of DOM, C is a long exhaustive-analysis instruction plus a full page). **[SME CHECK]** if the original practice text exists elsewhere, replace my files with it and rerun `node scripts/make-manifests.ts`.
+The three prompts are in `data/1-3-2-prompts/` (`prompt-a.txt`, `prompt-b.txt`, `prompt-c.txt`). **The lesson never printed their text, so I wrote them to match the lesson's own worked examples** (B is about 35 words of instruction plus about 25 words of DOM, C is a long exhaustive-analysis instruction plus a full page). **[SME CHECK]** if the original practice text exists elsewhere, replace my files with it and rerun `node scripts/make-manifests.ts`.
 
 ## The six cells (canonical accepted ranges)
 

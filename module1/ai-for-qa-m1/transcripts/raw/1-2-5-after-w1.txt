@@ -1,11 +1,22 @@
-Here are 5 fictional TechShop checkout-test customers (all data is invented; phone numbers use the Ofcom drama range 07700 900xxx, and the addresses are fictional).
+Here are 5 fictional customer records for worker 1. Phone numbers use Ofcom's reserved drama range (07700 900000–900999), so none of them can reach a real person. Street names are invented, and postcodes are plausible for each town.
 
 | # | First name | Last name | Email | Phone | Shipping address |
-|---|-----------|-----------|-------|-------|------------------|
-| 1 | Oliver | Hartley | worker1.customer001@example.com | 07700 900101 | 14 Mill Lane, Headingley, Leeds, West Yorkshire, LS6 2AB |
-| 2 | Priya | Nair | worker1.customer002@example.com | 07700 900102 | 52 Whitehall Road, Clifton, Bristol, BS8 4DL |
-| 3 | Callum | Reid | worker1.customer003@example.com | 07700 900103 | 7 Princes Terrace, Dowanhill, Glasgow, G12 9JU |
-| 4 | Megan | Prosser | worker1.customer004@example.com | 07700 900104 | 23 Castle Street, Cardiff, CF10 1BS |
-| 5 | Tomasz | Wilkins | worker1.customer005@example.com | 07700 900105 | 91 Abbey Gardens, Jesmond, Newcastle upon Tyne, NE2 3QT |
+|---|---|---|---|---|---|
+| 1 | Eleanor | Whitcombe | worker1.customer001@example.com | 07700 900123 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 7QX |
+| 2 | Rajan | Mehta-Collins | worker1.customer002@example.com | 07700 900456 | Flat 3, 27 Ferncroft Road, Bristol, BS7 9LJ |
+| 3 | Siobhan | Archer | worker1.customer003@example.com | 07700 900789 | 82 Thornbury Lane, Chelmsford, Essex, CM2 6TW |
+| 4 | Dominic | Fairley | worker1.customer004@example.com | 07700 900314 | 5 Kestrel Mews, Shrewsbury, Shropshire, SY3 8PD |
+| 5 | Amara | Okonkwo-Hale | worker1.customer005@example.com | 07700 900628 | 41 Glenmore Crescent, Edinburgh, EH10 5RN |
 
-All five emails follow the worker1.customer{NNN}@example.com format, counting from 001 to 005, so none will clash with the other workers' records.
+Here is the same data as CSV, ready to paste:
+
+```csv
+first_name,last_name,email,phone,address_line1,address_line2,city,county,postcode
+Eleanor,Whitcombe,worker1.customer001@example.com,07700 900123,14 Larkspur Close,,Harrogate,North Yorkshire,HG2 7QX
+Rajan,Mehta-Collins,worker1.customer002@example.com,07700 900456,Flat 3,27 Ferncroft Road,Bristol,,BS7 9LJ
+Siobhan,Archer,worker1.customer003@example.com,07700 900789,82 Thornbury Lane,,Chelmsford,Essex,CM2 6TW
+Dominic,Fairley,worker1.customer004@example.com,07700 900314,5 Kestrel Mews,,Shrewsbury,Shropshire,SY3 8PD
+Amara,Okonkwo-Hale,worker1.customer005@example.com,07700 900628,41 Glenmore Crescent,,Edinburgh,,EH10 5RN
+```
+
+The set includes a few edge cases that are useful in checkout tests: hyphenated surnames (records 2 and 5), a flat number on a second address line (record 2), and Scottish and Bristol addresses with no county.

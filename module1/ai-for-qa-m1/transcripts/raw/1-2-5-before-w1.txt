@@ -1,14 +1,17 @@
-Here are 5 fictional customer records for TechShop checkout testing. The names, emails and phone numbers are made up. The phone numbers use Ofcom's reserved drama ranges, so they won't connect to real people. The emails use the reserved `example.com` domain. The street addresses are invented, and the postcodes are realistic in format but not tied to real properties.
+Here are 5 fictional customer records for your TechShop checkout tests. Emails use the reserved `example.com` / `example.co.uk` domains, and phone numbers come from Ofcom's ranges reserved for fiction, so none of them can reach a real person.
 
 | # | First name | Last name | Email | Phone | Shipping address |
-|---|-----------|-----------|-------|-------|------------------|
-| 1 | Eleanor | Whitfield | eleanor.whitfield@example.com | 020 7946 0321 | 14 Harcourt Lane, London, SW11 3QT |
-| 2 | Rajesh | Patel | rajesh.patel@example.com | 0161 496 0872 | 7 Alderley Court, Manchester, M20 4HB |
-| 3 | Siobhan | McAllister | siobhan.mcallister@example.com | 0141 496 0455 | 52 Kelvin Row, Glasgow, G12 8LP |
-| 4 | Tomasz | Kowalczyk | tomasz.kowalczyk@example.com | 07700 900316 | Flat 3, 21 Priory Road, Bristol, BS6 7NR |
-| 5 | Megan | Llewellyn | megan.llewellyn@example.com | 029 2018 0743 | 9 Castle View, Cardiff, CF10 3AZ |
+|---|---|---|---|---|---|
+| 1 | Oliver | Hartwell | oliver.hartwell@example.co.uk | 07700 900123 | 14 Fernleigh Road, Islington, London, N7 8QT |
+| 2 | Priya | Mensah-Clarke | priya.mclarke@example.com | 0161 496 0457 | Flat 3, 22 Albion Crescent, Didsbury, Manchester, M20 4XJ |
+| 3 | Callum | Rourke | c.rourke@example.co.uk | 0131 496 0782 | 9 Thistlebank Lane, Morningside, Edinburgh, EH10 5RW |
+| 4 | Eleanor | Whitlock | ellie.whitlock@example.com | 07700 900846 | The Old Forge, 3 Mill Street, Bradford-on-Avon, Wiltshire, BA15 1LZ |
+| 5 | Dafydd | Prys-Owen | dafydd.prysowen@example.co.uk | 029 2018 0391 | 57 Heol Glanffrwd, Canton, Cardiff, CF11 9PD |
 
-**Notes for your tests:**
-- The records cover a mix of England, Scotland and Wales, with a flat address (Flat 3) and a mobile number (07700 900xxx) to test varied input formats.
-- If your checkout validates postcodes against a real address lookup, some of these may fail. In that case, swap in postcodes from your test environment's allowlist.
-- I can also produce these as CSV or JSON, or add edge cases such as long names, apostrophes, hyphens, accented characters or Northern Ireland (BT) postcodes.
+A few notes for testing:
+
+- **Edge cases built in:** a flat number in the first address line (#2), a named house with no simple street number (#4), hyphenated surnames (#2, #5), and a Welsh street name (#5). These are all useful for catching validation bugs.
+- **Postcodes** follow valid UK formats but the street/postcode combinations are invented. If your checkout validates against a live address lookup (e.g. Royal Mail PAF), these may be rejected. In that case you'll need your provider's sandbox test addresses.
+- **Phone #5** uses Cardiff's 029 2018 0xxx range, which Ofcom also reserves for drama use.
+
+Want these as a CSV or JSON file, or with extra fields like billing address or test card numbers from your payment provider's sandbox?

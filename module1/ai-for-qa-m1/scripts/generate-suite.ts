@@ -1,16 +1,23 @@
-// Deterministic generator for data/flaky-test-prompt/unrelated-suite.spec.ts.
+// Deterministic generator for data/1-1-4-flaky-ci/unrelated-suite.spec.ts.
 // No randomness: output depends only on the tables below, so every run is byte-identical.
 // The output is committed; learners never need to run this.
+//
+// Why it is this big: in practice 1.1.4 the learner must leave this file out of the prompt.
+// The suite is sized at 20,000+ tokens (lesson rule, words / 0.75) so that the token count alone
+// makes the exclusion obvious; the three files that belong in context total under 1,000.
+// 50 base checks x 5 viewports x 2 colour schemes = 500 tests. None of them touches the cart.
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const out = join(here, '..', 'data', 'flaky-test-prompt', 'unrelated-suite.spec.ts');
+const out = join(here, '..', 'data', '1-1-4-flaky-ci', 'unrelated-suite.spec.ts');
+
+const MIN_TOKENS = 20_000; // lesson rule: words / 0.75
 
 type Case = { title: string; path: string; locator: string; expected: string };
 
-// 50 regression tests that never touch the cart or its badge.
+// 50 base regression checks that never touch the cart or its badge.
 const cases: Case[] = [
   { title: 'home page shows the hero banner', path: '/', locator: "getByRole('img', { name: 'Autumn sale' })", expected: 'toBeVisible()' },
   { title: 'home page lists three featured categories', path: '/', locator: "getByTestId('featured-category')", expected: 'toHaveCount(3)' },
@@ -64,25 +71,46 @@ const cases: Case[] = [
   { title: 'brand page shows the brand logo', path: '/brands/nova', locator: "getByRole('img', { name: 'Nova logo' })", expected: 'toBeVisible()' },
 ];
 
-if (cases.length !== 50) throw new Error(`expected 50 cases, got ${cases.length}`);
+if (cases.length !== 50) throw new Error(`expected 50 base cases, got ${cases.length}`);
+
+const viewports = [
+  { name: 'wide', width: 1920, height: 1080 },
+  { name: 'desktop', width: 1440, height: 900 },
+  { name: 'laptop', width: 1280, height: 800 },
+  { name: 'tablet', width: 768, height: 1024 },
+  { name: 'mobile', width: 390, height: 844 },
+] as const;
+const schemes = ['light', 'dark'] as const;
 
 const header = `import { test, expect } from '@playwright/test';
 
-// Regression suite for TechShop storefront pages.
+// Regression suite for TechShop storefront pages, run at five viewports in light and dark mode.
 // Every test below passes in CI and none of them touches the cart.
-
-test.describe('storefront regression', () => {
 `;
 
-const body = cases
-  .map(
-    (c, i) => `  test('${String(i + 1).padStart(2, '0')} ${c.title}', async ({ page }) => {
+let n = 0;
+const blocks = viewports.flatMap((vp) =>
+  schemes.map((scheme) => {
+    const tests = cases
+      .map((c) => {
+        n += 1;
+        return `  test('${String(n).padStart(3, '0')} ${c.title} (${vp.name}, ${scheme})', async ({ page }) => {
+    await page.setViewportSize({ width: ${vp.width}, height: ${vp.height} });
+    await page.emulateMedia({ colorScheme: '${scheme}' });
     await page.goto('${c.path}');
     await expect(page.${c.locator}).${c.expected};
   });
-`,
-  )
-  .join('\n');
+`;
+      })
+      .join('\n');
+    return `\ntest.describe('storefront regression: ${vp.name}, ${scheme}', () => {\n${tests}});\n`;
+  }),
+);
 
-writeFileSync(out, `${header}${body}});\n`);
-console.log(`wrote ${out}`);
+const text = `${header}${blocks.join('')}`;
+const words = text.trim().split(/\s+/).filter(Boolean).length;
+const tokens = Math.round(words / 0.75);
+if (tokens < MIN_TOKENS) throw new Error(`suite is ${tokens} tokens (lesson rule); needs at least ${MIN_TOKENS}`);
+
+writeFileSync(out, text);
+console.log(`wrote ${out}: ${n} tests, ${words} words, ~${tokens} tokens (lesson rule), ~${Math.round(text.length / 4)} tokens (chars / 4)`);

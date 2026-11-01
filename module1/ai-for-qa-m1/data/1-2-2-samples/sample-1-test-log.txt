@@ -1,0 +1,19 @@
+2026-10-05 09:12:03,411 INFO  [runner] Starting suite: auth-regression (worker 2 of 4)
+2026-10-05 09:12:03,980 INFO  [auth.login.spec] TEST START: login rejects an expired password
+2026-10-05 09:12:04,102 DEBUG [http] POST /api/v2/auth/login -> 401 (118ms)
+2026-10-05 09:12:04,103 DEBUG [http] request body: {"email":"hannah.brooks@techshop-demo.com","password":"********"}
+2026-10-05 09:12:04,105 WARN  [auth.login.spec] Login failed for user hannah.brooks@techshop-demo.com
+2026-10-05 09:12:04,106 INFO  [auth.login.spec] customerId=CUST-20931 sessionId=sess_9f3c71a2e4b84d06
+2026-10-05 09:12:04,107 DEBUG [auth.login.spec] response headers: x-request-id=req-7d21c0 set-cookie=sid=sess_9f3c71a2e4b84d06; Path=/; HttpOnly
+2026-10-05 09:12:04,240 ERROR [auth.login.spec] AssertionError: expected "Your password has expired" but received "Invalid credentials"
+2026-10-05 09:12:04,241 ERROR [auth.login.spec]   at tests/auth/login.spec.ts:44:31
+2026-10-05 09:12:04,243 INFO  [auth.login.spec] TEST END: FAILED (1.26s)
+2026-10-05 09:12:04,350 INFO  [auth.login.spec] TEST START: login locks the account after five failed attempts
+2026-10-05 09:12:05,014 WARN  [auth.login.spec] Attempt 2/5 failed for hannah.brooks@techshop-demo.com
+2026-10-05 09:12:05,602 WARN  [auth.login.spec] Attempt 3/5 failed for hannah.brooks@techshop-demo.com
+2026-10-05 09:12:06,188 WARN  [auth.login.spec] Attempt 4/5 failed for hannah.brooks@techshop-demo.com
+2026-10-05 09:12:06,771 WARN  [auth.login.spec] Attempt 5/5 failed for hannah.brooks@techshop-demo.com
+2026-10-05 09:12:06,772 INFO  [auth.login.spec] account locked: customerId=CUST-20931
+2026-10-05 09:12:06,903 INFO  [auth.login.spec] TEST END: PASSED (2.55s)
+2026-10-05 09:12:07,010 INFO  [runner] Suite finished: 2 tests, 1 passed, 1 failed
+2026-10-05 09:12:07,011 INFO  [runner] Artifacts written to ./test-results/auth-regression

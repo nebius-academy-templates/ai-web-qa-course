@@ -20,5 +20,5 @@ Counted with a plain word and character count, before any tokenizer:
 | Structured prompt | 32 | 209 | 38 words, about 50 to 55 tokens | 43 | 52 |
 | DOM snippet | 13 | 157 | about 35 to 45 tokens | 17 | 39 |
 
-- The error line is the one that looks wrong: 28 tokens is well above both estimates. A real tokenizer will settle it. If it comes back near 12 to 16, change the lesson.
-- The one-line prompt is 8 words, not 9, and the structured prompt is 32 words, not 38. The token figures in the lesson are still roughly right (chars / 4), but the word counts printed next to them are not.
+- The error line is the one that looks wrong: 28 tokens is well above both estimates. The lesson will say about 12 tokens until a tokenizer screenshot confirms or corrects it.
+- The one-line prompt is 8 words, not 9, and the structured prompt is 32 words, not 38. Final lesson figures: 8 words, about 11 tokens; 32 words, about 43 tokens (lesson rule). See `NOTES-FOR-LXD.md` in the solutions repository.

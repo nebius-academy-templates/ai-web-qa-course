@@ -1,0 +1,9 @@
+You are a QA automation engineer. Generate the most stable Playwright locator for the Sign in button in the login form below. Prefer role-based or test-id locators and avoid XPath. Return only the locator, no explanation.
+
+<form id="login" class="login-form">
+  <label for="email">Email address</label>
+  <input id="email" name="email" type="email">
+  <label for="password">Password</label>
+  <input id="password" name="password" type="password">
+  <button type="submit" class="btn primary">Sign in</button>
+</form>

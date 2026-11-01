@@ -1,0 +1,34 @@
+# TechShop web - CI pipeline (staging checks)
+name: staging-checks
+
+on:
+  push:
+    branches: [main, release/*]
+  schedule:
+    - cron: "0 5 * * 1-5"
+
+env:
+  NODE_VERSION: "20"
+  BASE_URL: https://shop-staging.internal.corp
+  DATABASE_URL: postgres://qa_runner:Stg-Pa55w0rd-SYNTH@db-staging-02.internal.corp:5432/techshop_staging
+  PAYMENTS_API_KEY: tsk_live_8Fq2Jw9XmP4rZc7LbN1vKd5HyT3aGe6U_SYNTHETIC
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run end-to-end tests
+        run: npx playwright test --project=chromium --workers=4
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/

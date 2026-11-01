@@ -1,15 +1,14 @@
-import { test } from 'node:test';
-import assert from 'node:assert/strict';
+import { expect, test } from 'vitest';
 import { countWords, estimateTokens, charsOver4 } from './estimate.ts';
 
 test('countWords ignores extra whitespace and blanks', () => {
-  assert.equal(countWords('  one  two\nthree\t four '), 4);
-  assert.equal(countWords(''), 0);
+  expect(countWords('  one  two\nthree\t four ')).toBe(4);
+  expect(countWords('')).toBe(0);
 });
-test('estimateTokens: 9 words is about 12 tokens (lesson example)', () => {
-  assert.equal(estimateTokens(9), 12);
-  assert.equal(estimateTokens(100), 133);
+test('estimateTokens: 8 words is about 11 tokens (lesson 1.3.1 example)', () => {
+  expect(estimateTokens(8)).toBe(11);
+  expect(estimateTokens(100)).toBe(133);
 });
 test('charsOver4 rounds characters / 4', () => {
-  assert.equal(charsOver4('Error: locator.click: Timeout 30000ms exceeded.'), 12);
+  expect(charsOver4('Error: locator.click: Timeout 30000ms exceeded.')).toBe(12);
 });
