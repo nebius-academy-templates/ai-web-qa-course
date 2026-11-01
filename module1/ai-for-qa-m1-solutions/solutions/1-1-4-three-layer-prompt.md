@@ -49,27 +49,39 @@ Accepted band: **about 900 to 1,850 tokens** in total. The upper end covers lear
 
 **Verdict: comfortable.** It is a small fraction of any current context window, so truncation and silent degradation are not a concern here. Adding the suite would multiply the size about 25 times (to roughly 24,000 tokens or more) for no gain.
 
-## 5. Verdict lines from an honest run (observed, 2 runs with this system prompt, 2026-11-01)
+## 5. Verdict lines from an honest run (observed in claude.ai, 2026-11-01)
 
-- **Format:** followed exactly in both runs: Root Cause / Evidence / Recommended Fix, with no preamble and no fourth heading. One run added a "Side note, outside this flake" on the static `aria-label` at the end of Recommended Fix. "Yes, but it added an accessibility side note" is an accurate learner report.
-- **Evidence:** both runs quoted the `setTimeout(..., 150)` click handler, the `toHaveText('1', { timeout: 100 })` line, `Timeout: 100ms`, a `locator resolved to <span hidden ...>0</span>` line, the ticket's "server is not involved" sentence and `Previous 9 runs: 3 flaky, 6 clean`. All of these are genuine lines from the files.
-- **Your call:** both runs named the 100 ms timeout against the 150 ms delay as the cause, put the defect in the test ("the test is the problem, not the product"), and said not to add retries because `--retries=1` is what hides the flake. A learner who agrees is right. Neither run blamed "a race condition" without quoted lines, so that weak pattern did not occur.
-- **Honest about limits:** both runs listed things the files cannot settle, such as why the rate is about one in three (the trace would show it), whether the 150 ms delay is intended, and why the "caps at 9+" test is stable ("I can't see that test's code").
+The run was in claude.ai, with the system prompt above set as a Project's instructions (claude.ai has no separate system-prompt box) and the three files pasted into the message.
 
-## 6. The completed sentence (second run, no system prompt) (observed, 2 runs, 2026-11-01)
+- **Format:** followed exactly: Root Cause / Evidence / Recommended Fix, with no preamble. The last fix item was marked "Unrelated to the flake" and pointed out the static `aria-label` (AC6). A learner who reports "yes, plus a note on accessibility" is accurate.
+- **Evidence:** quoted lines from all three files: the `setTimeout(..., 150)` handler, `toHaveText('1', { timeout: 100 })`, `Timeout: 100ms`, the `locator resolved to <span hidden ...>0</span>` lines, the retry that passed, and the ticket's note that the server is not involved.
+- **Your call:** the cause was the 100 ms timeout against the 150 ms delay: "a race in the test", with the product not slow. It said removing the override "is not a global timeout increase". It did not recommend retries. A learner who agrees is right.
+- **Limits stated:** it listed what it could not tell from the files: why the rate is about one in three (the trace would show it), the project's default expect timeout (it had not seen `playwright.config`), and how the "caps at 9+" test is written.
+
+Two earlier runs outside claude.ai gave the same verdicts.
+
+## 6. The completed sentence (second run, no system prompt) (observed in claude.ai, 2026-11-01)
 
 "Without the system prompt the response was less ______ because ______."
 
-**What actually changed:**
-- **The format went.** Both runs used their own headings ("Diagnosis / Why it fails only sometimes / Fix / Unrelated problems") and showed code blocks instead of a quoted Evidence section.
-- **It went further beyond the task.** Both runs added a section on problems outside the flake: AC6 (the accessible name) and AC7 (the count not surviving navigation, fixed with `sessionStorage`). Both also suggested making flaky tests fail or be reported in CI.
-- **It was less careful about unseen code.** One run said as fact that the other badge tests pass "because they don't use this tight timeout". The other hedged ("very likely ... worth confirming"). With the system prompt, both runs said they couldn't see that code.
+The second run was a normal claude.ai chat with the same message and files.
 
-**What did not change (don't expect it):**
-- The diagnosis was just as correct: 100 ms against 150 ms, fix the test.
-- Neither run recommended retries.
-- The response was not longer. It was about 810 words without the system prompt, against about 950 with it, because the Evidence section adds length.
+**What changed:**
+- **Format.** It used two headings, "Diagnosis: the assertion's 100ms timeout is shorter than the app's own 150ms delay" and "Fix", not the three required ones.
+- **Evidence.** It quoted far fewer lines and had no separate Evidence section.
+- **Limits.** It did not list what the files could not settle. On the "caps at 9+" test it gave a reason ("Ten sequential clicks leave plenty of time"), with only a light hedge.
+- **Length.** It was shorter: about 480 words against about 870.
 
-Accept: "less structured, because the three headings disappeared"; "less focused, because it added AC6/AC7 problems I didn't ask about"; "less careful, because it explained the other tests without seeing their code". Mark unmet: a sentence with no observation ("less consistent because the model defaults to pretrained behaviour"). A learner who writes "less accurate", "longer" or "it recommended retries" must quote the line, because none of these happened in the captured runs.
+**What did not change:**
+- The diagnosis was the same and correct.
+- No retries were suggested.
+- It still added the AC6 `aria-label` point as "One unrelated thing I noticed".
 
-Raw runs: `run-checks/2026-11-01/114-*.md`.
+Accept, for example:
+- "less structured, because the three headings were replaced by Diagnosis and Fix"
+- "less evidenced, because it quoted far fewer lines and had no Evidence section"
+- "less careful about limits, because it explained the 9+ test without having its code"
+
+Mark unmet: a sentence with no observation, such as "less consistent because the model defaults to pretrained behaviour". "Less accurate", "longer" or "it suggested retries" need a quote, because none of these happened in the captured runs.
+
+Runs: claude.ai conversations 70cba8f7 (Project with instructions) and a19da0d0 (no instructions); details in `run-checks/2026-11-01/`.

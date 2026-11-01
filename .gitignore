@@ -28,3 +28,7 @@ tests/**/*-win32.png
 # shared - one render environment, one set of files, one truth to review.
 tests/**/*-darwin.png
 tests/**/*-win32.png
+
+# Grader-only run captures: they reveal planted causes. Keep out of this repo
+# until the solutions move to their own private repository (A3).
+module1/ai-for-qa-m1-solutions/run-checks/

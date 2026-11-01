@@ -58,14 +58,14 @@ The four pre-send checks from 1.2.1: real names or personal information; IDs or 
 - Samples 3 and 4 are flagged too (names, emails and phones in 3; the `userId` column in 4). That is the lesson's point: a regex finds shapes, it cannot tell a faker-generated name from a real one or an anonymous ID from a production ID. Provenance is a human judgement, and the scanner must not be used to decide "safe".
 - Practical use: run it as a prompt-hygiene check on files you did **not** generate yourself, and treat a clean run as "no known pattern found", never as "safe".
 
-## What a model gets wrong on this set (observed, 2 runs, 2026-11-01)
+## What a model gets wrong on this set (observed in claude.ai, 2026-11-01)
 
-**The two predicted errors could not be reproduced. The grader should not expect them.** Both runs were given all five files with the question "could each one be pasted into a public LLM?".
-- **Sample 3 was not over-flagged.** Both runs called it **safe**, and for the right reasons: the `faker (seed 4242)` header, the reserved `.example` domain and the Ofcom `7700 900` range. Both added the provenance caveat, for example "check that nobody has 'topped up' the fixture by hand with real customer records".
-- **Sample 2's hostnames were not missed.** Both runs listed both `internal.corp` hostnames as masking targets, alongside the database password and the API key. Both also said the real fix is to rotate the credentials and move them into the CI secret store.
+**The two predicted errors did not happen. The grader should not expect them.** The five files were pasted into a claude.ai chat with the question "could each one be pasted into a public LLM?" (conversation a78418bc). Two earlier runs outside claude.ai gave the same results.
+- **Sample 3 was not over-flagged.** It was called "Safe" because "it's Faker-generated with a documented seed", the emails use `.example`, and the phone numbers are in the Ofcom drama range.
+- **Sample 2's hostnames were not missed.** The mask list was "the password, the full API key, the hostnames and the database name", with the advice to use `${{ secrets.DATABASE_URL }}`-style references instead.
 
-What the runs did differently from this key:
-- **Sample 4 was stricter than the key.** One run said "Safe once IDs are swapped", the other "Borderline: mask first". Both treated the `usr_` IDs as pseudonymous data to replace. This is a defensible reading of the key's own caveat, so accept "safe, with the IDs replaced" as meeting the element.
-- **Sample 5 used the reserved values as a clue but still called it unsafe.** One run noted the `example.com` email and `7700 900` phone "hint that this sample is synthetic", but said a real response would look the same, so treat it as real. That is the right reasoning.
+Where it differed from this key:
+- **Sample 4:** "Safe (with one check)". If the `usr_` IDs are real production IDs, "they count as pseudonymised personal data under UK GDPR" and should be re-keyed. That matches the caveat in this key, so accept it.
+- **Sample 1:** it called the session ID "effectively a credential". That is a stronger reason than this key gives, and it is correct.
 
-So the realistic learner failure on this set is not a mistake copied from Claude. It is a learner disagreeing with a correct Claude answer (for example, overruling the "safe" verdict on sample 3 because the file contains names), or accepting the verdicts without the reasons. Raw runs: `run-checks/2026-11-01/122-*.md`.
+So the realistic learner mistake on this set is not copying an error from Claude. It is overruling a correct answer, for example marking sample 3 unsafe because it contains names, or giving the verdicts without the reasons. Details: `run-checks/2026-11-01/`.

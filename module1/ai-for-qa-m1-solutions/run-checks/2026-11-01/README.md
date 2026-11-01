@@ -1,5 +1,7 @@
 # Run checks, 2026-11-01
 
+**Primary evidence: real claude.ai runs.** See `claudeai-runs.md` and `claudeai-112-original.md`. The subagent captures described below came first and are kept as supporting evidence.
+
 Raw captures that closed the `[RUN CHECK]` markers in `solutions/`. Grader-only: some of these runs give away the planted causes, so do not copy them into the learner repo.
 
 **STATUS: CAPTURED via subagent runs on 2026-11-01, not typed into claude.ai.** This is the same method as the 2026-10-09 transcripts. Each run was a separate, fresh Claude instance given the prompt file's text as a user's first message, with an instruction to reply as in a chat, without tools. The 1.1.7 chains were one instance each, given the five prompts one at a time. Output is unedited. Model: `claude-opus-5-5` (configured; the serving model was not verified). For 1.1.4 "with system prompt", the system prompt was supplied in the message as a labelled block that the model was told to follow, not as a true API system prompt. Re-run in real chats before go-live if exact fidelity matters.

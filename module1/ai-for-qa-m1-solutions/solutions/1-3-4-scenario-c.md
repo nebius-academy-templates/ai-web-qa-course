@@ -6,7 +6,7 @@ Money uses the illustrative placeholder rates in `rates.json` (mid tier).
 
 Scenario (from the practice): a pipeline runs about 30 times a day with about a 15% failure rate; one QA engineer owns triage; Claude produces a first-pass classification that the engineer confirms or corrects.
 
-The practice gives no manual time per failure, so the template **has to assume one**, and the notes must say so. I assume 12 minutes (open the log, find the failing step, decide whether it is a product defect, a test defect, an environment problem or a flake). **[SME CHECK]**
+The practice gives no manual time per failure, so the template **has to assume one**, and the notes must say so. The figure is 12 minutes (open the log, find the failing step, decide whether it is a product defect, a test defect, an environment problem or a flake). 12 minutes is the canonical figure for the grader (confirmed by the SME, 2026-11-01).
 
 ## Completed template
 
