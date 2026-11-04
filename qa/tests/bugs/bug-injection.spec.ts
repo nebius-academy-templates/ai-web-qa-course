@@ -29,7 +29,11 @@ import { test, expect, type Page } from '@playwright/test';
 
 /** Pre-seed active bugs so they apply during the page's own DOMContentLoaded handler. */
 async function withBugs(page: Page, bugIds: string[]) {
+  // addInitScript re-runs on every navigation, reloads included — seed once per
+  // tab so a test that resets and reloads isn't re-infected by its own setup.
   await page.addInitScript((ids) => {
+    if (sessionStorage.getItem('techshop-bugs-seeded')) return;
+    sessionStorage.setItem('techshop-bugs-seeded', '1');
     localStorage.setItem('techshop-bugs', JSON.stringify(ids));
   }, bugIds);
 }
