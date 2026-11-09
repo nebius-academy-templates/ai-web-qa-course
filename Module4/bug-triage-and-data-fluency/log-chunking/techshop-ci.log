@@ -87,24 +87,24 @@
 2026-06-10T02:14:43.200Z [info] ✓ tests/catalog/search.spec.ts:18:5 > Search > product results appear as user types (1.3s)
 2026-06-10T02:14:43.500Z [info] [5/12] tests/profile/profile.spec.ts:19:5 > Profile > user can update address
 2026-06-10T02:14:43.900Z [warn] browser console warning: [Checkout] shipping options request exceeded 1500ms
-2026-06-10T02:14:44.100Z [info] [6/12] tests/orders/order-history.spec.ts:21:5 > Orders >user can filter order history
+2026-06-10T02:14:44.100Z [info] [6/12] tests/orders/order-history.spec.ts:21:5 > Orders > user can filter order history
 2026-06-10T02:14:44.300Z [info] ✓ tests/cart/cart.spec.ts:27:5 > Cart > add a product from product grid (2.1s)
-2026-06-10T02:14:44.600Z [info] ✓ tests/profile/profile.spec.ts:19:5 > Profile > user canupdate address (1.1s)
-2026-06-10T02:14:44.900Z [info] ✓ tests/orders/order-history.spec.ts:21:5 > Orders > usercan filter order history (0.8s)
+2026-06-10T02:14:44.600Z [info] ✓ tests/profile/profile.spec.ts:19:5 > Profile > user can update address (1.1s)
+2026-06-10T02:14:44.900Z [info] ✓ tests/orders/order-history.spec.ts:21:5 > Orders > user can filter order history (0.8s)
 2026-06-10T02:14:45.100Z [info] [7/12] tests/catalog/product-details.spec.ts:31:5 > Product details > price and image are visible
-2026-06-10T02:14:45.300Z [info] [8/12] tests/wishlist/wishlist.spec.ts:16:5 > Wishlist >user can save item
+2026-06-10T02:14:45.300Z [info] [8/12] tests/wishlist/wishlist.spec.ts:16:5 > Wishlist > user can save item
 2026-06-10T02:14:45.500Z [warn] network: GET https://staging.techshop.example/api/shipping/options pending > 1800ms
 2026-06-10T02:14:45.800Z [info] ✓ tests/catalog/product-details.spec.ts:31:5 > Product details > price and image are visible (0.7s)
-2026-06-10T02:14:46.000Z [info] ✓ tests/wishlist/wishlist.spec.ts:16:5 > Wishlist > usercan save item (0.7s)
-2026-06-10T02:14:46.200Z [info] [9/12] tests/promotions/promo.spec.ts:15:5 > Promotions >promo badge is shown for discounted product
+2026-06-10T02:14:46.000Z [info] ✓ tests/wishlist/wishlist.spec.ts:16:5 > Wishlist > user can save item (0.7s)
+2026-06-10T02:14:46.200Z [info] [9/12] tests/promotions/promo.spec.ts:15:5 > Promotions > promo badge is shown for discounted product
 2026-06-10T02:14:46.500Z [info] [10/12] tests/support/contact.spec.ts:23:5 > Support > contact form validation works
 2026-06-10T02:14:46.800Z [info] [11/12] tests/checkout/summary.spec.ts:17:5 > Checkout summary > totals update after quantity change
 2026-06-10T02:14:47.000Z [info] ✓ tests/promotions/promo.spec.ts:15:5 > Promotions > promo badge is shown for discounted product (0.8s)
 2026-06-10T02:14:47.100Z [warn] api response: POST /checkout -> 408 Request Timeout duration=30001ms traceId=af82d9
 2026-06-10T02:14:47.200Z [warn] browser console warning: checkout submit blocked waiting
 2026-06-10T02:14:47.300Z [info] [12/12] tests/navigation/header.spec.ts:11:5 > Header > category links navigate correctly
-2026-06-10T02:14:47.500Z [info] ✓ tests/support/contact.spec.ts:23:5 > Support > contact
-2026-06-10T02:14:47.700Z [info] ✓ tests/checkout/summary.spec.ts:17:5 > Checkout summary> totals update after quantity change (0.9s)
+2026-06-10T02:14:47.500Z [info] ✓ tests/support/contact.spec.ts:23:5 > Support > contact form validation works (1.0s)
+2026-06-10T02:14:47.700Z [info] ✓ tests/checkout/summary.spec.ts:17:5 > Checkout summary > totals update after quantity change (0.9s)
 2026-06-10T02:14:47.900Z [info] ✓ tests/navigation/header.spec.ts:11:5 > Header > category links navigate correctly (0.6s)
 2026-06-10T02:14:48.000Z [warn] response finished with status 503 Service Unavailable requestId=req-7812 route=/api/orders
 2026-06-10T02:14:48.200Z [info] retry #1 for tests/checkout/checkout.spec.ts:52:5 > Checkout > user can submit order with valid address
