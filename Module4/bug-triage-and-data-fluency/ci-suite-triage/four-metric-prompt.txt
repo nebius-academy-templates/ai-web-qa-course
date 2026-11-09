@@ -4,7 +4,7 @@ Given the following test run dataset, calculate for each unique test_name:
 2. Mean time-to-failure (mean of duration_seconds for FAIL rows only)
 3. Median time-to-failure (median of duration_seconds for FAIL rows only)
 4. Failure count per week (group FAIL rows by calendar week —
-   use ISO week numbering, e.g. W1, W2, W3, W4)
+   label the weeks W1, W2, W3, W4 in date order, W1 = the week of the first run)
 Return results as a markdown table with these exact columns:
 test_name | failure_rate | mean_mttf_s | median_mttf_s | weekly_failure_counts | outlier_flag
 For the outlier_flag column:
