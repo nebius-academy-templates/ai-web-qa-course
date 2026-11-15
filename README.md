@@ -25,6 +25,25 @@ npm run start:api   # REST API only    → http://localhost:3001
 
 ---
 
+## Repository layout
+
+| Path | What it is | Used in |
+|------|-----------|---------|
+| `index.html`, `cart.html`, `checkout.html`, `login.html`, `products.html`, `css/`, `js/` | TechShop static frontend (also the GitHub Pages site) | all modules |
+| `api/` | TechShop REST API (Express) | all modules |
+| `tests/` + `playwright.config.js` | Locator and visual tests (site on `:4300`) | Modules 2–3 |
+| `scripts/` | Auto-fix pipelines, CI-failure playground, `patch-testids.py` | Modules 2 and 4 |
+| `design-review/`, `design-assets/` | Design-conformance captures and lesson-asset builders | Module 3 |
+| `qa/` + `playwright.config.ts` | `/qa` skill suite — API, E2E and bug-injection tests (site on `:3000`) and test cases | Module 4 |
+| `.qa/` | QA project context for the `/qa` skill | Module 4 |
+| `workshop-2/` | Secure-pipeline workshop (own `README.md`) | Workshop 2 |
+| `docs/` | Workshop plans and other write-ups | — |
+| `.claude/`, `.agents/`, `skills-lock.json` | Claude Code settings and skills | — |
+
+The two Playwright configs are independent: `npm test` uses `playwright.config.js`; `npm run qa*` uses `playwright.config.ts`.
+
+---
+
 ## Pages
 
 | Page | URL |
