@@ -22,8 +22,5 @@ qa/report/
 tests/**/*-darwin.png
 tests/**/*-win32.png
 
-# Visual baselines: only Docker-generated -linux renders are committed.
-# Local platform baselines are kept for fast pre-push feedback but never
-# shared - one render environment, one set of files, one truth to review.
-tests/**/*-darwin.png
-tests/**/*-win32.png
+# Local screencast recordings (large, not course source)
+screencasts/
