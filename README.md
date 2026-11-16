@@ -2,15 +2,15 @@
 
 A demo e-commerce store for tech gadgets.
 
-**Live site:** https://cristianpgit.github.io/techshop-demo/
+**Live site:** https://nebius-academy-templates.github.io/ai-web-qa-course/
 
 ---
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/CristianPGit/techshop-demo.git
-cd techshop-demo
+git clone https://github.com/nebius-academy-templates/ai-web-qa-course.git
+cd ai-web-qa-course
 npm install
 
 npm run start:all   # site on :4300 + API on :3001

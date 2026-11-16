@@ -18,7 +18,7 @@ for an "AI for QA" course (Modules 2–5)**.
   self-explanatory** — a student reading the plan or test should understand *why* each case exists,
   not just *what* it asserts. (It is also a genuine working suite; keep it green where the app is
   correct.)
-- **Repo:** `CristianPGit/techshop-demo` · Live (read-only) build: https://cristianpgit.github.io/techshop-demo/
+- **Repo:** `nebius-academy-templates/ai-web-qa-course` · Live (read-only) build: https://nebius-academy-templates.github.io/ai-web-qa-course/
 - **Local path:** `/Users/cristianpandele/Documents/learn.dev/demo-shop/`
 
 ---
@@ -65,7 +65,7 @@ Single app, **no monorepo**, **no framework**. Two processes:
   No real payments, no real PII.
 - Frontend `http://localhost:3000` · API `http://localhost:3001`.
 - Live GitHub Pages build is **read-only** (static frontend only — no API). Point browser tests at it via
-  `WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium`.
+  `WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium`.
 - Playwright auto-starts both local servers (`webServer` block) and reuses them if already running.
 
 ---
@@ -132,7 +132,7 @@ npm run qa:ui              # Playwright interactive UI
 npm run qa:report          # open HTML report (qa/report)
 
 # Point browser tests at the live Pages build (no local server, frontend only)
-WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium
+WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium
 
 # CI failure playground (intentionally exit 1 — do NOT fix)
 npm run ci:clean           # one focused error

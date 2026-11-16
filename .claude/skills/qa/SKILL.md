@@ -55,7 +55,7 @@ Target the **live** GitHub Pages build instead of local (frontend only — the
 API/cart/order suites won't apply there):
 
 ```bash
-WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium
+WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium
 ```
 
 ## How to run this skill

@@ -1,6 +1,6 @@
 # 🧪 Exploratory Test Report — TechShop (live GitHub Pages build)
 
-**Target:** https://cristianpgit.github.io/techshop-demo/ (frontend-only; no API on Pages)
+**Target:** https://nebius-academy-templates.github.io/ai-web-qa-course/ (frontend-only; no API on Pages)
 **Driver:** `agent-browser` · **Date:** 2026-07-01
 
 Grounded in the live build: walked the five surfaces (home, products, cart, checkout, login)
@@ -25,7 +25,7 @@ No console errors observed across the flow.
 | 1 | Empty-cart shipping | Empty cart shows **Shipping $9.99 / Total $9.99** — should be $0.00. Known quirk; flag separately, not a new regression. |
 
 ## Notes for automation
-- Live build is a **subpath** deploy (`…/techshop-demo/`). Playwright's `baseURL` must end
+- Live build is a **subpath** deploy (`…/ai-web-qa-course/`). Playwright's `baseURL` must end
   with a trailing slash and specs must use **relative** gotos (`index.html`, not `/index.html`)
   or the leading slash drops the subpath and hits GitHub's 404. Fixed in `playwright.config.ts`
   (base normalized to trailing slash) and used by `qa/tests/e2e/smoke.spec.ts`.
