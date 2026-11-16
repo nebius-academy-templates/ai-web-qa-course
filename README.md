@@ -36,9 +36,13 @@ npm run start:api   # REST API only    → http://localhost:3001
 | `design-review/`, `design-assets/` | Design-conformance captures and lesson-asset builders | Module 3 |
 | `qa/` + `playwright.config.ts` | `/qa` skill suite — API, E2E and bug-injection tests (site on `:3000`) and test cases | Module 4 |
 | `.qa/` | QA project context for the `/qa` skill | Module 4 |
-| `workshop-2/` | Secure-pipeline workshop (own `README.md`) | Workshop 2 |
+| `workshop-2/` | Secure-pipeline workshop: `src/`, `tests/`, `fixtures/`, `checkpoints/` (own `package.json` and `README.md`) | Workshop 2 |
 | `docs/` | Workshop plans and other write-ups | — |
+| `.github/workflows/` | `deploy-pages.yml` (publishes the site from `main`) and `playwright.yml` (CI) | all modules |
+| `package.json`, `serve.json` | npm scripts and static-server config | all modules |
 | `.claude/`, `.agents/`, `skills-lock.json` | Claude Code settings and skills | — |
+
+Generated output (`test-results/`, `qa/report/`, `screencasts/`, visual baselines) is gitignored.
 
 The two Playwright configs are independent: `npm test` uses `playwright.config.js`; `npm run qa*` uses `playwright.config.ts`.
 
