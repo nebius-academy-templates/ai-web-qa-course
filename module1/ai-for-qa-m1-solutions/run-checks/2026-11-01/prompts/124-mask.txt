@@ -1,0 +1,22 @@
+Here is a customer record from our staging database. I need you to help me write assertions for an order-confirmation test that checks the email format, the order number and the purchase amount.
+
+Before that: classify every field (direct identifier, indirect identifier, sensitive attribute or clean), decide a treatment for each (mask, delete, anonymize or keep), and return a masked version of the record that keeps the format of every field so I can still use it for the test.
+
+{
+  "customerId": "CUST-10482",
+  "firstName": "Emma",
+  "lastName": "Johnson",
+  "email": "emma.johnson@example.com",
+  "phone": "+1-415-555-0198",
+  "address": "245 Oak Street",
+  "city": "Seattle",
+  "state": "WA",
+  "postalCode": "98109",
+  "dateOfBirth": "1992-08-14",
+  "nationalId": "456-72-8912",
+  "accountNumber": "9876543210",
+  "ipAddress": "192.168.14.23",
+  "orderNumber": "ORD-778214",
+  "purchaseAmount": 249.99,
+  "orderDate": "2025-02-18"
+}

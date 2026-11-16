@@ -1,0 +1,233 @@
+Functional Test Cases: TechShop Product Search
+
+Scope: Product Search returns mobile phones only. Queries for other product types should return no phone results unless a phone matches the query.
+
+Format: ID | Title | Preconditions | Steps | Test Data | Expected Result
+
+POSITIVE SCENARIOS
+
+TC-PS-P01 | Search by brand name
+Preconditions: Catalog contains phones from several brands.
+Steps: 1. Enter "Samsung" in the search box. 2. Submit.
+Test Data: "Samsung"
+Expected Result: Only Samsung phones are listed. Each card shows the brand Samsung.
+
+TC-PS-P02 | Search by full model name
+Preconditions: "iPhone 15 Pro" exists in the catalog.
+Steps: 1. Enter "iPhone 15 Pro". 2. Submit.
+Test Data: "iPhone 15 Pro"
+Expected Result: The matching model is listed first. Unrelated phones are not listed above it.
+
+TC-PS-P03 | Search by partial model name
+Preconditions: "Galaxy S23" and "Galaxy S24" exist.
+Steps: 1. Enter "Galaxy S2". 2. Submit.
+Test Data: "Galaxy S2"
+Expected Result: Both Galaxy S23 and Galaxy S24 are listed.
+
+TC-PS-P04 | Search is case-insensitive
+Preconditions: "Xiaomi Redmi Note 13" exists.
+Steps: 1. Submit "xiaomi redmi note 13". 2. Submit "XIAOMI REDMI NOTE 13". 3. Compare results.
+Test Data: Lowercase, uppercase, and mixed-case variants
+Expected Result: All variants return the same results.
+
+TC-PS-P05 | Search by feature keyword
+Preconditions: Catalog includes 5G and 4G phones.
+Steps: 1. Enter "5G". 2. Submit.
+Test Data: "5G"
+Expected Result: Phones listed as supporting 5G are shown. 4G-only phones are not shown.
+
+TC-PS-P06 | Search by operating system
+Preconditions: Catalog includes Android and iOS phones.
+Steps: 1. Enter "Android". 2. Submit. 3. Enter "iOS". 4. Submit.
+Test Data: "Android", "iOS"
+Expected Result: Android query returns Android phones only. iOS query returns iPhones only.
+
+TC-PS-P07 | Search results open the product detail page
+Preconditions: Search returns at least one phone.
+Steps: 1. Search for a phone. 2. Click the result.
+Expected Result: The detail page for the same phone opens, with matching name and price.
+
+TC-PS-P08 | Result card displays required fields
+Preconditions: Search returns at least one phone.
+Steps: 1. Search for a phone. 2. Check each result card.
+Expected Result: Each card shows image, brand, model, price, and availability.
+
+TC-PS-P09 | Search with a sort option applied
+Preconditions: At least five phone results for the query.
+Steps: 1. Search "Samsung". 2. Sort by Price: Low to High. 3. Check order. 4. Repeat for Price: High to Low.
+Expected Result: Results are ordered by the selected sort option.
+
+TC-PS-P10 | Filter applied to search results
+Preconditions: Price filter is available.
+Steps: 1. Search "phone". 2. Set price range to 300 to 600. 3. Check results.
+Expected Result: Only phones priced 300 to 600 are listed. Result count matches the number shown.
+
+TC-PS-P11 | Pagination of results
+Preconditions: More than one page of results.
+Steps: 1. Search "phone". 2. Go to page 2.
+Expected Result: Page 2 shows different phones from page 1. No duplicates across pages.
+
+NEGATIVE SCENARIOS
+
+TC-PS-N01 | Search for a laptop
+Preconditions: Catalog contains laptops.
+Steps: 1. Enter "MacBook Air". 2. Submit.
+Test Data: "MacBook Air"
+Expected Result: No laptops are listed. A no-results message is shown.
+
+TC-PS-N02 | Search for a tablet
+Preconditions: Catalog contains tablets.
+Steps: 1. Enter "iPad". 2. Submit.
+Test Data: "iPad"
+Expected Result: No tablets are listed. No phones are listed unless their name or specs contain "iPad".
+
+TC-PS-N03 | Search for an accessory
+Preconditions: Catalog contains chargers and cases.
+Steps: 1. Enter "USB-C charger". 2. Submit.
+Test Data: "USB-C charger"
+Expected Result: No accessories are listed. A no-results message is shown.
+
+TC-PS-N04 | Search for a non-existent model
+Preconditions: Model is not in the catalog.
+Steps: 1. Enter "Nokia Z999". 2. Submit.
+Test Data: "Nokia Z999"
+Expected Result: A "no results found" message is shown. The page does not show a blank grid without explanation.
+
+TC-PS-N05 | Search for a brand TechShop does not stock
+Preconditions: Brand has no products in the catalog.
+Steps: 1. Enter the brand name. 2. Submit.
+Test Data: A brand with no catalog products
+Expected Result: A "no results found" message is shown.
+
+TC-PS-N06 | Empty search submission
+Preconditions: Search box is empty.
+Steps: 1. Click the search icon or press Enter.
+Test Data: "" (empty)
+Expected Result: Search is blocked with a validation message, or the default listing appears, as defined in the requirements. No error page is shown.
+
+TC-PS-N07 | Whitespace-only search
+Preconditions: None.
+Steps: 1. Enter spaces only. 2. Submit.
+Test Data: "     "
+Expected Result: Treated the same as an empty search (TC-PS-N06).
+
+TC-PS-N08 | Search with special characters
+Preconditions: None.
+Steps: 1. Enter each value. 2. Submit.
+Test Data: "!@#$%^&*()", "<>", "\"", "'"
+Expected Result: No crash or error page. Results are a no-results message or a valid subset.
+
+TC-PS-N09 | Script injection in search
+Preconditions: None.
+Steps: 1. Enter the payload. 2. Submit. 3. Check that no script runs and that any echoed text is escaped.
+Test Data: "<script>alert(1)</script>"
+Expected Result: No script runs. The text is shown as plain text or not shown.
+
+TC-PS-N10 | SQL injection in search
+Preconditions: None.
+Steps: 1. Enter the payload. 2. Submit.
+Test Data: "' OR '1'='1", "'; DROP TABLE products;--"
+Expected Result: No database error is shown. The result is a normal search response with no extra data exposed.
+
+TC-PS-N11 | Search with only non-matching Unicode text
+Preconditions: None.
+Steps: 1. Enter the value. 2. Submit.
+Test Data: "手机", "смартфон"
+Expected Result: No crash. Text displays correctly. Results are a no-results message or matched phones.
+
+TC-PS-N12 | Search request fails from the server
+Preconditions: Search service returns an error (simulated with a mock or by stopping the service).
+Steps: 1. Enter "Samsung". 2. Submit.
+Expected Result: A clear error message with a retry option is shown. The page does not go blank.
+
+TC-PS-N13 | Search while offline
+Preconditions: Browser is set to offline.
+Steps: 1. Enter "Samsung". 2. Submit.
+Expected Result: An offline or connection error message is shown. The search box stays usable.
+
+BOUNDARY SCENARIOS
+
+TC-PS-B01 | Single character search
+Preconditions: Catalog contains phones with names starting with various letters.
+Steps: 1. Enter "S". 2. Submit.
+Test Data: "S"
+Expected Result: Results match the defined rule for a one-character query (for example, all phones containing "s", or a minimum-length message). No error.
+
+TC-PS-B02 | Two-character search
+Preconditions: Same as TC-PS-B01.
+Steps: 1. Enter "S2". 2. Submit.
+Test Data: "S2"
+Expected Result: Results match the defined rule. Behavior is consistent with TC-PS-B01.
+
+TC-PS-B03 | Minimum model-number query
+Preconditions: Catalog contains a model with a short number, such as "A54".
+Steps: 1. Enter "A54". 2. Submit.
+Test Data: "A54"
+Expected Result: Samsung Galaxy A54 is listed.
+
+TC-PS-B04 | Maximum allowed length
+Preconditions: The field has a defined maximum length (confirm in requirements). Use 255 if no limit is defined.
+Steps: 1. Enter a string of exactly the maximum length. 2. Submit.
+Test Data: A 255-character string
+Expected Result: The search runs. No truncation error or server error occurs.
+
+TC-PS-B05 | One character over maximum length
+Preconditions: Same as TC-PS-B04.
+Steps: 1. Enter a string one character longer than the maximum. 2. Submit.
+Test Data: A 256-character string
+Expected Result: Input is truncated, or a validation message is shown. No server error occurs.
+
+TC-PS-B06 | Query at maximum length matching no phones
+Preconditions: None.
+Steps: 1. Enter a 255-character string of random letters. 2. Submit.
+Expected Result: A no-results message is shown.
+
+TC-PS-B07 | Price filter at lower boundary
+Preconditions: Phone priced at exactly the lower limit exists (for example, 300).
+Steps: 1. Search "phone". 2. Set minimum price to 300. 3. Check results.
+Test Data: Min 300
+Expected Result: The phone priced at 300 is included.
+
+TC-PS-B08 | Price filter at upper boundary
+Preconditions: Phone priced at exactly the upper limit exists (for example, 600).
+Steps: 1. Search "phone". 2. Set maximum price to 600. 3. Check results.
+Test Data: Max 600
+Expected Result: The phone priced at 600 is included.
+
+TC-PS-B09 | Price filter just outside boundaries
+Preconditions: Phones priced at 299.99 and 600.01 exist.
+Steps: 1. Apply the 300 to 600 filter.
+Expected Result: Neither phone is included.
+
+TC-PS-B10 | Single result
+Preconditions: Query matches exactly one phone.
+Steps: 1. Search the exact model name.
+Expected Result: One result is shown. Pagination controls are hidden or disabled.
+
+TC-PS-B11 | Last page of results
+Preconditions: Results span multiple pages.
+Steps: 1. Go to the last page.
+Expected Result: The last page shows the remaining items. Next is disabled.
+
+TC-PS-B12 | Result count at page size
+Preconditions: Exactly one page's worth of matching phones exists (page size is 10 or as defined).
+Steps: 1. Search to return exactly one full page.
+Expected Result: One full page is shown. No empty second page is created.
+
+TC-PS-B13 | Result count one over page size
+Preconditions: One more phone than a full page.
+Steps: 1. Search the query.
+Expected Result: Page 1 shows a full page. The extra phone appears on page 2.
+
+Suggested Priority
+High: TC-PS-P01, P02, P07, N01, N04, N06, N09, N10, N12, B04, B05, B10
+Medium: P03 to P06, P08 to P11, N02, N03, N05, N07, N08, N11, N13, B01, B02, B07, B08, B11
+Low: P04, B03, B06, B09, B12, B13
+
+Open Questions for the Requirements Owner
+1. What is the minimum search length, if any?
+2. What is the maximum search length?
+3. What is the page size?
+4. Does an empty search show all phones or a validation message?
+5. Does search match specs (5G, OS, storage) or only name and brand?
+6. Are accessories that name a phone model (for example, a case for iPhone 15) excluded?

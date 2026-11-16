@@ -1,0 +1,14 @@
+{
+  "name": "Scenario B: test cases drafted from Jira tickets",
+  "itemsPerSprint": 20,
+  "manualMinutesPerItem": 30,
+  "reviewMinutesPerItem": 8,
+  "setupHours": 12,
+  "maintenanceHoursPerMonth": 2,
+  "tokensInPerItem": 600,
+  "tokensOutPerItem": 700,
+  "tier": "mid",
+  "toolingCostPerSprint": 0,
+  "reworkHoursSavedPerSprint": 0,
+  "contextStable": true
+}

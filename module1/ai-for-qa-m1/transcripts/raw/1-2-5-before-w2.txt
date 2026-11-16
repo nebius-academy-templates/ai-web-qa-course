@@ -1,0 +1,13 @@
+Here are 5 fictional customer records. Phone numbers come from Ofcom's ranges reserved for fiction and testing, and emails use the reserved `example.co.uk` domain, so none of them can reach a real person.
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|---|---|---|---|---|
+| 1 | Harriet | Pemberton | harriet.pemberton@example.co.uk | 07700 900123 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 9XQ |
+| 2 | Rajan | Mistry | rajan.mistry@example.co.uk | 020 7946 0451 | Flat 3, 27 Calloway Road, London, SE15 6ZT |
+| 3 | Siobhan | Doherty | s.doherty@example.co.uk | 0161 496 0782 | 8 Thornbury Mews, Stockport, Greater Manchester, SK4 7QW |
+| 4 | Owen | Llewellyn | owen.llewellyn@example.co.uk | 029 2018 0349 | 52 Penrhos Avenue, Cardiff, CF14 9ZJ |
+| 5 | Callum | Fraser | callum.fraser88@example.co.uk | 0131 496 0215 | 2F1, 19 Brunstane Terrace, Edinburgh, EH7 4YX |
+
+Street names are invented and the postcodes follow valid UK formatting for each area. The variety is useful for testing: a flat number on its own line, a Scottish tenement-style flat reference ("2F1"), a hyphen-free Welsh surname and a name with a numeric email.
+
+One thing to watch: if your checkout validates addresses against a live lookup such as Royal Mail PAF or getAddress.io, these invented postcodes will fail. For those tests you'd need the provider's sandbox or test postcodes. I can also put these in CSV or JSON for your test fixtures if that helps.

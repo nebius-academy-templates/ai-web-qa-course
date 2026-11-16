@@ -25,26 +25,27 @@ npm run start:api   # REST API only    → http://localhost:3001
 
 ---
 
-## Repository layout
+## Repo map
 
-| Path | What it is | Used in |
-|------|-----------|---------|
-| `index.html`, `cart.html`, `checkout.html`, `login.html`, `products.html`, `css/`, `js/` | TechShop static frontend (also the GitHub Pages site) | all modules |
-| `api/` | TechShop REST API (Express) | all modules |
-| `tests/` + `playwright.config.js` | Locator and visual tests (site on `:4300`) | Modules 2–3 |
-| `scripts/` | Auto-fix pipelines, CI-failure playground, `patch-testids.py` | Modules 2 and 4 |
-| `design-review/`, `design-assets/` | Design-conformance captures and lesson-asset builders | Module 3 |
-| `qa/` + `playwright.config.ts` | `/qa` skill suite — API, E2E and bug-injection tests (site on `:3000`) and test cases | Module 4 |
-| `.qa/` | QA project context for the `/qa` skill | Module 4 |
-| `workshop-2/` | Secure-pipeline workshop: `src/`, `tests/`, `fixtures/`, `checkpoints/` (own `package.json` and `README.md`) | Workshop 2 |
-| `docs/` | Workshop plans and other write-ups | — |
-| `.github/workflows/` | `deploy-pages.yml` (publishes the site from `main`) and `playwright.yml` (CI) | all modules |
-| `package.json`, `serve.json` | npm scripts and static-server config | all modules |
-| `.claude/`, `.agents/`, `skills-lock.json` | Claude Code settings and skills | — |
+| Path | What it is | Course use |
+|------|------------|------------|
+| `index/products/cart/checkout/login.html`, `js/`, `css/`, `api/` | The TechShop app itself | Shared practice context for every module |
+| `js/bugs.js` | Bug Injection Panel (10 toggleable defects) | Locator + visual lessons |
+| `scripts/ci-check-{clean,noisy}.js` | Intentionally failing CI logs | CI-log reading |
+| `scripts/autofix-*.js`, `scripts/create-linear-ticket.js` | Retry-limited auto-fix + escalation callback | Auto-fix block |
+| `scripts/patch-testids.py` | Restores the `data-testid` attributes `js/bugs.js` expects | Locator lessons |
+| `tests/` + `playwright.config.js` | Locator lessons (two tests red **by design**) | Auto-fix block |
+| `qa/` + `playwright.config.ts` | The real QA suite: e2e, API, bug-injection, plus test cases in `qa/test-cases/` | Reference suite, kept green |
+| `design-review/`, `design-assets/` | Captured baseline/actual/diff triples | Visual-validation lessons |
+| `module1/` | Module 1 practice repo + private solutions | Governance / security / cost |
+| `workshop-2/` (own `package.json` and `README.md`), `docs/workshop-better-agents.md` | Standalone workshops | Not part of the 5-module syllabus |
+| `.github/workflows/` | `deploy-pages.yml` (publishes the site from `main`), `playwright.yml` (CI) | All modules |
+| `.qa/`, `.claude/`, `.agents/`, `skills-lock.json` | QA project context and Claude Code skills | `/qa` skill |
+
+Two Playwright configs on purpose: `playwright.config.ts` runs `qa/` (`npm run qa`),
+`playwright.config.js` runs `tests/` (`npm test`). Both serve the site on **:4300**.
 
 Generated output (`test-results/`, `qa/report/`, `screencasts/`, visual baselines) is gitignored.
-
-The two Playwright configs are independent: `npm test` uses `playwright.config.js`; `npm run qa*` uses `playwright.config.ts`.
 
 ---
 

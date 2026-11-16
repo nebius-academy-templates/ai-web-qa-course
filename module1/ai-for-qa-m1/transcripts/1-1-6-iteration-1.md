@@ -1,0 +1,193 @@
+# Iteration 1: initial prompt
+
+**Lesson:** 1.1.6 walkthrough (steps 2 to 4). Prompt text below is copied verbatim from the lesson.
+
+**STATUS: CAPTURED in a real claude.ai chat on 2026-10-31.** The prompt was typed into the claude.ai web chat (signed-in Pro account, driven through a browser), and the output below is copied from that conversation's own data, unedited. This replaces the 2026-10-09 subagent capture.
+
+## Prompt (paste exactly, in the conversation the lesson names)
+
+```
+Generate test cases for the Product Search feature of TechShop. The user can search for mobile phones only
+```
+
+## What the lesson says to expect
+
+A short, unstructured list: a handful of one-line checks (verify users can search for mobile phones; verify matching phones are displayed; verify a "No products found" message when nothing matches). No IDs, no test data, no priorities, and probably a sentence or two of commentary nobody asked for.
+
+## Reviewer's step (the HITL role)
+
+Before typing anything else, note what is missing against project needs: edge cases and structure. The model did not flag these gaps; the reviewer does.
+
+## Run details
+
+**Model:** `claude-opus-5-5` (Opus 5.5, the default in the claude.ai model picker), effort Medium  
+**Date:** 2026-10-31 (reply at 14:10 UTC)  
+**Interface:** claude.ai web chat, Pro plan, no project. Account defaults left on: Claude Docs and artifacts, file creation, web search and chat memory.  
+**Conversation:** `47f00cbd-3ca1-42c1-a643-0bf9670d7faf` (new chat; iterations 1, 2 and 3 share it)
+
+## Verbatim output
+
+Claude answered by creating a Claude Docs document, not with text in the chat. Both are below. Lines in square brackets such as `[tool call: mcp__Claude_Docs__update]` mark where Claude used a tool between chat messages; they are not part of the text Claude wrote.
+
+### Chat reply
+
+````
+I'll put together a set of test cases for TechShop's mobile-phone-only product search, covering functional, negative, boundary, and non-functional scenarios.
+
+[tool call: Artifact]
+
+[tool call: mcp__Claude_Docs__guide]
+
+[tool call: mcp__Claude_Docs__batch]
+
+Outline is up; now writing scope and assumptions.
+
+[tool call: Artifact]
+
+[tool call: mcp__Claude_Docs__guide]
+
+[tool call: mcp__Claude_Docs__update]
+
+Scope is in; now the positive functional cases.
+
+[tool call: mcp__Claude_Docs__update]
+
+Now the category-restriction cases.
+
+[tool call: mcp__Claude_Docs__update]
+
+Next, negative and boundary cases.
+
+[tool call: mcp__Claude_Docs__update]
+
+Now filters, sorting, pagination and autocomplete.
+
+[tool call: mcp__Claude_Docs__update]
+
+Last section: non-functional cases.
+
+[tool call: mcp__Claude_Docs__update]
+
+Now one comment to confirm a key assumption.
+
+[tool call: ToolSearch]
+
+[tool call: mcp__Claude_Docs__create]
+
+**TechShop Product Search – Test Cases** is ready. You can read it over, edit it directly, or leave comments for changes.
+````
+
+### Document Claude created ("TechShop Product Search – Test Cases", exported as Markdown after this turn)
+
+````markdown
+# TechShop Product Search – Test Cases
+
+Oct 31, 2026 · @Tutor
+
+## Scope and assumptions
+
+52 test cases cover TechShop's Product Search, which returns mobile phones only and never any other product category.
+
+**In scope:** keyword search, the mobile-phone category restriction, results display, filters, sorting, pagination, autocomplete, and non-functional checks (performance, security, accessibility, compatibility).
+
+**Out of scope:** cart, checkout, product detail page content beyond navigation from results.
+
+**Assumed test data** (adjust to your catalogue):
+
+- Phones: Apple iPhone 15, iPhone 15 Pro Max, Samsung Galaxy S24, Galaxy A15, Google Pixel 8, OnePlus 12, Xiaomi Redmi Note 13, Nokia 105 (feature phone)
+- Non-phone products in the same store: Apple iPad Air, Samsung Galaxy Tab S9, Apple Watch, Galaxy Buds, MacBook Air, phone cases, chargers, screen protectors
+- One phone marked out of stock; one phone with a discounted price
+- Price range filter, brand filter, storage filter, and sort options: Relevance, Price low–high, Price high–low, Newest
+
+**Priority:** P1 = blocks release, P2 = important, P3 = minor.
+
+## Functional – positive
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-01 | Search by exact product name | iPhone 15 | Enter term in search bar, press Enter | iPhone 15 appears as the top result | P1 |
+| TC-02 | Search by brand | Samsung | Enter term, click search icon | Only Samsung phones listed (Galaxy S24, Galaxy A15) | P1 |
+| TC-03 | Search by model only | Pixel 8 | Enter term, press Enter | Google Pixel 8 returned | P1 |
+| TC-04 | Partial keyword match | Galax | Enter term, press Enter | All Samsung Galaxy phones returned | P2 |
+| TC-05 | Case insensitivity | iPHONE, iphone, IPHONE | Search each variant | Identical result sets for all three | P2 |
+| TC-06 | Leading/trailing spaces trimmed | "  OnePlus 12  " | Enter term, press Enter | Same results as "OnePlus 12" | P2 |
+| TC-07 | Multi-word search | Samsung Galaxy S24 | Enter term, press Enter | Galaxy S24 ranked first | P1 |
+| TC-08 | Search by attribute | 5G, 256GB, dual SIM | Search each term | Only phones with that attribute returned | P2 |
+| TC-09 | Generic category term | phone, smartphone, mobile | Search each term | All phones returned; no other categories | P1 |
+| TC-10 | Result card content | iPhone 15 | Search, inspect a result card | Card shows image, name, price, rating, stock status | P1 |
+| TC-11 | Navigate to product page | Pixel 8 | Search, click the result | Pixel 8 product detail page opens | P1 |
+| TC-12 | Result count shown | Samsung | Search, read the header | Count (e.g. "2 results for Samsung") matches cards shown | P3 |
+| TC-13 | Out-of-stock phone in results | Out-of-stock model | Search for it | Shown with "Out of stock" label; Add to cart disabled | P2 |
+| TC-14 | Discounted price displayed | Discounted model | Search for it | Original price struck through, sale price shown | P2 |
+
+## Category restriction – mobile phones only
+
+These cases verify the core rule: no non-phone product ever appears in search results, even when it shares a brand or name.
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-15 | Brand shared with tablets | Apple | Search, review all result pages | Only iPhones; no iPad, Mac or Apple Watch | P1 |
+| TC-16 | Product family shared with tablets | Galaxy | Search, review all pages | Galaxy phones only; Galaxy Tab S9 and Galaxy Buds excluded | P1 |
+| TC-17 | Search for a laptop | MacBook Air | Enter term, press Enter | No results message; no laptop shown | P1 |
+| TC-18 | Search for a tablet | iPad | Enter term, press Enter | No results message, or phone-only suggestions | P1 |
+| TC-19 | Search for accessories | iPhone case, charger | Search each term | No cases or chargers listed; phones may appear if relevant | P1 |
+| TC-20 | Search for a wearable | smartwatch | Enter term, press Enter | No results; no watches listed | P2 |
+| TC-21 | Feature phones included | Nokia 105 | Enter term, press Enter | Nokia 105 returned (confirm feature phones are in scope) | P2 |
+| TC-22 | Direct URL manipulation | Add `&category=tablets` to the search URL | Load the edited URL | Parameter ignored or rejected; still phones only | P1 |
+
+## Negative and boundary
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-23 | Empty search | (blank) | Click search with no input | Search not submitted, or prompt "Enter a search term" | P1 |
+| TC-24 | Spaces only | "     " | Enter spaces, press Enter | Treated as empty; same as TC-23 | P2 |
+| TC-25 | No matching phone | Motorola Razr (not stocked) | Enter term, press Enter | "No results found" with suggestions or popular phones | P1 |
+| TC-26 | Gibberish input | xyzqwe123 | Enter term, press Enter | No results message; no error page | P2 |
+| TC-27 | Misspelling | iphnoe, samsng | Search each term | "Did you mean iPhone / Samsung?" or corrected results | P2 |
+| TC-28 | Single character | a | Enter term, press Enter | Handled gracefully: results or minimum-length message | P3 |
+| TC-29 | Maximum length | 255 characters | Paste string, press Enter | Accepted or truncated at the limit; no crash | P2 |
+| TC-30 | Over maximum length | 256+ characters (e.g. 1,000) | Paste string, press Enter | Input capped or validation message; no server error | P2 |
+| TC-31 | Special characters | !@#$%^&\*() | Enter term, press Enter | No error; no results or sanitised search | P2 |
+| TC-32 | Numbers only | 15, 128 | Search each term | Matching phones returned (iPhone 15, 128GB models) | P3 |
+| TC-33 | Non-Latin / emoji input | 三星, 📱 | Search each term | No crash; graceful no-results or matched results | P3 |
+| TC-34 | Search with network loss | Any term | Disconnect network, submit search | Friendly error message with retry option | P2 |
+
+## Filters, sorting, pagination and autocomplete
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-35 | Brand filter | Search "phone", filter Brand = Apple | Apply filter | Only Apple phones; count updates | P1 |
+| TC-36 | Price range filter | £200–£600 | Search "phone", set range | All results priced within £200–£600 inclusive | P1 |
+| TC-37 | Combined filters | Brand = Samsung, Storage = 256GB | Apply both | Only phones meeting both conditions | P2 |
+| TC-38 | Clear filters | Any active filters | Click "Clear all" | Full unfiltered result set restored | P2 |
+| TC-39 | Sort by price low–high | Search "phone" | Choose Price: Low to High | Results in ascending price order | P1 |
+| TC-40 | Sort by price high–low | Search "phone" | Choose Price: High to Low | Results in descending price order | P2 |
+| TC-41 | Pagination | Term returning more results than one page (e.g. 20 per page) | Go to page 2, then back | Next set shown; no duplicates or gaps; page 1 restored | P2 |
+| TC-42 | Autocomplete suggestions | Type "Gal" | Wait for dropdown | Suggestions show only phones (Galaxy S24, Galaxy A15); no Galaxy Tab | P1 |
+| TC-43 | Select a suggestion | Type "Pix", click "Pixel 8" | Click suggestion | Pixel 8 results or product page opens | P2 |
+| TC-44 | Search term persists | Search "OnePlus", open a result, press Back | Press browser Back | Search term, filters and scroll position retained | P3 |
+
+## Non-functional
+
+| ID | Type | Scenario | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-45 | Performance | Response time | Search "Samsung" 10 times, measure | Results load in under 2 seconds (confirm target) | P1 |
+| TC-46 | Performance | Concurrent load | Simulate 500 concurrent users searching | No errors; response time stays within target | P2 |
+| TC-47 | Security | SQL injection | Search `' OR '1'='1` | Input treated as text; no data leak or DB error | P1 |
+| TC-48 | Security | Cross-site scripting | Search `<script>alert(1)</script>` | Script not executed; term shown escaped | P1 |
+| TC-49 | Accessibility | Keyboard and screen reader | Tab to search, type, press Enter; use NVDA/VoiceOver | Search bar labelled; results and count announced | P2 |
+| TC-50 | Usability | Mobile responsive layout | Search on a 375px-wide screen | Search bar, filters and results usable without horizontal scroll | P2 |
+| TC-51 | Compatibility | Cross-browser | Run TC-01, TC-15, TC-39 on Chrome, Safari, Firefox, Edge | Consistent behaviour on all browsers | P2 |
+| TC-52 | Compatibility | Native app vs web | Run TC-01 and TC-15 in the TechShop app | Same results as web | P3 |
+````
+
+Claude also left one comment on the document: "Should accessory searches like "iPhone case" show no results, or show matching phones instead? Reply here or comment anywhere in the doc."
+
+## Does the real output match the lesson's expectation?
+
+**No, and it is further from the lesson than the October subagent run was.** The lesson expects a handful of one-line checks with no IDs, test data or priorities. In the real chat Claude didn't answer in the conversation at all. It created a Claude Docs document and posted only progress lines in the chat. The document holds 52 test cases (TC-01 to TC-52) in tables with ID, scenario, test data, steps, expected result and priority (P1 to P3). They are grouped into positive, category-restriction, negative and boundary, filters/sorting/pagination, and non-functional sections. It already includes SQL injection (TC-47), XSS (TC-48) and oversized input (TC-29, TC-30), and it states its assumed catalogue and filters up front. Claude also left a comment in the doc asking a clarifying question.
+
+Two consequences for the lesson:
+
+- The step 3 expectation ("a short, unstructured list") needs rewriting. Apart from the assumptions to confirm, there is nothing for the reviewer to find missing.
+- Learners whose account has Claude Docs or artifacts switched on will get a document, not a chat reply, so "compare the output" means opening the document. Learners without those features will see something different again. The walkthrough should say what to expect, or tell learners what to do when a document opens.

@@ -102,7 +102,13 @@ async function resolveLabelIds(cfg, names) {
 //   team id                     -> from env, never hardcoded
 // ============================================================
 async function createLinearTicket(report) {
-  const cfg = loadLinearConfig();
+  // Mock mode is resolved BEFORE the credential guard: the whole point of
+  // LINEAR_MOCK is running the escalation path without a Linear instance.
+  // The guard still fires on every real delivery.
+  const MOCK = process.env.LINEAR_MOCK === 'true';
+  const cfg = MOCK
+    ? { LINEAR_API_KEY: 'mock', LINEAR_TEAM_ID: process.env.LINEAR_TEAM_ID || '<LINEAR_TEAM_ID>' }
+    : loadLinearConfig();
 
   const input = {
     teamId: cfg.LINEAR_TEAM_ID,
@@ -120,7 +126,7 @@ async function createLinearTicket(report) {
       }
     }`;
 
-  if (process.env.LINEAR_MOCK === 'true') {
+  if (MOCK) {
     console.log('\n[LINEAR_MOCK] GraphQL payload that would be posted:');
     console.log(JSON.stringify({
       query: mutation.trim(),

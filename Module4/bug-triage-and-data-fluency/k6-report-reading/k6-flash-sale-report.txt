@@ -1,0 +1,27 @@
+execution: local
+  script: techshop-checkout-load.js
+  output: -
+scenarios: (100.00%) 1 scenario, 100 max VUs, 5m30s max duration
+         * default: 100 looping VUs for 5m0s (gracefulStop: 30s)
+── CHECKS & THRESHOLDS ────────────────────────────────────────────────────
+  ✗ status was 200
+    ↳ 89.23% — ✓ 8031 / ✗ 971
+  ✗ p(95) of http_req_duration < 2000ms   [FAILED] p(95)=6244ms
+── HTTP METRICS ───────────────────────────────────────────────────────────
+  Metric                    avg     min    med     max     p(90)   p(95)
+  ───────────────────────────────────────────────────────────────────────
+  http_req_duration         1.42s   87ms   612ms   18.3s   3.81s   6.24s   ← (A)
+  ↳ {expected_response}     1.19s   87ms   591ms   14.2s   3.12s   4.87s   ← (B)
+  http_req_waiting          1.35s   82ms   583ms   18.2s   3.68s   6.09s   ← (C)
+  http_req_connecting       1.21ms  1µs    4µs     289ms   12µs    16µs    ← (D)
+  http_req_sending          17.8µs  6µs    14µs    2.31ms  27µs    35µs
+  http_req_receiving        68.3µs  15µs   45µs    12.1ms  121µs   178µs
+── TRAFFIC & ERROR ────────────────────────────────────────────────────────
+  http_reqs                 9,002   30.0 req/s                            ← (E)
+  http_req_failed            10.77%  ✓ 971 failed / ✗ 8031 succeeded      ← (F)
+  iteration_duration         avg=3.47s med=2.63s p(90)=7.42s p(95)=10.1s  ← (G)
+── VIRTUAL USERS ──────────────────────────────────────────────────────────
+  vus                        min=12  max=100                             ← (H)
+  vus_max                    100
+running (5m00.1s), 000/100 VUs, 9002 complete iterations
+default ✗ [======================================] 100 VUs  5m0s

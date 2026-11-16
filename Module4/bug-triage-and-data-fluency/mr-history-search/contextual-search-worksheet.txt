@@ -1,0 +1,50 @@
+======================================
+CONTEXTUAL SEARCH — WORKSHEET
+======================================
+Sources: mr-corpus.md (same folder) · your validated bug report from the bug-report practice
+
+STEP 1: FAILURE SIGNATURE
+-------------------------
+Component:
+Test name:
+Error type:
+Affected element:
+Environment / browser:
+Relevant configuration:   [anything logged at test time that could matter — or "none"]
+First seen:
+Retry behaviour:
+
+STEP 2: SCOPED CORPUS
+---------------------
+Component filter  -> MRs kept: [...]            dropped: [...]
+Time window       -> MRs kept: [...]            dropped: [...]
+Outcome filter    -> flagged as higher priority: [...]
+Final scoped set: [MR numbers]   Count: [N]
+
+STEP 3: CLAUDE RUN (pasted, unedited)
+-------------------------------------
+[Paste Claude's full response here]
+
+STEP 4: CANDIDATE EVALUATION
+----------------------------
+For each candidate Claude returned:
+MR !___ | Claude's type: ___ | What the MR actually says: ___
+         | Verdict: CONFIRMED / REJECTED — reason: ___
+         | Action: ___
+
+Candidates Claude missed that you think qualify (or "none"): ___
+
+STEP 5: UPDATED BUG REPORT
+--------------------------
+[Your four-component report from the bug-report practice, corrected, plus:]
+
+RECURRENCE HISTORY
+- MR !___ (date, status): ___
+
+PRIORITY DECISION
+Confirmed matches on this component in the last 3 months: [N]
+Rule applied: ___
+Decision: file new ticket at P_ / update existing ticket ___ / escalate — because ___
+
+ROOT CAUSE HYPOTHESIS (from pattern analysis, not confirmed from the current log alone)
+[hypothesis] — or — NOT APPLICABLE because ___

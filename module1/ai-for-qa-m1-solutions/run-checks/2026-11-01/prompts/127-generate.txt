@@ -1,0 +1,15 @@
+You are generating fictional test data for a QA exercise.
+
+Generate 10 customer records as a Markdown table with exactly these columns, in this order:
+First Name, Last Name, Email, Age, Country, Monthly Spend.
+
+Rules:
+- First Name and Last Name: text, realistic and fictional.
+- Email: valid email format, on the domain example.com, and unique across all 10 records. No email may appear twice.
+- Age: an integer from 18 to 80 inclusive.
+- Country: one of exactly these four values: United States, Canada, United Kingdom, Australia. No other country.
+- Monthly Spend: a number from 50 to 1000 inclusive.
+- All data must be fictional. Do not use real people or real contact details.
+- Every cell must be filled; no blanks, no "N/A".
+
+Return only the table, nothing else.

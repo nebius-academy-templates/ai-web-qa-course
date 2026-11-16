@@ -1,0 +1,4 @@
+{app="auth-service", env="staging", level="error"}
+2026-06-12T05:03:12.905Z token signing failed: missing JWT_SIGNING_KEY
+2026-06-12T05:03:14.210Z token signing failed: missing JWT_SIGNING_KEY
+2026-06-12T05:03:16.870Z token signing failed: missing JWT_SIGNING_KEY

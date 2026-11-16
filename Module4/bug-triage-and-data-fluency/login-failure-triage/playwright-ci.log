@@ -1,0 +1,16 @@
+2026-06-12T05:03:09.400Z == Step 3: Run Playwright tests
+2026-06-12T05:03:10.150Z [info] OS: ubuntu-22.04
+2026-06-12T05:03:10.152Z [info] Node: v19.5.0
+2026-06-12T05:03:10.155Z [info] Browser: Chromium 114
+2026-06-12T05:03:10.900Z [info] ✓ tests/catalog/search.spec.ts:18:5 › Search › product results appear as user types (1.3s)
+2026-06-12T05:03:12.114Z [info] tests/auth/login.spec.ts:12:5 › Login › user can sign in
+2026-06-12T05:03:12.480Z [info]   clicking getByTestId('login-submit')
+2026-06-12T05:03:12.702Z [info]   waiting for response **/api/auth/token
+2026-06-12T05:03:42.815Z [error] ✘ tests/auth/login.spec.ts:12:5 › Login › user can sign in (30.7s)
+2026-06-12T05:03:42.816Z [error] Error: expect(page.getByTestId('account-dashboard')).toBeVisible()
+2026-06-12T05:03:42.817Z [error] Expected: visible
+2026-06-12T05:03:42.818Z [error] Received: <element(s) not found>
+2026-06-12T05:03:42.819Z [error] Timeout: 30000ms exceeded.
+2026-06-12T05:03:44.100Z [info] ##[group]Upload test artifacts
+2026-06-12T05:03:47.300Z [info] Artifact playwright-report.zip successfully finalized.
+2026-06-12T05:03:47.900Z Process completed with exit code 1

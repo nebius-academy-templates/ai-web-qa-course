@@ -1,0 +1,26 @@
+2024-03-15 10:22:01 [INFO] Starting test suite: product_search
+2024-03-15 10:22:01 [INFO] Browser: chromium 123.0.6312.58
+2024-03-15 10:22:02 [INFO] Connecting to test environment: staging-12.techshop.internal
+2024-03-15 10:22:02 [INFO] Loading test fixtures from: fixtures/search_users.json
+2024-03-15 10:22:03 [INFO] Running: should return results matching search query
+2024-03-15 10:22:03 [INFO] FEATURE_FLAG: enhanced_search_v2=true
+2024-03-15 10:22:04 [INFO] User authenticated: { id: "usr_4491", email: "alice.smith@techshop-test.com" }
+2024-03-15 10:22:04 [INFO] Navigating to homepage
+2024-03-15 10:22:05 [INFO] Typing search query: "winter jacket"
+2024-03-15 10:22:05 [INFO] Waiting for search results dropdown
+2024-03-15 10:22:06 [ERROR] AssertionError: expected locator('ul[data-testid="search-results"]')
+  to have count >= 1 but received 0
+  at product-search.spec.ts:33:12
+  Test: should return results matching search query
+  Expected: results count >= 1
+  Received: 0
+2024-03-15 10:22:06 [INFO] Retrying (1/3)...
+2024-03-15 10:22:09 [ERROR] AssertionError: expected locator('ul[data-testid="search-results"]')
+  to have count >= 1 but received 0
+2024-03-15 10:22:09 [INFO] Retrying (2/3)...
+2024-03-15 10:22:12 [ERROR] AssertionError: expected locator('ul[data-testid="search-results"]')
+  to have count >= 1 but received 0
+2024-03-15 10:22:12 [INFO] Retrying (3/3)...
+2024-03-15 10:22:15 [ERROR] Test failed after 3 retries
+2024-03-15 10:22:15 [INFO] Screenshot saved: test-results/search-failed-20240315-102215.png
+2024-03-15 10:22:15 [INFO] Teardown complete

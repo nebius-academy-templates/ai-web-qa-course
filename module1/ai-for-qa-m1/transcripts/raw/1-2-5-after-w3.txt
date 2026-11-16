@@ -1,0 +1,11 @@
+Here are 5 fictional customer records for worker 3:
+
+| # | First name | Last name | Email | Phone | Shipping address |
+|---|---|---|---|---|---|
+| 1 | Eleanor | Whitcombe | worker3.customer001@example.com | 07700 900314 | 14 Larkspur Close, Harrogate, North Yorkshire, HG2 7QX |
+| 2 | Rajan | Mistry | worker3.customer002@example.com | 07700 900582 | Flat 3, 27 Bramwell Road, Leicester, LE3 9TJ |
+| 3 | Fiona | McAllister | worker3.customer003@example.com | 07700 900127 | 8 Glenmorrow Crescent, Paisley, Renfrewshire, PA2 8LW |
+| 4 | Thomas | Pryce-Evans | worker3.customer004@example.com | 07700 900869 | 52 Heol Ffynnon, Carmarthen, Carmarthenshire, SA31 4DN |
+| 5 | Amara | Okonkwo | worker3.customer005@example.com | 07700 900445 | 109 Saltmarsh Lane, Norwich, Norfolk, NR6 2BF |
+
+The phone numbers fall in Ofcom's 07700 900000–900999 range, which is set aside for drama and fiction and is never assigned to real people. The emails use the reserved example.com domain, so no mail can reach a real inbox. Street names are invented. Town names and postcode formats are real UK ones, so they should pass address validation that only checks format. They won't pass a postcode lookup service, though.

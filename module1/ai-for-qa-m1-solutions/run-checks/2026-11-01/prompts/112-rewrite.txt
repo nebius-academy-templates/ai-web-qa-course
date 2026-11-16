@@ -1,0 +1,13 @@
+You are a QA engineer for TechShop, an online electronics store.
+Checkout supports a guest flow and a registered-user flow. Payment is by card only: no wallets, no PayPal, no buy-now-pay-later.
+
+Validation rules:
+- Email: required for guests, valid format.
+- Card number: 16 digits, passes the Luhn check.
+- Expiry: MM/YY, not in the past.
+- CVV: 3 digits.
+- Postcode: valid UK format.
+- A declined card shows "Your card was declined" and keeps the cart.
+
+Generate test cases for the guest checkout flow only, as a table with columns: ID, scenario, steps, expected result.
+Include positive, negative and boundary cases for the card and postcode fields. Do not invent payment methods or fields that are not listed above.

@@ -1,0 +1,223 @@
+Test Cases: TechShop Product Search (Mobile Phones Only)
+
+Scope: The search function returns mobile phones only. Searches for other product types (laptops, tablets, accessories, etc.) should return no phone results.
+
+Test Case Format: ID | Title | Preconditions | Steps | Test Data | Expected Result
+
+Functional: Valid Searches
+
+TC-PS-01 | Search by exact brand name
+Preconditions: User is on the TechShop home page. Catalog contains phones from several brands.
+Steps: 1. Enter "Samsung" in the search box. 2. Press Enter or click the search icon.
+Test Data: "Samsung"
+Expected Result: Results show only Samsung mobile phones. Every result card displays the brand name Samsung.
+
+TC-PS-02 | Search by exact model name
+Preconditions: The model exists in the catalog.
+Steps: 1. Enter the full model name. 2. Submit the search.
+Test Data: "iPhone 15 Pro"
+Expected Result: The matching model appears at or near the top of the results. No unrelated phones are shown.
+
+TC-PS-03 | Search by partial model name
+Preconditions: Catalog contains "Galaxy S24" and "Galaxy S23".
+Steps: 1. Enter "Galaxy S2". 2. Submit the search.
+Test Data: "Galaxy S2"
+Expected Result: Both Galaxy S23 and Galaxy S24 models are returned.
+
+TC-PS-04 | Search by brand and model together
+Preconditions: Catalog contains multiple Google Pixel models.
+Steps: 1. Enter "Google Pixel 8". 2. Submit the search.
+Test Data: "Google Pixel 8"
+Expected Result: Pixel 8 models are returned. Other Pixel models (for example Pixel 7a) are excluded or ranked lower.
+
+TC-PS-05 | Case-insensitive search
+Preconditions: Catalog contains "Xiaomi Redmi Note 13".
+Steps: 1. Enter the query in lowercase. 2. Submit. 3. Repeat with uppercase and mixed case and compare results.
+Test Data: "xiaomi redmi note 13", "XIAOMI REDMI NOTE 13", "XiAoMi ReDmI NoTe 13"
+Expected Result: All three queries return the same set of results.
+
+TC-PS-06 | Search by a feature or spec keyword
+Preconditions: Catalog includes phones with 5G support and phones without it.
+Steps: 1. Enter "5G". 2. Submit the search.
+Test Data: "5G"
+Expected Result: Only phones that support 5G are returned. No 4G-only phones appear, if the spec is listed on the product.
+
+TC-PS-07 | Search by operating system keyword
+Preconditions: Catalog includes Android and iOS phones.
+Steps: 1. Enter "Android". 2. Submit. 3. Enter "iOS" and submit.
+Test Data: "Android", "iOS"
+Expected Result: Android query returns Android phones only. iOS query returns iPhones only.
+
+TC-PS-08 | Search with a single common word that matches many phones
+Preconditions: Catalog has more than one page of phone results.
+Steps: 1. Enter "phone". 2. Submit. 3. Check the result count and pagination.
+Test Data: "phone"
+Expected Result: Results are mobile phones only. Pagination or infinite scroll works. The result count matches the number shown.
+
+Functional: Negative and Scope Restriction
+
+TC-PS-09 | Search for a laptop returns no phone results
+Preconditions: Catalog contains laptops and phones.
+Steps: 1. Enter "MacBook Air". 2. Submit.
+Test Data: "MacBook Air"
+Expected Result: No laptops are returned. The page shows a "no results" message or suggests searching for phones. No phones are shown as matches.
+
+TC-PS-10 | Search for a tablet returns no phone results
+Preconditions: Catalog contains tablets.
+Steps: 1. Enter "iPad". 2. Submit.
+Test Data: "iPad"
+Expected Result: No tablets are returned. No phones are returned unless their name or description contains "iPad".
+
+TC-PS-11 | Search for an accessory returns no phone results
+Preconditions: Catalog contains chargers, cases, and earphones.
+Steps: 1. Enter "USB-C charger". 2. Submit.
+Test Data: "USB-C charger"
+Expected Result: No accessories appear in the results. The result is a no-results message, or only phones that mention the term in their specs.
+
+TC-PS-12 | Search for a non-existent phone model
+Preconditions: The model does not exist in the catalog.
+Steps: 1. Enter "Nokia Z999". 2. Submit.
+Test Data: "Nokia Z999"
+Expected Result: A "no results found" message is shown. The page does not crash or show an empty grid without explanation.
+
+TC-PS-13 | Search for a phone brand not sold by TechShop
+Preconditions: The brand has no products in the catalog.
+Steps: 1. Enter the brand name. 2. Submit.
+Test Data: "Sony Xperia" (if Sony is not stocked)
+Expected Result: A "no results found" message is shown.
+
+Input Validation
+
+TC-PS-14 | Empty search submission
+Preconditions: Search box is empty.
+Steps: 1. Click the search icon or press Enter without typing.
+Test Data: "" (empty)
+Expected Result: Either the search is blocked with a validation message, or the user sees all phones. The behavior matches the defined requirement. No error page appears.
+
+TC-PS-15 | Whitespace-only input
+Preconditions: None.
+Steps: 1. Enter spaces only. 2. Submit.
+Test Data: "     "
+Expected Result: Treated as empty input. No error page. Same behavior as TC-PS-14.
+
+TC-PS-16 | Leading and trailing spaces
+Preconditions: Catalog contains "Samsung Galaxy A54".
+Steps: 1. Enter "   Samsung Galaxy A54   ". 2. Submit.
+Test Data: "   Samsung Galaxy A54   "
+Expected Result: Results match the same query without spaces.
+
+TC-PS-17 | Special characters
+Preconditions: None.
+Steps: 1. Enter each value. 2. Submit and check the page.
+Test Data: "!@#$%^&*()", "<>", "\"", "'"
+Expected Result: No crash. The search returns no results or the valid subset. Special characters are not executed or displayed as code.
+
+TC-PS-18 | Script injection attempt
+Preconditions: None.
+Steps: 1. Enter the payload. 2. Submit. 3. Check that no alert or script runs and that the text is escaped if echoed back.
+Test Data: "<script>alert(1)</script>"
+Expected Result: The script does not run. The text is escaped or treated as plain text in the "no results" message.
+
+TC-PS-19 | SQL injection attempt
+Preconditions: None.
+Steps: 1. Enter the payload. 2. Submit.
+Test Data: "' OR '1'='1", "'; DROP TABLE products;--"
+Expected Result: No database error is shown. The result is a normal no-results response or a normal search result. No data is exposed.
+
+TC-PS-20 | Maximum input length
+Preconditions: The search field has a defined maximum length, if any.
+Steps: 1. Enter a string at the limit. 2. Enter a string one character over the limit. 3. Submit each.
+Test Data: A 255-character string, then 256 characters (adjust to the actual limit)
+Expected Result: At the limit, the search runs. Over the limit, input is truncated or a validation message is shown. No server error.
+
+TC-PS-21 | Non-English or Unicode input
+Preconditions: None.
+Steps: 1. Enter a Unicode query. 2. Submit.
+Test Data: "手机", "téléphone", "смартфон"
+Expected Result: No crash. Results are either a no-results message or matched phones. Text is displayed correctly.
+
+Results Display and Behavior
+
+TC-PS-22 | Results are sorted by the selected sort option
+Preconditions: At least 5 phone results for a query.
+Steps: 1. Search "Samsung". 2. Change the sort to "Price: Low to High". 3. Check the order. 4. Repeat for "Price: High to Low" and "Newest".
+Test Data: "Samsung"
+Expected Result: Each sort order is applied correctly. The sort persists when paging.
+
+TC-PS-23 | Filters apply within phone results only
+Preconditions: Filters such as brand, price range, or storage are available.
+Steps: 1. Search "phone". 2. Apply a price filter. 3. Check that only phones in the price range appear.
+Test Data: Price range 300 to 600
+Expected Result: Only phones in range are shown. Filter counts match the results.
+
+TC-PS-24 | Pagination across phone results
+Preconditions: More than one page of phone results.
+Steps: 1. Search a broad term. 2. Go to page 2. 3. Confirm no duplicate items across pages.
+Test Data: "phone"
+Expected Result: Page 2 shows different phones than page 1. Page count and item count are consistent.
+
+TC-PS-25 | Result card contents
+Preconditions: At least one phone result.
+Steps: 1. Search for a phone. 2. Check the card for each result.
+Expected Result: Each card shows the phone image, brand, model name, price, and availability. No laptops or accessories are mixed in.
+
+TC-PS-26 | Click-through from a result
+Preconditions: Search results are shown.
+Steps: 1. Click a phone result.
+Expected Result: The product detail page for the same phone opens, with matching name and price.
+
+TC-PS-27 | Search results after clearing the query
+Preconditions: A search has been run.
+Steps: 1. Clear the search box. 2. Submit.
+Expected Result: The page shows the default product listing or the empty-input behavior from TC-PS-14.
+
+System and Error Handling
+
+TC-PS-28 | Search with network failure
+Preconditions: Network is interrupted or the search service is stopped (simulate with dev tools offline mode).
+Steps: 1. Enter "Samsung". 2. Submit.
+Expected Result: A clear error message is shown, with a retry option. The page does not freeze or show a blank screen.
+
+TC-PS-29 | Slow response
+Preconditions: Search API response delayed (throttle the network to Slow 3G).
+Steps: 1. Submit a search.
+Expected Result: A loading indicator is shown. The search box stays usable. Results appear when the response arrives.
+
+TC-PS-30 | Repeated rapid submissions
+Preconditions: None.
+Steps: 1. Submit the same or different queries quickly several times.
+Expected Result: The last query's results are shown. No duplicate results or stale results from an earlier query.
+
+TC-PS-31 | Search performance
+Preconditions: Full catalog loaded.
+Steps: 1. Submit a search. 2. Measure time to first result.
+Expected Result: Results appear within the agreed response time target (for example, under 2 seconds).
+
+Usability, Responsive, and Accessibility
+
+TC-PS-32 | Search on a mobile viewport
+Preconditions: Browser set to a phone width (for example 375 px).
+Steps: 1. Open the search box. 2. Search "Samsung". 3. Check layout.
+Expected Result: Search box and results fit the screen. No horizontal scrolling. Touch targets are usable.
+
+TC-PS-33 | Keyboard-only search
+Preconditions: None.
+Steps: 1. Tab to the search box. 2. Type a query. 3. Press Enter. 4. Tab through results.
+Expected Result: All steps work without a mouse. Focus is visible.
+
+TC-PS-34 | Screen reader announces results
+Preconditions: Screen reader is running.
+Steps: 1. Submit a search.
+Expected Result: The number of results is announced. The search field has a label.
+
+Suggested Priority
+High: TC-PS-01, 02, 03, 09, 10, 11, 12, 14, 18, 19, 22, 24, 28
+Medium: TC-PS-04 to 08, 13, 15 to 17, 20, 21, 23, 25, 26, 27, 29, 30, 32
+Low: TC-PS-31, 33, 34
+
+Open Questions for the Requirements Owner
+1. Does an empty search show all phones, or show a validation message?
+2. What is the maximum search length?
+3. Does search match on specs (5G, storage, OS), or only on name and brand?
+4. Are accessories that mention a phone model (for example, a case for iPhone 15) excluded from results?
+5. What is the expected response time for a search?

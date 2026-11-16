@@ -3,7 +3,7 @@ name: qa
 description: >-
   Run automated QA for the TechShop demo shop — Playwright E2E browser flows,
   REST API contract checks, and bug-injection verification against the local
-  dev servers (frontend :3000, API :3001). Use when asked to "run QA", "test the
+  dev servers (frontend :4300, API :3001). Use when asked to "run QA", "test the
   app", "check the flows", verify a change end-to-end, or reproduce/verify the
   bug-injection panel. Generated as the Claude Code equivalent of Factory's
   /install-qa, tailored to this repo.
@@ -20,7 +20,7 @@ This skill drives the project's Playwright suite. It covers three layers:
 | **Bug-injection** | `qa/tests/bugs/` | Proves the suite *catches* defects toggled by the 🐛 panel |
 
 Config: `playwright.config.ts`. Servers start automatically via `webServer`
-(reused if already up): static frontend on **:3000** (`npm start`) and the
+(reused if already up): static frontend on **:4300** (`npm start`) and the
 Express API on **:3001** (`npm run start:api`).
 
 ## First-time setup

@@ -1,0 +1,191 @@
+# Iteration 2: refine
+
+**Lesson:** 1.1.6 walkthrough (steps 5 and 6). Prompt text below is copied verbatim from the lesson.
+
+**STATUS: CAPTURED in a real claude.ai chat on 2026-10-31.** The prompt was typed into the claude.ai web chat (signed-in Pro account, driven through a browser), and the output below is copied from that conversation's own data, unedited. This replaces the 2026-10-09 subagent capture.
+
+## Prompt (paste exactly, in the conversation the lesson names)
+
+```
+Generate functional test cases for TechShop's Product Search feature. Include positive, negative, and boundary test scenarios.
+```
+
+## What the lesson says to expect
+
+A structured set, usually grouped under Positive / Negative / Boundary headings or laid out as a scenario-and-expected-result table: valid search, invalid model, partial keyword, empty input, case sensitivity and a few more. Coverage improved; priorities, test data and security scenarios are still missing, because nothing asked for them. The model considers its answer complete; the gap list is the reviewer's.
+
+## Reviewer's step (the HITL role)
+
+Note again what is missing: priorities, test data, security scenarios.
+
+## Run details
+
+**Model:** `claude-opus-5-5` (Opus 5.5, the default in the claude.ai model picker), effort Medium  
+**Date:** 2026-10-31 (reply at 14:13 UTC)  
+**Interface:** claude.ai web chat, Pro plan, no project. Account defaults left on: Claude Docs and artifacts, file creation, web search and chat memory.  
+**Conversation:** `47f00cbd-3ca1-42c1-a643-0bf9670d7faf` (same chat as iteration 1)
+
+## Verbatim output
+
+Claude answered by editing the document it created in iteration 1. Both the chat reply and the document as it stood after this turn are below. Lines in square brackets such as `[tool call: mcp__Claude_Docs__update]` mark where Claude used a tool between chat messages; they are not part of the text Claude wrote.
+
+### Chat reply
+
+````
+I'll reorganise the existing doc so the functional cases are grouped into clear Positive, Negative and Boundary sections, and add more boundary coverage.
+
+[tool call: ToolSearch]
+
+[tool call: mcp__Claude_Docs__guide]
+
+[tool call: mcp__Claude_Docs__read]
+
+[tool call: mcp__Claude_Docs__update]
+
+[tool call: mcp__Claude_Docs__update]
+
+Structure updated; now filling the Negative scenarios.
+
+[tool call: mcp__Claude_Docs__update]
+
+Now the Boundary scenarios.
+
+[tool call: mcp__Claude_Docs__update]
+
+Last step: renumbering the non-functional cases to follow on.
+
+[tool call: mcp__Claude_Docs__update]
+
+The doc now groups the functional cases into Positive (TC-01–24), Negative (TC-33–44), and Boundary (TC-45–58). The phones-only rule checks (TC-25–32) mix positive and negative cases. I also added new negative cases for invalid filters and URLs, and new boundary cases for input length, price edges, pagination and stock levels.
+
+The boundary cases assume a 255-character input limit, 20 results per page, and autocomplete starting at 2 characters. Tell me TechShop's real values and I'll update them. The non-functional cases are still at the end; I can remove them if you want a functional-only doc.
+````
+
+### Document after this turn (same Claude Docs document, exported as Markdown)
+
+````markdown
+# TechShop Product Search – Test Cases
+
+Oct 31, 2026 · @Tutor
+
+## Scope and assumptions
+
+66 test cases cover TechShop's Product Search, which returns mobile phones only and never any other product category.
+
+**In scope:** keyword search, the mobile-phone category restriction, results display, filters, sorting, pagination, autocomplete, and non-functional checks (performance, security, accessibility, compatibility).
+
+**Out of scope:** cart, checkout, product detail page content beyond navigation from results.
+
+**Assumed test data** (adjust to your catalogue):
+
+- Phones: Apple iPhone 15, iPhone 15 Pro Max, Samsung Galaxy S24, Galaxy A15, Google Pixel 8, OnePlus 12, Xiaomi Redmi Note 13, Nokia 105 (feature phone)
+- Non-phone products in the same store: Apple iPad Air, Samsung Galaxy Tab S9, Apple Watch, Galaxy Buds, MacBook Air, phone cases, chargers, screen protectors
+- One phone marked out of stock; one phone with a discounted price
+- Price range filter, brand filter, storage filter, and sort options: Relevance, Price low–high, Price high–low, Newest
+
+**Priority:** P1 = blocks release, P2 = important, P3 = minor.
+
+## Positive – core search
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-01 | Search by exact product name | iPhone 15 | Enter term in search bar, press Enter | iPhone 15 appears as the top result | P1 |
+| TC-02 | Search by brand | Samsung | Enter term, click search icon | Only Samsung phones listed (Galaxy S24, Galaxy A15) | P1 |
+| TC-03 | Search by model only | Pixel 8 | Enter term, press Enter | Google Pixel 8 returned | P1 |
+| TC-04 | Partial keyword match | Galax | Enter term, press Enter | All Samsung Galaxy phones returned | P2 |
+| TC-05 | Case insensitivity | iPHONE, iphone, IPHONE | Search each variant | Identical result sets for all three | P2 |
+| TC-06 | Leading/trailing spaces trimmed | "  OnePlus 12  " | Enter term, press Enter | Same results as "OnePlus 12" | P2 |
+| TC-07 | Multi-word search | Samsung Galaxy S24 | Enter term, press Enter | Galaxy S24 ranked first | P1 |
+| TC-08 | Search by attribute | 5G, 256GB, dual SIM | Search each term | Only phones with that attribute returned | P2 |
+| TC-09 | Generic category term | phone, smartphone, mobile | Search each term | All phones returned; no other categories | P1 |
+| TC-10 | Result card content | iPhone 15 | Search, inspect a result card | Card shows image, name, price, rating, stock status | P1 |
+| TC-11 | Navigate to product page | Pixel 8 | Search, click the result | Pixel 8 product detail page opens | P1 |
+| TC-12 | Result count shown | Samsung | Search, read the header | Count (e.g. "2 results for Samsung") matches cards shown | P3 |
+| TC-13 | Out-of-stock phone in results | Out-of-stock model | Search for it | Shown with "Out of stock" label; Add to cart disabled | P2 |
+| TC-14 | Discounted price displayed | Discounted model | Search for it | Original price struck through, sale price shown | P2 |
+
+## Positive – filters, sorting, pagination and autocomplete
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-15 | Brand filter | Search "phone", filter Brand = Apple | Apply filter | Only Apple phones; count updates | P1 |
+| TC-16 | Price range filter | £200–£600 | Search "phone", set range | All results priced within £200–£600 inclusive | P1 |
+| TC-17 | Combined filters | Brand = Samsung, Storage = 256GB | Apply both | Only phones meeting both conditions | P2 |
+| TC-18 | Clear filters | Any active filters | Click "Clear all" | Full unfiltered result set restored | P2 |
+| TC-19 | Sort by price low–high | Search "phone" | Choose Price: Low to High | Results in ascending price order | P1 |
+| TC-20 | Sort by price high–low | Search "phone" | Choose Price: High to Low | Results in descending price order | P2 |
+| TC-21 | Pagination | Term returning more than one page of results | Go to page 2, then back | Next set shown; no duplicates or gaps; page 1 restored | P2 |
+| TC-22 | Autocomplete suggestions | Type "Gal" | Wait for dropdown | Suggestions show only phones (Galaxy S24, Galaxy A15); no Galaxy Tab | P1 |
+| TC-23 | Select a suggestion | Type "Pix", click "Pixel 8" | Click suggestion | Pixel 8 results or product page opens | P2 |
+| TC-24 | Search term persists | Search "OnePlus", open a result, press Back | Press browser Back | Search term, filters and scroll position retained | P3 |
+
+## Positive and negative – mobile-phones-only rule
+
+These cases verify the core rule: no non-phone product ever appears in search results, even when it shares a brand or name.
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-25 | Brand shared with tablets | Apple | Search, review all result pages | Only iPhones; no iPad, Mac or Apple Watch | P1 |
+| TC-26 | Product family shared with tablets | Galaxy | Search, review all pages | Galaxy phones only; Galaxy Tab S9 and Galaxy Buds excluded | P1 |
+| TC-27 | Search for a laptop | MacBook Air | Enter term, press Enter | No results message; no laptop shown | P1 |
+| TC-28 | Search for a tablet | iPad | Enter term, press Enter | No results message, or phone-only suggestions | P1 |
+| TC-29 | Search for accessories | iPhone case, charger | Search each term | No cases or chargers listed; phones may appear if relevant | P1 |
+| TC-30 | Search for a wearable | smartwatch | Enter term, press Enter | No results; no watches listed | P2 |
+| TC-31 | Feature phones included | Nokia 105 | Enter term, press Enter | Nokia 105 returned (confirm feature phones are in scope) | P2 |
+| TC-32 | Direct URL manipulation | Add `&category=tablets` to the search URL | Load the edited URL | Parameter ignored or rejected; still phones only | P1 |
+
+## Negative scenarios
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-33 | Empty search | (blank) | Click search with no input | Search not submitted, or prompt "Enter a search term" | P1 |
+| TC-34 | Spaces only | "     " | Enter spaces, press Enter | Treated as empty; same as TC-33 | P2 |
+| TC-35 | Phone not stocked | Motorola Razr | Enter term, press Enter | "No results found" with suggestions or popular phones | P1 |
+| TC-36 | Gibberish input | xyzqwe123 | Enter term, press Enter | No results message; no error page | P2 |
+| TC-37 | Misspelling | iphnoe, samsng | Search each term | "Did you mean iPhone / Samsung?" or corrected results | P2 |
+| TC-38 | Special characters only | !@#$%^&\*() | Enter term, press Enter | No error; no results or sanitised search | P2 |
+| TC-39 | Non-Latin / emoji input | 三星, 📱 | Search each term | No crash; graceful no-results or matched results | P3 |
+| TC-40 | Network loss | Any term | Disconnect network, submit search | Friendly error message with retry option | P2 |
+| TC-41 | Price filter min greater than max | Min £800, Max £200 | Enter values, apply | Validation message; filter not applied | P2 |
+| TC-42 | Non-numeric price input | abc, -50 | Type into price fields | Input rejected or validation message | P2 |
+| TC-43 | Filters with no matches | Brand = Apple, Storage = 2TB | Apply both | "No phones match your filters" with a Clear filters option | P2 |
+| TC-44 | Invalid page in URL | `page=-1`, `page=abc`, `page=999` | Load each URL | Redirect to page 1 or friendly empty state; no server error | P3 |
+
+## Boundary scenarios
+
+Assumed limits: search input max 255 characters, 20 results per page, autocomplete starts at 2 characters. Replace with TechShop's real values.
+
+| ID | Scenario | Test data | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-45 | Minimum input length | a (1 character) | Enter term, press Enter | Results returned, or minimum-length message; no error | P3 |
+| TC-46 | Just below max length | 254 characters | Paste string, press Enter | Accepted; search runs | P2 |
+| TC-47 | At max length | 255 characters | Paste string, press Enter | Accepted; search runs | P2 |
+| TC-48 | Just above max length | 256 characters | Paste string | Input capped at 255 or validation message | P2 |
+| TC-49 | Far above max length | 10,000 characters | Paste string, press Enter | Input capped; no server error or timeout | P2 |
+| TC-50 | Price filter lower edge | Phone at exactly £200; range £200–£600 | Apply range | Phone included | P1 |
+| TC-51 | Price filter upper edge | Phones at £600.00 and £600.01; range £200–£600 | Apply range | £600.00 included; £600.01 excluded | P1 |
+| TC-52 | Full price range | Min £0, Max = highest catalogue price | Apply range | All phones returned | P3 |
+| TC-53 | Results equal page size | Term returning exactly 20 phones | Search | One page; no Next control | P2 |
+| TC-54 | Results one over page size | Term returning 21 phones | Search, go to page 2 | Two pages; page 2 shows 1 phone | P2 |
+| TC-55 | First and last page controls | Term returning 3+ pages | Check page 1, then last page | Previous disabled on page 1; Next disabled on last page | P3 |
+| TC-56 | Autocomplete threshold | Type "G", then "Ga" | Watch the dropdown | No suggestions at 1 character; suggestions appear at 2 | P3 |
+| TC-57 | Stock edge | Phones with stock 0 and stock 1 | Search for each | Stock 0 = "Out of stock"; stock 1 = in stock (e.g. "Only 1 left") | P2 |
+| TC-58 | Exactly one result | Term matching one phone (OnePlus 12) | Search | One card; count reads "1 result" (singular) | P3 |
+
+## Non-functional
+
+| ID | Type | Scenario | Steps | Expected result | Priority |
+| --- | --- | --- | --- | --- | --- |
+| TC-59 | Performance | Response time | Search "Samsung" 10 times, measure | Results load in under 2 seconds (confirm target) | P1 |
+| TC-60 | Performance | Concurrent load | Simulate 500 concurrent users searching | No errors; response time stays within target | P2 |
+| TC-61 | Security | SQL injection | Search `' OR '1'='1` | Input treated as text; no data leak or DB error | P1 |
+| TC-62 | Security | Cross-site scripting | Search `<script>alert(1)</script>` | Script not executed; term shown escaped | P1 |
+| TC-63 | Accessibility | Keyboard and screen reader | Tab to search, type, press Enter; use NVDA/VoiceOver | Search bar labelled; results and count announced | P2 |
+| TC-64 | Usability | Mobile responsive layout | Search on a 375px-wide screen | Search bar, filters and results usable without horizontal scroll | P2 |
+| TC-65 | Compatibility | Cross-browser | Run TC-01, TC-25, TC-19 on Chrome, Safari, Firefox, Edge | Consistent behaviour on all browsers | P2 |
+| TC-66 | Compatibility | Native app vs web | Run TC-01 and TC-25 in the TechShop app | Same results as web | P3 |
+````
+
+## Does the real output match the lesson's expectation?
+
+**Partly.** The lesson expects a new structured set under Positive / Negative / Boundary headings, with priorities, test data and security scenarios still missing. Because iteration 2 runs in the same conversation, Claude did not write a new answer. It edited the iteration 1 document, regrouping it into Positive, Negative and Boundary sections and growing it to 66 cases (TC-01 to TC-66). The headings match the lesson, but the gap list does not: priorities, test data and the SQL injection and XSS cases all carried over from iteration 1, and the chat reply is only a summary of the edits. The reviewer step "note again what is missing: priorities, test data, security scenarios" finds nothing missing.

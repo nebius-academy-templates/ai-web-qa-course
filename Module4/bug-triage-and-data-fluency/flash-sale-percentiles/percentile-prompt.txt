@@ -1,0 +1,17 @@
+You are a QA performance analyst.
+Given the following response time dataset, calculate for each unique endpoint:
+1. p50, p90, p95, p99 (in milliseconds, using ceil formula: index = ceil(P/100 × N))
+2. Pass/fail verdict against the provided thresholds
+3. Flag any endpoint where p95 > 2 × p50 as TAIL_SPIKE
+Thresholds:
+- [ENDPOINT_1]: p95 ≤ [VALUE]ms, p99 ≤ [VALUE]ms
+- [ENDPOINT_2]: p95 ≤ [VALUE]ms, p99 ≤ [VALUE]ms
+- [ENDPOINT_3]: p95 ≤ [VALUE]ms, p99 ≤ [VALUE]ms
+Return results as a markdown table with columns:
+endpoint | p50 | p90 | p95 | p99 | p95_status | p99_status | tail_flag
+Then, for any endpoint with TAIL_SPIKE or a FAIL verdict, write one sentence stating:
+- what the numbers imply about user experience
+- what the next investigation step is
+Dataset:
+[paste raw response times here, one value per line or comma-separated,
+labelled by endpoint]

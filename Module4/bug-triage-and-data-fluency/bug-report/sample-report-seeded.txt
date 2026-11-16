@@ -1,0 +1,24 @@
+SAMPLE CLAUDE OUTPUT — product search (seeded with deliberate errors; validate every numbered line)
+
+ENVIRONMENT
+- Browser: Chromium 123.0 [1]
+- Environment: Staging [2]
+- Feature flag: enhanced_search_v2 = true [3]
+PRECONDITIONS
+- User is logged in to a registered test account [4]
+- User is on the TechShop homepage [5]
+- The enhanced_search_v2 feature flag is enabled [6]
+- Search index contains products matching "winter jacket" [7]
+REPRODUCTION STEPS
+1. Log in to the TechShop staging application with a valid user account [8]
+2. Navigate to the homepage [9]
+3. Locate the search input field in the navigation bar [10]
+4. Type "winter jacket" into the search field [11]
+5. Wait for the search results dropdown (data-testid="search-results") to populate [12]
+6. Verify that the dropdown contains at least one result [13]
+7. Select the first result from the dropdown to confirm navigation works correctly [14]
+EXPECTED VS. ACTUAL RESULT
+Expected: After typing "winter jacket", the search results dropdown should display
+one or more matching products within the standard response window. [15]
+Actual: The search results list (data-testid="search-results") returned 0 items.
+The test failed consistently across 3 retry attempts. [16]

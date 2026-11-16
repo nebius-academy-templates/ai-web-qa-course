@@ -78,7 +78,17 @@ async function fireEscalationCallbacks(report) {
 //   project key: from env, never hardcoded
 // ============================================================
 async function createJiraTicket(report) {
-  const cfg = loadJiraConfig();
+  // Same rule as the Linear callback: JIRA_MOCK is resolved before the
+  // credential guard so the demo runs without a Jira instance.
+  const MOCK = process.env.JIRA_MOCK === 'true';
+  const cfg = MOCK
+    ? {
+        JIRA_BASE_URL: process.env.JIRA_BASE_URL || 'https://jira.example.com',
+        JIRA_API_TOKEN: 'mock',
+        JIRA_EMAIL: 'mock@example.com',
+        JIRA_PROJECT_KEY: process.env.JIRA_PROJECT_KEY || 'QA',
+      }
+    : loadJiraConfig();
 
   const payload = {
     fields: {
@@ -98,7 +108,7 @@ async function createJiraTicket(report) {
     },
   };
 
-  if (process.env.JIRA_MOCK === 'true') {
+  if (MOCK) {
     console.log('\n[JIRA_MOCK] Payload that would be posted:');
     console.log(JSON.stringify(payload, null, 2));
     return { key: 'QA-1847', url: `${cfg.JIRA_BASE_URL}/browse/QA-1847` };

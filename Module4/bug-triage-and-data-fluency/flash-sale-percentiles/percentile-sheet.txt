@@ -1,0 +1,41 @@
+======================================
+FLASH-SALE PERCENTILES — WORK SHEET
+======================================
+Sources: response-times.txt · thresholds.txt · percentile-prompt.txt (same folder)
+
+EXERCISE 1 — MANUAL (20-value checkout run, in the lesson; thresholds P95 <= 300 / P99 <= 600)
+--------------------------------------------------------------------------------------------
+Sorted dataset: [20 values]
+P50: index ___ -> ___ms
+P90: index ___ -> ___ms
+P95: index ___ -> ___ms   | Threshold: 300ms | Verdict: PASS / FAIL
+P99: index ___ -> ___ms   | Threshold: 600ms | Verdict: PASS / FAIL
+TAIL_SPIKE: YES / NO — ratio = P95 / P50 = ___ / ___ = ___
+
+EXERCISE 2 — CLAUDE ON THREE ENDPOINTS
+--------------------------------------
+Step 1 — Claude's table and sentences (pasted, unedited):
+[paste here]
+
+Step 2 — Verify before you trust it:
+  a) Spot-check user_login_submit by hand (30 values):
+     sorted: ___
+     P50 index ___ -> ___   P95 index ___ -> ___   P99 index ___ -> ___
+     Claude's row says: ___   Match? YES / NO
+  b) Every percentile value in Claude's table appears in the raw data? YES / NO — if NO, which: ___
+  c) Any row or verdict you do not trust, and why: ___ (or "none")
+
+Task 1 — priority
+  Immediate action: ___ — because ___
+  Monitor:          ___ — because ___
+  Healthy:          ___ — because ___
+
+Task 2 — annotations  ([endpoint]: [what the numbers say about user experience] -> [next step])
+  checkout_confirm_payment: ___
+  search_results_load:      ___
+  user_login_submit:        ___
+
+Task 3 — MR history plan for the TAIL_SPIKE endpoint
+  What I would search for, and the terms: ___
+  Match type if this is a regression: ___ — because ___
+  Match type if this is a new failure mode: ___ — because ___

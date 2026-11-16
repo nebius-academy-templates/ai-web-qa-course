@@ -3,6 +3,8 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
+  // tests/fixtures/* are auto-fix targets, not tests — never collected.
+  testIgnore: '**/fixtures/**',
   timeout: 30000,
   retries: 0,
   reporter: [

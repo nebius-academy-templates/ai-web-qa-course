@@ -1,0 +1,13 @@
+{
+  "name": "What-if: volume too low (15 locators per sprint) - Negative case",
+  "itemsPerSprint": 15,
+  "manualMinutesPerItem": 3,
+  "reviewMinutesPerItem": 0.75,
+  "setupHours": 16,
+  "maintenanceHoursPerMonth": 2,
+  "tokensInPerItem": 300,
+  "tokensOutPerItem": 40,
+  "tier": "light",
+  "toolingCostPerSprint": 0,
+  "contextStable": true
+}
