@@ -1,4 +1,4 @@
-# QA Project Context — TechShop (demo-shop)
+# QA Project Context — TechShop (ai-web-qa-course)
 
 Durable context for QA Architect. Future `test-cases` / `automate-tests` runs read this first so they
 don't re-analyze the repo from scratch. Pair it with `.qa/preferences.md` (output style) and
@@ -19,7 +19,7 @@ for an "AI for QA" course (Modules 2–5)**.
   not just *what* it asserts. (It is also a genuine working suite; keep it green where the app is
   correct.)
 - **Repo:** `nebius-academy-templates/ai-web-qa-course` · Live (read-only) build: https://nebius-academy-templates.github.io/ai-web-qa-course/
-- **Local path:** `/Users/cristianpandele/Documents/learn.dev/demo-shop/`
+- **Local path:** your clone of this repo (`ai-web-qa-course/`)
 
 ---
 
@@ -146,7 +146,7 @@ npm run ci:noisy           # realistic noisy log — find the failure
 
 - **Browser driver:** `agent-browser` skill is installed (`.agents/skills/`, pinned in `skills-lock.json`) —
   preferred for exploratory/automate-tests work. Playwright is the framework for committed specs.
-- **Tracker:** Linear-style issue IDs (`TRI-5`, `TRI-7`) + GitHub PRs on `CristianPGit/techshop-demo`. When a
+- **Tracker:** Linear-style issue IDs (`TRI-5`, `TRI-7`) + GitHub PRs on `nebius-academy-templates/ai-web-qa-course` (earlier ones, e.g. #3 and #11, live on the old `CristianPGit/techshop-demo`). When a
   ticket/PR is given, quote its acceptance criteria **verbatim** into the test plan (per the template).
 
 ---

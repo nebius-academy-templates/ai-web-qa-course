@@ -45,7 +45,7 @@ npm run start:api   # REST API only    → http://localhost:3001
 Two Playwright configs on purpose: `playwright.config.ts` runs `qa/` (`npm run qa`),
 `playwright.config.js` runs `tests/` (`npm test`). Both serve the site on **:4300**.
 
-Generated output (`test-results/`, `qa/report/`, `screencasts/`, visual baselines) is gitignored.
+Generated output (`test-results/`, `qa/report/`, `screencasts/`) and local `-darwin` / `-win32` visual baselines are gitignored; the Docker-generated `-linux` baselines are committed.
 
 ---
 
