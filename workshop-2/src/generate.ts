@@ -136,7 +136,20 @@ const CANNED_PATH = path.resolve(here, '../fixtures/canned-generation.json');
  * to have been real — the schema gate still validates it, the HITL gate still
  * diffs it, and writeFiles still writes it.
  */
-async function cannedGeneration(): Promise<unknown> {
+/** The one ticket the canned output was written for (fixtures/ticket.json). */
+export const CANNED_TICKET_ID = 'TS-142';
+
+async function cannedGeneration(ticket: TicketData): Promise<unknown> {
+  // The canned payload is a TS-142 checkout page object and spec. Serving it for
+  // any other ticket would pass every gate and quietly produce tests for the
+  // wrong ticket, so refuse instead.
+  if (ticket.id !== CANNED_TICKET_ID) {
+    throw new Error(
+      `No ANTHROPIC_API_KEY, and the offline canned output only covers ${CANNED_TICKET_ID} ` +
+        `(you asked for ${ticket.id}). Set ANTHROPIC_API_KEY to generate live, or run ` +
+        `\`npm start -- ${CANNED_TICKET_ID}\`.`,
+    );
+  }
   console.log('  No API key — using canned generation output (fixtures/canned-generation.json).');
   console.log('  Set ANTHROPIC_API_KEY to generate live.');
   return JSON.parse(await readFile(CANNED_PATH, 'utf8'));
@@ -152,7 +165,7 @@ export async function generate(
   users: SyntheticUser[],
   config: Config,
 ): Promise<unknown> {
-  if (!config.apiKey) return cannedGeneration();
+  if (!config.live || !config.apiKey) return cannedGeneration(ticket);
 
   const client = new Anthropic({ apiKey: config.apiKey });
 

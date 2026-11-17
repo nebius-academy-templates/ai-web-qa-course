@@ -7,8 +7,8 @@
  * where the script expects them.
  *
  * Makes no network call and spends no tokens. A missing ANTHROPIC_API_KEY is
- * reported here as a warning, because you can do sprints 1-3 without one —
- * but `npm start` will refuse to run until it is set.
+ * reported here as "runs offline", not a warning: with no key, `npm start`
+ * serves the canned output for TS-142 (and refuses any other ticket).
  */
 import { readdir, stat } from 'node:fs/promises';
 import path from 'node:path';

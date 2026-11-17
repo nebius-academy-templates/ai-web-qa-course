@@ -49,6 +49,6 @@ export function loadConfig(env = process.env): Config {
     apiKey,
     model: env.ANTHROPIC_MODEL?.trim() || 'claude-opus-5',
     outputDir: env.OUTPUT_DIR?.trim() || 'output',
-    live: apiKey !== undefined,
+    live: apiKey !== undefined, // the only place this is derived; generate() and cli.ts read it
   };
 }

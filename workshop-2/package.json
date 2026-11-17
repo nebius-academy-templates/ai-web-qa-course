@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Workshop 2 \u2014 Secure Jira/Linear-to-Playwright pipeline. Self-contained; independent of the course repo at the parent directory.",
+  "description": "Workshop 2 — Secure Jira/Linear-to-Playwright pipeline. Self-contained; independent of the course repo at the parent directory.",
   "scripts": {
     "smoke": "tsx scripts/smoke.ts",
     "start": "tsx src/cli.ts",

@@ -1,7 +1,9 @@
 # Instructor material — not part of the workshop
 
 Everything in here is for the person **running** the session, not the people
-attending it. Nothing outside this directory refers to it by path.
+attending it. Only two things outside this directory refer to it by path:
+`fixtures/demo/run-gated.ts` (`npm run demo:gated`) and `scripts/checkpoint.ts`
+(`npm run checkpoint solution`). Delete this folder and both stop working.
 
 ## `solution/gates/` — all three gates, working
 
