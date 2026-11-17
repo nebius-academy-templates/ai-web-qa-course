@@ -4,3 +4,6 @@ node_modules/
 output/
 .env
 *.log
+
+# Demo prompt captures — contain unmasked PII by design. Never commit.
+fixtures/demo/output/

@@ -34,4 +34,14 @@ test.describe('3.2 - Visual baselines', () => {
     });
   });
 
+  test('3.2.4 - homepage matches baseline', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => localStorage.removeItem('cart'));
+    await page.reload();
+    await expect(page).toHaveScreenshot('homepage.png', {
+      fullPage: true,
+      mask: [page.getByTestId('bug-panel-toggle')],
+    });
+  });
+
 });

@@ -3,11 +3,11 @@
 patch-testids.py — restores the data-testid attributes that js/bugs.js expects
 but that the JS renderers and HTML no longer emit.
 
-Run from the repo root:  python3 patch-testids.py
+Run from anywhere:  python3 scripts/patch-testids.py
 """
 import re, pathlib, sys
 
-root = pathlib.Path('.')
+root = pathlib.Path(__file__).resolve().parent.parent  # repo root
 changed = []
 
 # ── 1. js/products.js — product card renderer ────────────────────────

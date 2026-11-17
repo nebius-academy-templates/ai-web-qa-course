@@ -25,8 +25,14 @@ async function exists(p: string): Promise<boolean> {
 }
 
 async function main(): Promise<void> {
-  const arg = process.argv[2]?.replace(/^sprint-?/, '').replace(/-start$/, '');
-  if (!arg || !/^[0-9]+$/.test(arg)) {
+  const raw = process.argv[2]?.trim().toLowerCase();
+  const arg = raw?.replace(/^sprint-?/, '').replace(/-start$/, '');
+
+  // `solution` is instructor material — all three gates working, so the
+  // pipeline can be dry-run end to end before a session. See .instructor/.
+  const isSolution = arg === 'solution';
+
+  if (!arg || (!isSolution && !/^[0-9]+$/.test(arg))) {
     console.error('Usage: npm run checkpoint <n>        e.g. npm run checkpoint 2');
     console.error('  2 = start sprint 2 (sprint 1 solved for you)');
     console.error('  3 = start sprint 3 (sprints 1 and 2 solved for you)');
@@ -34,7 +40,9 @@ async function main(): Promise<void> {
     return;
   }
 
-  const from = path.join(root, 'checkpoints', `sprint-${arg}-start`, 'gates');
+  const from = isSolution
+    ? path.join(root, '.instructor', 'solution', 'gates')
+    : path.join(root, 'checkpoints', `sprint-${arg}-start`, 'gates');
   const to = path.join(root, 'src', 'gates');
 
   if (!(await exists(from))) {
@@ -42,7 +50,7 @@ async function main(): Promise<void> {
       .filter((e) => e.isDirectory())
       .map((e) => e.name)
       .join(', ');
-    console.error(`No checkpoint "sprint-${arg}-start". Available: ${available || '(none)'}`);
+    console.error(`No checkpoint "${isSolution ? 'solution' : `sprint-${arg}-start`}". Available: ${available || '(none)'}`);
     process.exitCode = 1;
     return;
   }
@@ -50,14 +58,18 @@ async function main(): Promise<void> {
   await mkdir(to, { recursive: true });
   const files = (await readdir(from)).filter((f) => f.endsWith('.ts'));
 
-  console.log(`Restoring checkpoint sprint-${arg}-start into src/gates/`);
+  console.log(`Restoring ${isSolution ? 'the full solution' : `checkpoint sprint-${arg}-start`} into src/gates/`);
   console.log('This OVERWRITES your src/gates/*.ts. Anything you wrote there is gone.\n');
   for (const file of files) {
     await copyFile(path.join(from, file), path.join(to, file));
     console.log(`  ${file}`);
   }
 
-  console.log(`\nDone. Run \`npm test\` — you should now see ${Math.max(0, 4 - Number(arg))} failing test file(s).`);
+  const failing = isSolution ? 0 : Math.max(0, 4 - Number(arg));
+  console.log(`\nDone. Run \`npm test\` — you should now see ${failing} failing test file(s).`);
+  if (isSolution) {
+    console.log('Back to the participant starting state with: git checkout src/gates/');
+  }
 }
 
 main().catch((err: unknown) => {

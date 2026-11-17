@@ -10,6 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "checkpoint": "tsx scripts/checkpoint.ts",
+    "demo:gateless": "tsx fixtures/demo/run-gateless.ts",
+    "demo:gated": "tsx fixtures/demo/run-gated.ts",
+    "demo:compare": "tsx fixtures/demo/compare.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -32,7 +32,7 @@ async function loadAttachments(names: string[]): Promise<Attachment[]> {
   const loaded: Attachment[] = [];
   for (const name of names) {
     const full = path.resolve(fixturesDir, name);
-    if (!full.startsWith(fixturesDir)) {
+    if (!full.startsWith(fixturesDir + path.sep)) {
       throw new Error(`Attachment "${name}" escapes fixtures/ — refusing to read it.`);
     }
     loaded.push({

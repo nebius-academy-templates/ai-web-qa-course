@@ -1,4 +1,4 @@
-# QA Project Context — TechShop (demo-shop)
+# QA Project Context — TechShop (ai-web-qa-course)
 
 Durable context for QA Architect. Future `test-cases` / `automate-tests` runs read this first so they
 don't re-analyze the repo from scratch. Pair it with `.qa/preferences.md` (output style) and
@@ -18,8 +18,8 @@ for an "AI for QA" course (Modules 2–5)**.
   self-explanatory** — a student reading the plan or test should understand *why* each case exists,
   not just *what* it asserts. (It is also a genuine working suite; keep it green where the app is
   correct.)
-- **Repo:** `CristianPGit/techshop-demo` · Live (read-only) build: https://cristianpgit.github.io/techshop-demo/
-- **Local path:** `/Users/cristianpandele/Documents/learn.dev/demo-shop/`
+- **Repo:** `nebius-academy-templates/ai-web-qa-course` · Live (read-only) build: https://nebius-academy-templates.github.io/ai-web-qa-course/
+- **Local path:** your clone of this repo (`ai-web-qa-course/`)
 
 ---
 
@@ -65,7 +65,7 @@ Single app, **no monorepo**, **no framework**. Two processes:
   No real payments, no real PII.
 - Frontend `http://localhost:4300` · API `http://localhost:3001`.
 - Live GitHub Pages build is **read-only** (static frontend only — no API). Point browser tests at it via
-  `WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium`.
+  `WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium`.
 - Playwright auto-starts both local servers (`webServer` block) and reuses them if already running.
 
 ---
@@ -137,7 +137,7 @@ npm run qa:ui              # Playwright interactive UI
 npm run qa:report          # open HTML report (qa/report)
 
 # Point browser tests at the live Pages build (no local server, frontend only)
-WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium
+WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium
 
 # CI failure playground (intentionally exit 1 — do NOT fix)
 npm run ci:clean           # one focused error
@@ -146,7 +146,7 @@ npm run ci:noisy           # realistic noisy log — find the failure
 
 - **Browser driver:** `agent-browser` skill is installed (`.agents/skills/`, pinned in `skills-lock.json`) —
   preferred for exploratory/automate-tests work. Playwright is the framework for committed specs.
-- **Tracker:** Linear-style issue IDs (`TRI-5`, `TRI-7`) + GitHub PRs on `CristianPGit/techshop-demo`. When a
+- **Tracker:** Linear-style issue IDs (`TRI-5`, `TRI-7`) + GitHub PRs on `nebius-academy-templates/ai-web-qa-course` (earlier ones, e.g. #3 and #11, live on the old `CristianPGit/techshop-demo`). When a
   ticket/PR is given, quote its acceptance criteria **verbatim** into the test plan (per the template).
 
 ---

@@ -2,15 +2,15 @@
 
 A demo e-commerce store for tech gadgets.
 
-**Live site:** https://cristianpgit.github.io/techshop-demo/
+**Live site:** https://nebius-academy-templates.github.io/ai-web-qa-course/
 
 ---
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/CristianPGit/techshop-demo.git
-cd techshop-demo
+git clone https://github.com/nebius-academy-templates/ai-web-qa-course.git
+cd ai-web-qa-course
 npm install
 
 npm run start:all   # site on :4300 + API on :3001
@@ -33,14 +33,19 @@ npm run start:api   # REST API only    → http://localhost:3001
 | `js/bugs.js` | Bug Injection Panel (10 toggleable defects) | Locator + visual lessons |
 | `scripts/ci-check-{clean,noisy}.js` | Intentionally failing CI logs | CI-log reading |
 | `scripts/autofix-*.js`, `scripts/create-linear-ticket.js` | Retry-limited auto-fix + escalation callback | Auto-fix block |
+| `scripts/patch-testids.py` | Restores the `data-testid` attributes `js/bugs.js` expects | Locator lessons |
 | `tests/` + `playwright.config.js` | Locator lessons (two tests red **by design**) | Auto-fix block |
-| `qa/` + `playwright.config.ts` | The real QA suite: e2e, API, bug-injection | Reference suite, kept green |
+| `qa/` + `playwright.config.ts` | The real QA suite: e2e, API, bug-injection, plus test cases in `qa/test-cases/` | Reference suite, kept green |
 | `design-review/`, `design-assets/` | Captured baseline/actual/diff triples | Visual-validation lessons |
 | `module1/` | Module 1 practice repo + private solutions | Governance / security / cost |
-| `workshop-2/`, `workshop-better-agents.md` | Standalone workshops | Not part of the 5-module syllabus |
+| `workshop-2/` (own `package.json` and `README.md`), `docs/workshop-better-agents.md` | Standalone workshops | Not part of the 5-module syllabus |
+| `.github/workflows/` | `deploy-pages.yml` (publishes the site from `main`), `playwright.yml` (CI) | All modules |
+| `.qa/`, `.claude/`, `.agents/`, `skills-lock.json` | QA project context and Claude Code skills | `/qa` skill |
 
 Two Playwright configs on purpose: `playwright.config.ts` runs `qa/` (`npm run qa`),
 `playwright.config.js` runs `tests/` (`npm test`). Both serve the site on **:4300**.
+
+Generated output (`test-results/`, `qa/report/`, `screencasts/`) and local `-darwin` / `-win32` visual baselines are gitignored; the Docker-generated `-linux` baselines are committed.
 
 ---
 

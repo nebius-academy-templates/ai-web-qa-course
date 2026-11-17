@@ -1,0 +1,14 @@
+{
+  "pageObject": {
+    "path": "pages/../../../etc/evil.ts",
+    "contents": "import type { Page } from '@playwright/test';\nexport class CheckoutPage {\n  constructor(private page: Page) {}\n  get phone() { return this.page.getByTestId('input-phone'); }\n  get placeOrder() {\n    const cls = 'css-' + '1a2b3c4';\n    return this.page.locator('.' + cls);\n  }\n}"
+  },
+  "spec": {
+    "path": "specs/checkout.spec.ts",
+    "contents": "import { expect, test } from '@playwright/test';\ntest('accepts an international phone number', async ({ page }) => {\n  await page.getByTestId('input-phone').fill('+40 721 555 019');\n  await page.locator('.' + 'css-' + '1a2b3c4').click();\n  await expect(page.getByTestId('order-success')).toBeVisible();\n});"
+  },
+  "testIds": [
+    "input-phone",
+    "order-success"
+  ]
+}

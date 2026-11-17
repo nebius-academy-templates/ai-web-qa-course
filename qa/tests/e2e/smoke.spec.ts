@@ -11,7 +11,7 @@ import { addToCartButton, card, cartCount, PRODUCTS } from './_selectors';
  * against localhost OR the live GitHub Pages build:
  *
  *   npm run qa:e2e
- *   WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium smoke
+ *   WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium smoke
  *
  * Verified by exploratory run (2026-07-01): order #11252 placed, cart cleared.
  */

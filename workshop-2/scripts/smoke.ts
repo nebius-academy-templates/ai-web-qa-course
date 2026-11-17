@@ -7,8 +7,8 @@
  * where the script expects them.
  *
  * Makes no network call and spends no tokens. A missing ANTHROPIC_API_KEY is
- * reported here as a warning, because you can do sprints 1-3 without one —
- * but `npm start` will refuse to run until it is set.
+ * reported here as "runs offline", not a warning: with no key, `npm start`
+ * serves the canned output for TS-142 (and refuses any other ticket).
  */
 import { readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -52,14 +52,13 @@ async function main(): Promise<void> {
   console.log('environment');
   ok('node', process.version);
   await check('TICKET_SOURCE', async () => `${resolveSource()} (default: fixture)`);
-  if (process.env.ANTHROPIC_API_KEY?.trim()) {
-    ok('ANTHROPIC_API_KEY', 'set');
-  } else {
-    warn(
-      'ANTHROPIC_API_KEY',
-      'not set. Sprints 1-3 and `npm test` work without it; `npm start` will refuse to run.',
-    );
-  }
+  // Absence is the expected, supported state — not a warning.
+  ok(
+    'ANTHROPIC_API_KEY',
+    process.env.ANTHROPIC_API_KEY?.trim()
+      ? 'set — generation will run live'
+      : 'not set — generation runs offline from fixtures/canned-generation.json',
+  );
 
   console.log('\ndependencies');
   for (const pkg of ['@anthropic-ai/sdk', '@faker-js/faker', 'ajv', 'vitest']) {

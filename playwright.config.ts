@@ -8,10 +8,10 @@ import { defineConfig, devices } from '@playwright/test';
  *   - REST API (Express) → http://localhost:3001   (`npm run start:api`)
  *
  * Override targets with env vars, e.g. to point the browser tests at the
- * live GitHub Pages build:  WEB_URL=https://cristianpgit.github.io/techshop-demo npx playwright test --project=chromium
+ * live GitHub Pages build:  WEB_URL=https://nebius-academy-templates.github.io/ai-web-qa-course npx playwright test --project=chromium
  */
 // Normalize to a trailing slash so relative gotos (`index.html`) resolve under a
-// subpath deploy like GitHub Pages (…/techshop-demo/) instead of the origin root.
+// subpath deploy like GitHub Pages (…/ai-web-qa-course/) instead of the origin root.
 const WEB_URL = (process.env.WEB_URL || 'http://localhost:4300').replace(/\/+$/, '') + '/';
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 

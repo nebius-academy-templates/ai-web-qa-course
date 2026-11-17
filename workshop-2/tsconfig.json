@@ -8,12 +8,13 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true,
+    "rootDirs": ["src", ".instructor/solution"],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts", "fixtures/demo/**/*.ts", ".instructor/**/*.ts"],
   "exclude": ["node_modules", "output", "checkpoints"]
 }
