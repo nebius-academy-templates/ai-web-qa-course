@@ -266,7 +266,9 @@ if (require.main === module) {
   // not touched. On Jira? Register createJiraTicket instead.
   onEscalation(async (report) => {
     const ticket = await createLinearTicket(report);
-    console.log(`\n🎫 Linear issue created: ${ticket.url}`);
+    console.log(ticket.mock
+      ? '\n🎫 [LINEAR_MOCK] No issue created - the payload above is what would be posted.'
+      : `\n🎫 Linear issue created: ${ticket.url}`);
 
     // Exercise 2 target: learners add a second channel here,
     // e.g. the CI-readable structured console summary - WITHOUT
