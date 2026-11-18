@@ -19,7 +19,9 @@ jobs:
 
       - name: Run Module 2 tests
         id: tests
-        run: npx playwright test tests/module2.spec.js --reporter=list,json
+        # Explicit config: playwright.config.ts (the qa/ suite) would otherwise
+        # win and its testDir excludes tests/, giving "No tests found".
+        run: npx playwright test tests/module2.spec.js --config playwright.config.js --reporter=list,json
         continue-on-error: true
 
       # Auto-fix agent (lesson 2.3.5) — one attempt, then escalate.
@@ -32,6 +34,11 @@ jobs:
           JIRA_API_TOKEN:   ${{ secrets.JIRA_API_TOKEN }}
           JIRA_EMAIL:       ${{ secrets.JIRA_EMAIL }}
           JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
+          LINEAR_API_KEY:   ${{ secrets.LINEAR_API_KEY }}
+          LINEAR_TEAM_ID:   ${{ secrets.LINEAR_TEAM_ID }}
+          # No Linear secrets on this repo (e.g. a fresh template copy)? Run the
+          # tracker step in mock mode instead of failing the startup check.
+          LINEAR_MOCK:      ${{ secrets.LINEAR_API_KEY == '' && 'true' || 'false' }}
 
       - uses: actions/upload-artifact@v4
         if: always()
