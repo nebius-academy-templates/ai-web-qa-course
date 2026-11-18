@@ -58,14 +58,18 @@ function onEscalation(callback) {
 }
 
 async function fireEscalationCallbacks(report) {
+  let failures = 0;
   for (const cb of escalationCallbacks) {
     try {
       await cb(report);
     } catch (err) {
-      // One failing channel must not block the others.
+      // One failing channel must not block the others...
+      failures++;
       console.error(`Escalation callback failed: ${err.message}`);
     }
   }
+  // ...but a report that reached nobody is not a success.
+  return failures;
 }
 
 // ============================================================
@@ -168,27 +172,31 @@ function queryDOM(domSnapshot, locator) {
   return [];
 }
 
-function escalate(brokenLocator, domSnapshot, failedProposal) {
+function escalate(brokenLocator, domSnapshot, failedProposal, validationFailure) {
   const report = {
     status: 'ESCALATED',
     broken_locator: brokenLocator,
     dom_snapshot: truncate(domSnapshot, 2000),
     failed_proposal: failedProposal || null,
+    // Why the proposal was rejected - the most useful line for the human
+    // who picks this up (e.g. "resolves to 2 elements (need exactly 1)").
+    validation_failure: validationFailure || (failedProposal ? null : 'no proposal (null response)'),
     timestamp: new Date().toISOString(),
     suggested_jira_title: `Auto-fix failed: ${brokenLocator}`,
-    suggested_jira_description: buildDescription(brokenLocator, domSnapshot, failedProposal),
+    suggested_jira_description: buildDescription(brokenLocator, domSnapshot, failedProposal, validationFailure),
   };
   fs.mkdirSync('test-results', { recursive: true });
   fs.writeFileSync('test-results/escalation-report.json', JSON.stringify(report, null, 2));
   return report; // NOTE: no notification code here. Separate concerns.
 }
 
-function buildDescription(brokenLocator, domSnapshot, failedProposal) {
+function buildDescription(brokenLocator, domSnapshot, failedProposal, validationFailure) {
   return [
     'Automated locator fix could not be validated. Human investigation needed.',
     '',
     `Broken locator: ${brokenLocator}`,
     `Claude's proposal: ${failedProposal || 'none (null response)'}`,
+    `Why it was rejected: ${validationFailure || (failedProposal ? 'not recorded' : 'no proposal to validate')}`,
     '',
     'DOM snapshot at time of failure (truncated):',
     truncate(domSnapshot, 1500),
@@ -210,6 +218,7 @@ function writeLocatorToFile(brokenLocator, newLocator, testFilePath) {
 async function autoFixLocator(brokenLocator, testFilePath, domSnapshot, stubMode = 'success') {
   console.log(`\n🤖 Auto-fix pipeline started for: ${brokenLocator}`);
   let proposal = null;
+  let validationFailure = null;
   let attempt = 0;
 
   while (attempt < MAX_AUTOFIX_ATTEMPTS) {
@@ -223,11 +232,13 @@ async function autoFixLocator(brokenLocator, testFilePath, domSnapshot, stubMode
       writeLocatorToFile(brokenLocator, proposal, testFilePath);
       return { status: 'FIXED', newLocator: proposal, attempts: attempt };
     }
-    console.log(`   Validation failed: resolves to ${queryDOM(domSnapshot, proposal).length} elements (need exactly 1)`);
+    validationFailure = `resolves to ${queryDOM(domSnapshot, proposal).length} elements (need exactly 1)`;
+    console.log(`   Validation failed: ${validationFailure}`);
   }
 
-  const report = escalate(brokenLocator, domSnapshot, proposal);
-  await fireEscalationCallbacks(report); // callbacks fire HERE, outside escalate()
+  const report = escalate(brokenLocator, domSnapshot, proposal, validationFailure);
+  const failedDeliveries = await fireEscalationCallbacks(report); // callbacks fire HERE, outside escalate()
+  if (failedDeliveries > 0) report.delivery_failed = true;
   return report;
 }
 
@@ -238,6 +249,17 @@ module.exports = { autoFixLocator, onEscalation, createJiraTicket, createLinearT
 // ============================================================
 if (require.main === module) {
   const mode = process.argv[2] || 'success';
+
+  // Fail loudly at startup, never silently at delivery: check the tracker
+  // credentials before the run, unless the mock is switched on explicitly.
+  if (process.env.LINEAR_MOCK !== 'true') {
+    try {
+      require('./create-linear-ticket').loadLinearConfig();
+    } catch (err) {
+      console.error(`❌ ${err.message} (set LINEAR_MOCK=true to run the demo without Linear)`);
+      process.exit(1);
+    }
+  }
 
   // Register the tracker callback - THE lesson 2.3.3 addition.
   // Swapping Jira -> Linear is this one line. escalate() above was
@@ -272,5 +294,11 @@ if (require.main === module) {
     'tests/fixtures/checkout.spec.js',
     domSnapshot,
     mode
-  ).then(result => console.log('\nFinal status:', result.status));
+  ).then(result => {
+    console.log('\nFinal status:', result.status);
+    if (result.delivery_failed) {
+      console.error('❌ The escalation report was not delivered to any tracker.');
+      process.exitCode = 1;
+    }
+  });
 }
