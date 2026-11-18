@@ -132,9 +132,9 @@ async function createLinearTicket(report) {
       query: mutation.trim(),
       variables: { input: { ...input, labels: ESCALATION_LABELS } },
     }, null, 2));
-    // Mirrors the real TRI team's key prefix so the mock and live
-    // paths are indistinguishable on screen.
-    return { key: 'TRI-142', url: 'https://linear.app/tripleten-pandele/issue/TRI-142' };
+    // Nothing was posted, so there is no real issue to link to. The
+    // `mock` flag lets the caller say so instead of claiming success.
+    return { key: 'MOCK-1', url: 'https://linear.app/example/issue/MOCK-1', mock: true };
   }
 
   input.labelIds = await resolveLabelIds(cfg, ESCALATION_LABELS);

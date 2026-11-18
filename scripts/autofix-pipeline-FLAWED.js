@@ -40,6 +40,9 @@ async function createJiraTicket(report) {
     },
     body: JSON.stringify(payload),
   });
+  if (!res.ok) {
+    throw new Error(`Jira rejected the ticket: ${res.status} ${await res.text()}`);
+  }
   const data = await res.json();
   return { key: data.key, url: `${JIRA_BASE_URL}/browse/${data.key}` };
 }

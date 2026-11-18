@@ -12,6 +12,7 @@ A demo e-commerce store for tech gadgets.
 git clone https://github.com/nebius-academy-templates/ai-web-qa-course.git
 cd ai-web-qa-course
 npm install
+npx playwright install   # downloads the browsers Playwright runs the tests in
 
 npm run start:all   # site on :4300 + API on :3001
 ```
